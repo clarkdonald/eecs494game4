@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<!-- Initial Values for Video Singleton in zenilib
+
+'Textures' describes the options for texture loading and rendering.
+
+  Anisotropy improves how Textures look when rendered at extreme angles,
+  but it makes rendering slower.  I recommend setting it to '0' for 2D
+  games and setting it at a minimum of '2' for 3D games.  '8' should be
+  more or less sufficient for any game.
+
+  Bilinear_Filtering improves how Textures look when they are being
+  rendered at a different resolution than that at which they were
+  created.  It makes rendering slower, but it is recommended that
+  this always be set to '1'.
+
+  Mipmapping causes the rendering system to use multiple sizes of a
+  given Texture.  It improves rendering quality and reduces CPU
+  usage.  It is recommended that this always be set to '1'.
+  
+'Video' describes the more general options for rendering.
+
+  API can be either 'OpenGL' or 'DX9'.  If either API is unavailable
+  or an invalid API string is set, the default API will be used.
+  'DX9' is generally faster on Windows machines.
+
+  Full_Screen should be '0' while debugging, and '1' for most, but
+  not all, releases.
+
+  Multisampling improves stability of rendering when there is lots
+  of motion.  It reduces the problem of jaggies and gives most edges
+  a slightly softer look.  Testing for performance problems, I recommend
+  setting it to a minimum of '2' and possibly as high as '4' or '8'.
+  Multisampling is a specific variant of anti-aliasing.
+
+  Resolution should be set to the resolution at which you want the
+  game to be rendered.  Keep in mind that certain resolutions are
+  impossible when rendering Full_Screen.  Setting Width/Height to
+  '0' causes SDL to choose an optimal value for Full_Screen rendering.
+
+  Vertical_Sync limits rendering frequency to the refresh rate of the
+  monitor.  This eliminates the problem of tearing but can significantly
+  impair the game playing experience if performance is very poor.
+-->
+<Zenilib>
+    <Uniqname>zenilib</Uniqname>
+    <Controllers>
+        <GameController>xinput,X360 Controller,a:b10,b:b11,back:b5,dpdown:b1,dpleft:b2,dpright:b3,dpup:b0,guide:b14,leftshoulder:b8,leftstick:b6,lefttrigger:a4,leftx:a0,lefty:a1,rightshoulder:b9,rightstick:b7,righttrigger:a5,rightx:a2,righty:a3,start:b4,x:b12,y:b13,</GameController>
+        <GameController>5e048e02000000000000504944564944,X360 Controller,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b10,leftshoulder:b4,leftstick:b8,lefttrigger:a2,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b9,righttrigger:a5,rightx:a3,righty:a4,start:b7,x:b2,y:b3,</GameController>
+    </Controllers>
+    <Textures>
+        <Anisotropy>0</Anisotropy>
+        <Bilinear_Filtering>1</Bilinear_Filtering>
+        <Mipmapping>1</Mipmapping>
+    </Textures>
+    <Video>
+        <!--<API>Disabled</API>-->
+        <!--<API>Direct3D 9</API>-->
+        <!--<API>OpenGL Fixed</API>-->
+        <!--<API>OpenGL Shader</API>-->
+        <API>OpenGL Fixed</API>
+        <Full_Screen>0</Full_Screen>
+        <Multisampling>0</Multisampling>
+        <Resolution>
+            <Width>853</Width>
+            <Height>480</Height>
+        </Resolution>
+        <Vertical_Sync>1</Vertical_Sync>
+    </Video>
+</Zenilib>
