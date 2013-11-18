@@ -92,7 +92,8 @@ void Game_State::render(){
 	//get_Video().set_2d(VIDEO_DIMENSION, true);
  
   // Top left corner  
-  get_Video().set_2d_view(VIDEO_DIMENSION, get_top_left_screen(), true);
+  get_Video().set_2d_view(std::make_pair(player->get_position() - Vector2f(300.0f, 200.0f),
+                                      player->get_position() + Vector2f(500.0f, 400.0f)), get_top_left_screen(), true);
   //if(player_not_dead)
   render_all();
   //else
