@@ -60,15 +60,32 @@ void Game_State::perform_logic() {
   float time_step = processing_time;
 }
 
-void Game_State::render(){
-  // If we're done with the level, don't render anything
-  if (gameover) return;
-
-  get_Video().set_2d(VIDEO_DIMENSION, true);
+void Game_State::render_all() {
   for (auto dirt : dirts) dirt->render();
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
+}
+
+void Game_State::render(){
+  // If we're done with the level, don't render anything
+  if (gameover) return;
+
+  // Todo: Each VIDEO_DIMENSION should actually be the coordinates 
+  // for each player
+
+  // Top left corner  
+  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(0, 0), Point2i(427, 240)), true);
+  render_all();
+  // Top right corner
+  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(427, 0), Point2i(854, 240)), true);
+  render_all();
+  // Bottom left corner
+  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(0, 240), Point2i(427, 480)), true);
+  render_all();
+  // Bottom right corner  
+  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(427, 240), Point2i(854, 480)), true);    
+  render_all();  
 }
 
 void Game_State::load_map(const std::string &file_) {
