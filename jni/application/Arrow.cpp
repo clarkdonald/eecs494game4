@@ -12,7 +12,14 @@ Arrow::Arrow(const Zeni::Point2f &position_, const float &theta)
 
 void Arrow::render() const
 {
-
+  render_image("arrow",
+               get_position(),              // upper left
+               get_position() + get_size(), // bottom right
+               move_vec.theta(),              // rotation in radians
+               1.0f,                        // scale factor
+               get_center(),                // point to rotate about
+               false,                       // horizontal flip
+               Color());                    // texture color
 }
 
 void Arrow::update(const float timestep)

@@ -1,16 +1,16 @@
 <?xml version="1.0" ?>
 <Textures>
-  <!-- Logo -->
+  <!-------------- Logo ------------->
   <logo>
     <filepath>textures/Logo/logo.png</filepath>
     <tile>0</tile>
   </logo>
-  <!-- Crystal -->
+  <!-------------- Crystal ------------->
   <crystal>
     <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
   </crystal>
-  <!-- Main Player -->
+  <!-------------- Main Player ------------->
   <downidle>
     <filepath>textures/Character/downidle.png</filepath>
     <tile>0</tile>
@@ -24,12 +24,72 @@
     <filepath>textures/GUI/health.png</filepath>
     <tile>0</tile>
   </health>
-  <!-- Weapons -->
+  <!-------------- Weapons ------------->
   <arrow>
     <filepath>textures/Projectiles/arrow1.png</filepath>
     <tile>0</tile>
   </arrow>
-  <!-- Terrain -->
+  <attackdown>
+    <filepath>textures/Character/attackdown.png</filepath>
+    <tile>0</tile>
+  </attackdown>
+  <attackleft>
+    <filepath>textures/Character/attackleft.png</filepath>
+    <tile>0</tile>
+  </attackleft>
+  <attackright>
+    <filepath>textures/Character/attackright.png</filepath>
+    <tile>0</tile>
+  </attackright>
+  <attackup>
+    <filepath>textures/Character/attackup.png</filepath>
+    <tile>0</tile>
+  </attackup>
+  <downrun1>
+    <filepath>textures/Character/downrun1.png</filepath>
+    <tile>0</tile>
+  </downrun1>
+  <downrun2>
+    <filepath>textures/Character/downrun2.png</filepath>
+    <tile>0</tile>
+  </downrun2>
+  <leftidle>
+    <filepath>textures/Character/leftidle.png</filepath>
+    <tile>0</tile>
+  </leftidle>
+  <leftrun1>
+    <filepath>textures/Character/leftrun1.png</filepath>
+    <tile>0</tile>
+  </leftrun1>
+  <leftrun2>
+    <filepath>textures/Character/leftrun2.png</filepath>
+    <tile>0</tile>
+  </leftrun2>
+  <rightidle>
+    <filepath>textures/Character/rightidle.png</filepath>
+    <tile>0</tile>
+  </rightidle>
+  <rightrun1>
+    <filepath>textures/Character/rightrun1.png</filepath>
+    <tile>0</tile>
+  </rightrun1>
+  <rightrun2>
+    <filepath>textures/Character/rightrun2.png</filepath>
+    <tile>0</tile>
+  </rightrun2>
+  <upidle>
+    <filepath>textures/Character/upidle.png</filepath>
+    <tile>0</tile>
+  </upidle>
+  <uprun1>
+    <filepath>textures/Character/uprun1.png</filepath>
+    <tile>0</tile>
+  </uprun1>
+  <uprun2>
+    <filepath>textures/Character/uprun2.png</filepath>
+    <tile>0</tile>
+  </uprun2> 
+  <!-------------- Terrain ------------->
   <dirt>
     <filepath>textures/Terrain/dirt.png</filepath>
     <tile>0</tile>
@@ -110,7 +170,7 @@
     <filepath>textures/Terrain/bush.png</filepath>
     <tile>0</tile>
   </bush>
-  <!-- Environment -->
+  <!-------------- Environment ------------->
   <treetop>
     <filepath>textures/Terrain/treetop.png</filepath>
     <tile>0</tile>
@@ -175,7 +235,7 @@
     <filepath>textures/Buildings/windowright.png</filepath>
     <tile>0</tile>
   </windowright>
-  <!-- Atmosphere -->
+  <!-------------- Atmosphere ------------->
   <cloud>
     <filepath>textures/Atmosphere/cloud.png</filepath>
     <tile>0</tile>

@@ -10,5 +10,8 @@
 #define PLAYER_INCLUDES_H
 
 #include "Player.h"
+#include "Warrior.h"
+#include "Archer.h"
+#include "Mage.h"
 
 #endif /* PLAYER_INCLUDES_H */

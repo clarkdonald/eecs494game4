@@ -21,6 +21,7 @@
 #include "Player_Factory.h"
 #include "Map_Manager.h"
 #include "Warrior.h"				//for controls testing
+#include "Archer.h"
 #include <utility>
 #include <fstream>
 #include <map>
@@ -70,19 +71,39 @@ Game_State::~Game_State() {
 }
 
 void Game_State::perform_logic() {
+  // calculate game time
   const Time_HQ current_time = get_Timer_HQ().get_time();
   float processing_time = float(current_time.get_seconds_since(time_passed));
   time_passed = current_time;
   float time_step = processing_time;
-  for (auto player : players)
-    player->handle_inputs(controls[player->get_uid()], time_step);
+  
+  for (auto player : players) {
+    Controls input = controls[player->get_uid()];
+    Point2f pos = player->get_position();
+    
+    // check movement around boundary
+    if ((pos.x + input.move_x) >= 0 || (pos.x + input.move_x) < dimension.width*UNIT_LENGTH)
+      player->move_x(input.move_x, time_step);
+    if ((pos.y + input.move_y) >= 0 || (pos.y + input.move_y) < dimension.height*UNIT_LENGTH)
+      player->move_y(input.move_y, time_step);
+
+	  Vector2f direction_vector(input.look_x, input.look_y);
+	  player->turn_to_face(direction_vector.theta());
+
+    if (input.attack) {
+      //player->melee();
+      Weapon* projectile = player->range();
+      if (projectile != nullptr) projectiles.push_back(projectile);
+    }
+  }
+  
+  for (auto projectile : projectiles) projectile->update(time_step);
 }
 
 void Game_State::render_spawn_menu() {
   Text_Button warrior(Point2f(200.0f, 250.0f), Point2f(600.0f, 310.0f), "system_36_800x600", "Warrior");
   Text_Button archer(Point2f(200.0f, 330.0f), Point2f(600.0f, 390.0f), "system_36_800x600", "Archer");
   Text_Button mage(Point2f(200.0f, 410.0f), Point2f(600.0f, 470.0f), "system_36_800x600", "Mage");
-  //warrior.
   warrior.render();
   archer.render();
   mage.render();
@@ -94,20 +115,19 @@ void Game_State::render_all() {
   for (auto environment : environments) environment->render();
   for (auto player : players) player->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
+  for (auto projectile : projectiles) projectile->render();
 }
 
 void Game_State::render(){
   // If we're done with the level, don't render anything
   if (gameover) return;
-
-	//get_Video().set_2d(VIDEO_DIMENSION, true);
  
-  // Top left corner
   for (auto player : players) {    
     auto p_pos = player->get_position();
     auto screen_pos = screen_coord_map[player->get_uid()]();
     get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
         p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);    
+
     render_all();
 
     // TODO: this position should be done once not every time. And the hp_pct should not be added on the hp_pctg
@@ -172,7 +192,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
-    players.push_back(new Warrior(Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
+    players.push_back(create_player("Warrior", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
     controls.push_back(Controls());
   }
 
@@ -240,7 +260,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 17:
-			controls[0].attack = true;
+      controls[0].attack = confidence > .5;
       break;
 
     case 10:

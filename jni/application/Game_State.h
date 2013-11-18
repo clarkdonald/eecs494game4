@@ -10,6 +10,7 @@
 #define GAME_STATE_H
 
 #include "Utility.h"
+#include "Weapon.h"
 #include <zenilib.h>
 #include <string>
 
@@ -36,7 +37,9 @@ class Game_State {
         
     bool is_gameover() const {return gameover;}
 
-		void execute_controller_code(const Zeni::Zeni_Input_ID &id, const float &confidence, const int &action);
+		void execute_controller_code(const Zeni::Zeni_Input_ID &id,
+                                 const float &confidence,
+                                 const int &action);
     
   private:
     void clear();
@@ -59,6 +62,8 @@ class Game_State {
     std::list<Atmosphere*> atmospheres;
     std::list<Grass*> grasss;
     std::list<Player*> players;
+
+    std::list<Weapon*> projectiles;
     bool gameover;
     Dimension dimension;
     std::vector<std::pair<Zeni::Point2i, Zeni::Point2i> (*)()> screen_coord_map;
