@@ -18,5 +18,5 @@ Title_State_Custom::Title_State_Custom()
 
 void Title_State_Custom::render() {
   Title_State<Play_State, Instructions_State>::render();
-  render_image("logo", Point2f(150.0f, 0.0f), Point2f(650.0f, 225.0f));
+  render_image("logo", Point2f(50.0f, 0.0f), Point2f(750.0f, 260.0f));
 }
