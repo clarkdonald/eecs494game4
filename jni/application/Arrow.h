@@ -3,7 +3,7 @@
 
 #include "Weapon.h"
 
-#define ARROW_SPD 150.0f
+#define ARROW_SPD 50.0f
 
 class Arrow : public Weapon
 {
