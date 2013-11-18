@@ -37,6 +37,8 @@ class Game_State {
     
   private:
     void clear();
+
+	void render_all();
         
     void load_map(const std::string &file_);
     
