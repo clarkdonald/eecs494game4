@@ -63,15 +63,17 @@ Game_State::~Game_State() {
 }
 
 void Game_State::perform_logic() {
+  // calculate game time
   const Time_HQ current_time = get_Timer_HQ().get_time();
   float processing_time = float(current_time.get_seconds_since(time_passed));
   time_passed = current_time;
   float time_step = processing_time;
-  for (auto player : players)
-  {
+  
+  for (auto player : players) {
     Controls input = controls[player->get_uid()];
     Point2f pos = player->get_position();
     
+    // check movement around boundary
     if ((pos.x + input.move_x) >= 0 || (pos.x + input.move_x) < dimension.width*UNIT_LENGTH)
       player->move_x(input.move_x, time_step);
     if ((pos.y + input.move_y) >= 0 || (pos.y + input.move_y) < dimension.height*UNIT_LENGTH)
@@ -80,27 +82,20 @@ void Game_State::perform_logic() {
 	  Vector2f direction_vector(input.look_x, input.look_y);
 	  player->turn_to_face(direction_vector.theta());
 
-    if(input.attack)
-    {
+    if (input.attack) {
       //player->melee();
-
       Weapon* projectile = player->range();
-      if( projectile )
-        projectiles.push_back(projectile);
+      if (projectile != nullptr) projectiles.push_back(projectile);
     }
   }
-
-  for(auto it = projectiles.begin(); it != projectiles.end(); it++)
-  {
-    (*it)->update(time_step);
-  }
+  
+  for (auto projectile : projectiles) projectile->update(time_step);
 }
 
 void Game_State::render_spawn_menu() {
   Text_Button warrior(Point2f(200.0f, 250.0f), Point2f(600.0f, 310.0f), "system_36_800x600", "Warrior");
   Text_Button archer(Point2f(200.0f, 330.0f), Point2f(600.0f, 390.0f), "system_36_800x600", "Archer");
   Text_Button mage(Point2f(200.0f, 410.0f), Point2f(600.0f, 470.0f), "system_36_800x600", "Mage");
-  //warrior.
   warrior.render();
   archer.render();
   mage.render();
