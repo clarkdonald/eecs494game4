@@ -34,11 +34,15 @@ class Game_State {
     void render();
         
     bool is_gameover() const {return gameover;}
+
+		void execute_controller_code(const Zeni::Zeni_Input_ID &id, const float &confidence, const int &action);
     
   private:
     void clear();
 
 	  void render_all();
+
+    void render_spawn_menu();
   
     void create_tree(const Zeni::Point2f &position);
   

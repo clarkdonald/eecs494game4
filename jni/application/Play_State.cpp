@@ -20,6 +20,7 @@ using std::endl;
 Play_State::Play_State()
 {
   set_pausable(true);
+  initialize_xbox_controller();
   
   if (Map_Manager::get_Instance().empty()) {
     cerr << "No maps to play!" << endl;
@@ -77,4 +78,22 @@ void Play_State::perform_logic() {
 
 void Play_State::render(){
   if (game_state != nullptr) game_state->render();
+}
+
+// --- Code to detect xbox controller button presses ---
+void Play_State::initialize_xbox_controller()
+{
+  set_action(Zeni_Input_ID(SDL_KEYDOWN, SDLK_ESCAPE), 1);
+  set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_BACK), 1);
+  set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_LEFTX /* x-axis */), 2);
+  set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_LEFTY /* y-axis */), 3);
+  set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_RIGHTX /* x-rotation */), 4);
+  set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_RIGHTY /* y-rotation */), 5);
+  set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERLEFT /* z-axis */), 6);
+  set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERRIGHT /* z-axis */), 7);
+}
+
+void Play_State::on_event(const Zeni_Input_ID &id, const float &confidence, const int &action)
+{
+	game_state -> execute_controller_code(id, confidence, action);
 }

@@ -10,7 +10,11 @@
     <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
   </crystal>
-  <!-- Player -->
+  <!-- Main Player -->
+  <downidle>
+    <filepath>textures/Character/downidle.png</filepath>
+    <tile>0</tile>
+  </downidle>
   <!-- Terrain -->
   <dirt>
     <filepath>textures/Terrain/dirt.png</filepath>

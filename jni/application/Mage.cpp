@@ -10,7 +10,7 @@ Mage::Mage(const Zeni::Point2f &position_)
   hp = max_hp;
 }
 
-void Mage::render()
+void Mage::render() const
 {
 }
 
@@ -19,7 +19,7 @@ Weapon* Mage::range()
   return NULL;
 }
 
-void Mage::spc_attack()
+void Mage::spc_skill()
 {
 }
 

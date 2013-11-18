@@ -27,14 +27,10 @@ std::make_pair(Zeni::Point2f(0.0f, 0.0f), Zeni::Point2f(854.0f, 480.0f));
 /** Controls of the player **/
 struct Controls {
   Controls();
-  bool move_forward;
-  bool move_left;
-  bool move_back;
-  bool move_right;
-  bool look_forward;
-  bool look_left;
-  bool look_back;
-  bool look_right;
+  float move_y;
+  float move_x;
+  float look_y;
+  float look_x;
   bool attack;
 };
 
@@ -72,5 +68,21 @@ struct Dimension {
 
 /** Prints out msg and throws bad_excetion **/
 void error_handle(const std::string &msg);
+
+/** Prints out msg and throws bad_excetion **/
+void error_handle(const std::string &msg);
+
+/** Coordinates for Top Left Screen Coordinates**/
+std::pair<Zeni::Point2i, Zeni::Point2i> get_top_left_screen();
+
+/** Coordinates for Top Right Screen Coordinates**/
+std::pair<Zeni::Point2i, Zeni::Point2i> get_top_right_screen();
+
+/** Coordinates for Bottom Left Screen Coordinates**/
+std::pair<Zeni::Point2i, Zeni::Point2i> get_bottom_left_screen();
+
+/** Coordinates for Bottom Rigth Screen Coordinates**/
+std::pair<Zeni::Point2i, Zeni::Point2i> get_bottom_right_screen();
+
 
 #endif /* UTILITY_H */
