@@ -38,6 +38,7 @@ class Player : public Game_Object {
 	void drop_crystal();
 
   private:
+	Weapon* equipped;
 	float facing;
 
 	float hp;

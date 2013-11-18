@@ -14,7 +14,8 @@ using namespace std;
 Player::Player(const Zeni::Point2f &position_)
 	: Game_Object(position_),
 	  hp(MAX_HP),
-	  n_crystals(0)
+	  n_crystals(0),
+	  equipped(NULL)
 {
 }
 
