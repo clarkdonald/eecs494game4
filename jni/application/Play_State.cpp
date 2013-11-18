@@ -29,7 +29,7 @@ Play_State::Play_State()
   
   // Load BGM
   Sound &sr = get_Sound();
-  sr.set_BGM("music/fortunedays");
+  sr.set_BGM("music/battle_song");
   sr.set_BGM_looping(true);
   sr.play_BGM();
 }
