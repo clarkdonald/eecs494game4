@@ -84,9 +84,9 @@ void Game_State::perform_logic() {
     // check movement around boundary
     float delta_x = pos.x + input.move_x;
     float delta_y = pos.y + input.move_y;
-    if (delta_x >= 0.0f && delta_x < dimension.width*UNIT_LENGTH)
+    if (delta_x >= 0.0f && delta_x < (dimension.width*UNIT_LENGTH - UNIT_LENGTH))
       player->move_x(input.move_x, time_step);
-    if (delta_y >= 0.0f && delta_y < dimension.height*UNIT_LENGTH)
+    if (delta_y >= 0.0f && delta_y < (dimension.height*UNIT_LENGTH - UNIT_LENGTH))
       player->move_y(input.move_y, time_step);
 
 	  Vector2f direction_vector(input.look_x, input.look_y);
