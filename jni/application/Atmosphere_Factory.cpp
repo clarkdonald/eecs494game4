@@ -16,4 +16,5 @@ using namespace Zeni;
 Atmosphere * create_atmosphere(const String &type_, const Point2f &position_)
 {
   error_handle("Unknown atmosphere type");
+  return NULL;
 }

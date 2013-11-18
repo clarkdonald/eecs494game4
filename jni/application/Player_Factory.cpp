@@ -19,4 +19,5 @@ Player * create_player(const String &type_, const Point2f &position_)
   else if (type_ == "Mage");
   else if (type_ == "Archer");
   error_handle("Unknown player type");
+  return NULL;
 }

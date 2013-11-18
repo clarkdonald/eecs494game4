@@ -16,6 +16,7 @@ using namespace Zeni;
 Environment * create_environment(const String &type_, const Point2f &position_)
 {
   error_handle("Unknown environment type");
+  return NULL;
 }
 
 Environment * create_environment(const String &type_,
