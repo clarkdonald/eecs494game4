@@ -61,7 +61,7 @@ void Play_State::on_key(const SDL_KeyboardEvent &event) {
 
 void Play_State::perform_logic() {
   bool over = false;
-  if (game_state->is_done()) {
+  if (game_state->is_gameover()) {
     delete game_state;
     if (Map_Manager::get_Instance().empty()) {
       over = true;

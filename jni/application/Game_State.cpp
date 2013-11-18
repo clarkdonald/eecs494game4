@@ -30,7 +30,7 @@ using std::cerr;
 using std::endl;
 
 Game_State::Game_State(const std::string &file_)
-: done(false)
+: gameover(false)
 {
   load_map(file_);
 }
@@ -50,8 +50,8 @@ void Game_State::perform_logic() {
 }
 
 void Game_State::render(){
-  // If we're done with the level, don't render anyting
-  if (done) return;
+  // If we're gameover with the level, don't render anyting
+  if (gameover) return;
 
   get_Video().set_2d(VIDEO_DIMENSION, true);
   for (auto ground : grounds) ground->render();

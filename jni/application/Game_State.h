@@ -30,7 +30,7 @@ class Game_State {
     
     void render();
         
-    bool is_done() const {return done;}
+    bool is_gameover() const {return gameover;}
     
   private:
     void clear();
@@ -38,14 +38,11 @@ class Game_State {
     void load_map(const std::string &file_);
     
     Zeni::Time_HQ time_passed;
-    Zeni::Chronometer<Zeni::Time> use_timer;
-    Zeni::Chronometer<Zeni::Time> shoot_timer;
-    Zeni::Chronometer<Zeni::Time> hit_timer;
-    Zeni::Chronometer<Zeni::Time> shooting_timer;
+    //Zeni::Chronometer<Zeni::Time> shooting_timer;
     Controls controls;
     std::list<Terrain*> terrains;
     std::list<Ground*> grounds;
-    bool done;
+    bool gameover;
     Dimension dimension;
 };
 
