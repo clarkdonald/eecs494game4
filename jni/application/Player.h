@@ -10,6 +10,7 @@
 #define PLAYER_H
 
 #include "Game_Object.h"
+#include "Weapon.h"
 
 #define MAX_HP 100.0f
 #define MAX_SPD 20.0f
@@ -27,7 +28,7 @@ class Player : public Game_Object {
 	void move_right(const float);
 	void turn_to_face(const float);
 
-	virtual bool std_attack();	  // sword, arrow, fireball
+	virtual Weapon* std_attack() = 0;	  // sword, arrow, fireball
 	virtual void spc_skill() = 0; // special class-specific attack
 
 	void take_dmg(float);

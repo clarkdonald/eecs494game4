@@ -20,6 +20,7 @@ Player::Player(const Zeni::Point2f &position_)
 
 void Player::handle_inputs(const Controls input, const float timestep)
 {
+
 }
 
 void Player::move_forward(const float timestep)
@@ -39,12 +40,6 @@ void Player::move_right(const float timestep)
 void Player::turn_to_face(const float theta)
 {
 	facing = theta;
-}
-
-void Player::std_attack()
-{
-	// attack in facing direction
-	// detect weapon collision
 }
 
 void Player::take_dmg(float dmg)
