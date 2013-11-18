@@ -84,5 +84,4 @@ std::pair<Zeni::Point2i, Zeni::Point2i> get_bottom_left_screen();
 /** Coordinates for Bottom Rigth Screen Coordinates**/
 std::pair<Zeni::Point2i, Zeni::Point2i> get_bottom_right_screen();
 
-
 #endif /* UTILITY_H */

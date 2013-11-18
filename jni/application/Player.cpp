@@ -11,12 +11,12 @@
 using namespace Zeni;
 using namespace std;
 
-Player::Player(const Zeni::Point2f &position_)
-	: Game_Object(position_),
-	  n_crystals(0),
-	  equipped(NULL)
-{
-}
+Player::Player(const Zeni::Point2f &position_, const int &uid_)
+: Game_Object(position_),
+  equipped(NULL),
+  n_crystals(0),
+  uid(uid_)
+{}
 
 void Player::handle_inputs(const Controls input, const float timestep)
 {

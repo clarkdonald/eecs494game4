@@ -6,7 +6,7 @@
 class Mage : public Player
 {
 public:
-  Mage(const Zeni::Point2f &position_);
+  Mage(const Zeni::Point2f &position_, const int &uid_);
   ~Mage();
 
   void render() const override;

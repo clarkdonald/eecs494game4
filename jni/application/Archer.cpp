@@ -3,8 +3,8 @@
 using namespace Zeni;
 using namespace std;
 
-Archer::Archer(const Zeni::Point2f &position_)
-  : Player(position_)
+Archer::Archer(const Zeni::Point2f &position_, const int &uid_)
+  : Player(position_, uid_)
 {
   max_hp = 150.0f;
   hp = max_hp;

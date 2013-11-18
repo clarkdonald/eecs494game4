@@ -16,7 +16,7 @@
 
 class Player : public Game_Object {
   public:
-	  Player(const Zeni::Point2f &position_);
+	  Player(const Zeni::Point2f &position_, const int &uid_);
     virtual ~Player() {}
 
     virtual void render() const = 0;
@@ -36,8 +36,10 @@ class Player : public Game_Object {
 
 	  void pick_up_crystal();
 	  void drop_crystal();
+  
+    const int & get_uid() const {return uid;}
 
-  private:    
+  private:
 	  void turn_to_face(const float);
 
   protected:
@@ -47,6 +49,7 @@ class Player : public Game_Object {
 	  float hp;
     float max_hp;
 	  unsigned int n_crystals;
+    int uid;
 };
 
 #endif /* PLAYER_H */

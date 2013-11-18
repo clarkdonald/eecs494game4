@@ -60,6 +60,7 @@ class Game_State {
     std::list<Player*> players;
     bool gameover;
     Dimension dimension;
+    std::map<int, std::pair<Zeni::Point2i, Zeni::Point2i> (*)()> screen_coord_map;
 };
 
 #endif /* GAME_STATE_H */
