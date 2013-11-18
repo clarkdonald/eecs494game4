@@ -18,10 +18,10 @@ void Warrior::render()
 
 Weapon* Warrior::melee()
 {
-  return equipped;
+  return NULL;
 }
 
-void Warrior::spc_attack()
+void Warrior::spc_skill()
 {
 }
 

@@ -13,8 +13,7 @@ using namespace std;
 
 Player::Player(const Zeni::Point2f &position_)
 	: Game_Object(position_),
-	  n_crystals(0),
-	  equipped(NULL)
+	  n_crystals(0)
 {
 }
 

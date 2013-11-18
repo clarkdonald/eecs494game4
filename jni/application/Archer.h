@@ -5,13 +5,14 @@
 
 class Archer : public Player
 {
-  Archer(const Zeni::Point2f &position_);
-  ~Archer();
+  public:
+    Archer(const Zeni::Point2f &position_);
+    ~Archer();
 
-  void render();
+    void render();
 
-  Weapon* range();
-  void spc_attack();
+    Weapon* range();
+    void spc_attack();
 };
 
 

@@ -10,6 +10,9 @@ class Arrow : public Weapon
     ~Arrow();
 
     void render();
+
+  private:
+
 };
 
 

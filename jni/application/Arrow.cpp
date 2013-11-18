@@ -6,7 +6,7 @@ using namespace std;
 Arrow::Arrow(const Zeni::Point2f &position_)
   : Weapon(position_)
 {
-  damage = 10.0f;
+  damage = 25.0f;
 }
 
 void Arrow::render()

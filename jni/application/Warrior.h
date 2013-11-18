@@ -5,13 +5,14 @@
 
 class Warrior : public Player
 {
-  Warrior(const Zeni::Point2f &position_);
-  ~Warrior();
+  public:
+    Warrior(const Zeni::Point2f &position_);
+    ~Warrior();
 
-  void render();
+    void render();
 
-  Weapon* melee();
-  void spc_attack();
+    Weapon* melee();
+    void spc_skill();
 };
 
 

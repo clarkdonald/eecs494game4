@@ -19,7 +19,7 @@ class Player : public Game_Object {
 	  Player(const Zeni::Point2f &position_);
     virtual ~Player() {}
 
-    virtual void render() = 0;
+    virtual void render() const = 0;
   
 	  void handle_inputs(const Controls, const float);
 
@@ -43,7 +43,6 @@ class Player : public Game_Object {
 	  void turn_to_face(const float);
 
   protected:
-	  Weapon* equipped;
 	  float facing;
 
 	  float hp;
