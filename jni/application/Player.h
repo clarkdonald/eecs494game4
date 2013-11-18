@@ -31,7 +31,7 @@ class Player : public Game_Object {
 	  void take_dmg(float);
 	  void die();
 
-    float get_hp();
+    float get_hp_pctg();
     unsigned int get_crystals_held();
 
 	  void pick_up_crystal();

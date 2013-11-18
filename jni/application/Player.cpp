@@ -45,9 +45,9 @@ void Player::die()
 	// start spawn menu?
 }
 
-float Player::get_hp()
+float Player::get_hp_pctg()
 {
-  return hp;
+  return hp/max_hp;
 }
 
 unsigned int Player::get_crystals_held()
