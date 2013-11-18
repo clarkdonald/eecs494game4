@@ -110,8 +110,8 @@ void Game_State::render_all() {
   for (auto grass : grasss) grass->render();
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
-  for (auto atmosphere : atmospheres) atmosphere->render();
   for (auto player : players) player->render();
+  for (auto atmosphere : atmospheres) atmosphere->render();
   for (auto projectile : projectiles) projectile->render();
 }
 
