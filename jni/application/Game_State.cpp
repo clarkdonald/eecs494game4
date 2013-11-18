@@ -8,7 +8,7 @@
 
 #include "Game_State.h"
 #include "Utility.h"
-#include "Ground.h"
+#include "Dirt.h"
 #include "Atmosphere.h"
 #include "Atmosphere_Factory.h"
 #include "Environment.h"
@@ -43,7 +43,7 @@ Game_State::Game_State(const std::string &file_)
 }
 
 Game_State::~Game_State() {
-  for (auto it = grounds.begin(); it != grounds.end(); ++it)
+  for (auto it = dirts.begin(); it != dirts.end(); ++it)
     if (*it != nullptr) delete *it;
   for (auto it = terrains.begin(); it != terrains.end(); ++it)
     if (*it != nullptr) delete *it;
@@ -65,7 +65,7 @@ void Game_State::render(){
   if (gameover) return;
 
   get_Video().set_2d(VIDEO_DIMENSION, true);
-  for (auto ground : grounds) ground->render();
+  for (auto dirt : dirts) dirt->render();
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
@@ -115,7 +115,7 @@ void Game_State::load_map(const std::string &file_) {
         string s = "Invalid character found: ";
         error_handle(s + line[width]);
       }
-      grounds.push_back(new Ground(position));
+      dirts.push_back(new Dirt(position));
     }
     ++height;
   }

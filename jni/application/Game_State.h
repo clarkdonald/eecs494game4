@@ -13,7 +13,7 @@
 #include <zenilib.h>
 #include <string>
 
-class Ground;
+class Dirt;
 class Terrain;
 class Atmosphere;
 class Environment;
@@ -46,7 +46,7 @@ class Game_State {
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
     std::list<Atmosphere*> atmospheres;
-    std::list<Ground*> grounds;
+    std::list<Dirt*> dirts;
     bool gameover;
     Player *player;
     Dimension dimension;

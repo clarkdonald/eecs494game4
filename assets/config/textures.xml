@@ -1,15 +1,109 @@
 <?xml version="1.0" ?>
 <Textures>
+  <!-- Logo -->
   <logo>
-    <filepath>textures/logo.png</filepath>
+    <filepath>textures/Logo/logo.png</filepath>
     <tile>0</tile>
   </logo>
-  <ground>
-    <filepath>textures/ground.png</filepath>
+  <!-- Crystal -->
+  <crystal>
+    <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
-  </ground>
-  <water>
-    <filepath>textures/water.png</filepath>
-    <tile>1</tile>
-  </water>
+  </crystal>
+  <!-- Player -->
+  <!-- Terrain -->
+  <dirt>
+    <filepath>textures/Terrain/dirt.png</filepath>
+    <tile>0</tile>
+  </dirt>
+  <grass>
+    <filepath>textures/Terrain/grass.png</filepath>
+    <tile>0</tile>
+  </grass>
+  <rockpile>
+    <filepath>textures/Terrain/rockpile1.png</filepath>
+    <tile>0</tile>
+  </rockpile>
+  <stonedown>
+    <filepath>textures/Terrain/stonedown.png</filepath>
+    <tile>0</tile>
+  </stonedown>
+  <stonedownend>
+    <filepath>textures/Terrain/stonedownend.png</filepath>
+    <tile>0</tile>
+  </stonedownend>
+  <stonedownleft>
+    <filepath>textures/Terrain/stonedownleft.png</filepath>
+    <tile>0</tile>
+  </stonedownleft>
+  <stonedownright>
+    <filepath>textures/Terrain/stonedownright.png</filepath>
+    <tile>0</tile>
+  </stonedownright>
+  <stonehorizontal>
+    <filepath>textures/Terrain/stonehorizontal.png</filepath>
+    <tile>0</tile>
+  </stonehorizontal>
+  <stoneleft>
+    <filepath>textures/Terrain/stoneleft.png</filepath>
+    <tile>0</tile>
+  </stoneleft>
+  <stoneleftend>
+    <filepath>textures/Terrain/stoneleftend.png</filepath>
+    <tile>0</tile>
+  </stoneleftend>
+  <stonemiddle>
+    <filepath>textures/Terrain/stonemiddle.png</filepath>
+    <tile>0</tile>
+  </stonemiddle>
+  <stoneright>
+    <filepath>textures/Terrain/stoneright.png</filepath>
+    <tile>0</tile>
+  </stoneright>
+  <stonerightend>
+    <filepath>textures/Terrain/stonerightend.png</filepath>
+    <tile>0</tile>
+  </stonerightend>
+  <stoneup>
+    <filepath>textures/Terrain/stoneup.png</filepath>
+    <tile>0</tile>
+  </stoneup>
+  <stoneupend>
+    <filepath>textures/Terrain/stoneupend.png</filepath>
+    <tile>0</tile>
+  </stoneupend>
+  <stoneupleft>
+    <filepath>textures/Terrain/stoneupleft.png</filepath>
+    <tile>0</tile>
+  </stoneupleft>
+  <stoneupright>
+    <filepath>textures/Terrain/stoneupright.png</filepath>
+    <tile>0</tile>
+  </stoneupright>
+  <stonevertical>
+    <filepath>textures/Terrain/stonevertical.png</filepath>
+    <tile>0</tile>
+  </stonevertical>
+  <woodfloor>
+    <filepath>textures/Terrain/woodfloor.png</filepath>
+    <tile>0</tile>
+  </woodfloor>
+  <bush>
+    <filepath>textures/Terrain/bush.png</filepath>
+    <tile>0</tile>
+  </bush>
+  <!-- Environment -->
+  <tree>
+    <filepath>textures/Terrain/tree.png</filepath>
+    <tile>0</tile>
+  </tree>
+  <treetop>
+    <filepath>textures/Terrain/treetop.png</filepath>
+    <tile>0</tile>
+  </treetop>
+  <treebottom>
+    <filepath>textures/Terrain/treebottom.png</filepath>
+    <tile>0</tile>
+  </treebottom>
+  <!-- Atmosphere -->
 </Textures>

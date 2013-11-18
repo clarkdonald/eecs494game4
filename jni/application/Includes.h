@@ -18,6 +18,7 @@
 #include "Atmosphere_Factory.h"
 #include "Player_Includes.h"
 #include "Player_Factory.h"
+#include "Crystal.h"
 #include "Play_State.h"
 #include "Instructions_State.h"
 #include "Title_State_Custom.h"

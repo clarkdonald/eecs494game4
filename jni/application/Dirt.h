@@ -1,23 +1,23 @@
 //
-//  Ground.h
+//  Dirt.h
 //  game
 //
 //  Created by Donald Clark on 11/9/13.
 //
 //
 
-#ifndef GROUND_H
-#define GROUND_H
+#ifndef DIRT_H
+#define DIRT_H
 
 #include "Terrain.h"
 #include "Utility.h"
 #include <zenilib.h>
 
-class Ground : public Terrain {
+class Dirt : public Terrain {
   public:
-    Ground(const Zeni::Point2f &position_);
+    Dirt(const Zeni::Point2f &position_);
     
     void render() const override;
 };
 
-#endif /* GROUND_H */
+#endif /* DIRT_H */
