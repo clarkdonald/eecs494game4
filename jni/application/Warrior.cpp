@@ -12,9 +12,8 @@ void Warrior::render()
 {
 }
 
-Weapon* Warrior::std_attack()
+void Warrior::melee()
 {
-  return NULL;
 }
 
 void Warrior::spc_attack()

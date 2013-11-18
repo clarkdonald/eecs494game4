@@ -24,7 +24,9 @@ class Player : public Game_Object {
   
 	  void handle_inputs(const Controls, const float);
 
-	  virtual Weapon* std_attack() = 0;	  // sword, arrow, fireball
+    virtual void melee() {}	                // sword
+    virtual Weapon* range() {return NULL;}  // arrow, fireball
+
 	  virtual void spc_skill() = 0; // special class-specific attack
 
 	  void take_dmg(float);
