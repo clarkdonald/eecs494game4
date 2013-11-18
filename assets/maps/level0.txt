@@ -18,9 +18,9 @@
 .s.....rs..b...
 .s......s..tttt
 .s......dddd...
-.s..h......d.b.
-.s.....rt..dccc
-.s.r.r.....dccc
-.s.....t.t.dccc
+.s..h......dcb.
+.s.....rt..d...
+.s.r.r.....d...
+.s.....t.t.dc..
 dsddddddddddddd
 dsddddddddddddd

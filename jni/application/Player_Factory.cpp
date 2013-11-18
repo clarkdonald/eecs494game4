@@ -13,11 +13,11 @@
 using std::bad_alloc;
 using namespace Zeni;
 
-Player * create_player(const String &type_, const Point2f &position_)
+Player * create_player(const String &type_, const Point2f &position_, const int &uid_)
 {
-  if (type_ == "Warrior");
-  else if (type_ == "Mage");
-  else if (type_ == "Archer");
+  if (type_ == "Warrior") return new Warrior(position_, uid_);
+  else if (type_ == "Mage") return new Mage(position_, uid_);
+  else if (type_ == "Archer") return new Archer(position_, uid_);
   error_handle("Unknown player type");
-  return NULL;
+  return nullptr;
 }

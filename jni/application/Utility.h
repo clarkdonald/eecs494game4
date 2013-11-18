@@ -19,6 +19,7 @@ const int NUM_PLAYERS = 4;
 /** Size of units in the game **/
 const float UNIT_LENGTH = 32.0f;
 const Zeni::Vector2f OBJECT_SIZE = Zeni::Vector2f(UNIT_LENGTH, UNIT_LENGTH);
+const Zeni::Vector2f LARGE_SIZE = Zeni::Vector2f(3*UNIT_LENGTH, 3*UNIT_LENGTH);
 
 /** Relative size of entire video window **/
 const std::pair<Zeni::Point2f, Zeni::Point2f> VIDEO_DIMENSION =

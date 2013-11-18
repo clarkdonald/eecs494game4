@@ -11,7 +11,7 @@
 using Zeni::Point2f;
 
 Atmosphere::Atmosphere(const Point2f &position_)
-: Game_Object(position_)
+: Game_Object(position_, LARGE_SIZE)
 {}
 
 Atmosphere::~Atmosphere() {}
