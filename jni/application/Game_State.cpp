@@ -41,10 +41,10 @@ using std::endl;
 Game_State::Game_State(const std::string &file_)
 : gameover(false)
 {
-  screen_coord_map[0] = &get_top_left_screen;
-  screen_coord_map[1] = &get_bottom_left_screen;
-  screen_coord_map[2] = &get_top_right_screen;
-  screen_coord_map[3] = &get_bottom_right_screen;
+  screen_coord_map.push_back(&get_top_left_screen);
+  screen_coord_map.push_back(&get_bottom_left_screen);
+  screen_coord_map.push_back(&get_top_right_screen);
+  screen_coord_map.push_back(&get_bottom_right_screen);
   load_map(file_);
 }
 
@@ -66,7 +66,8 @@ void Game_State::perform_logic() {
   float processing_time = float(current_time.get_seconds_since(time_passed));
   time_passed = current_time;
   float time_step = processing_time;
-  for (auto player : players) player->handle_inputs(controls, time_step);
+  for (auto player : players)
+    player->handle_inputs(controls[player->get_uid()], time_step);
 }
 
 void Game_State::render_spawn_menu() {
@@ -158,6 +159,7 @@ void Game_State::load_map(const std::string &file_) {
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
     players.push_back(new Warrior(Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
+    controls.push_back(Controls());
   }
 
   // Get map information
@@ -191,7 +193,9 @@ void Game_State::load_map(const std::string &file_) {
   file.close();
 }
 
-void Game_State::execute_controller_code(const Zeni_Input_ID &id, const float &confidence, const int &action)
+void Game_State::execute_controller_code(const Zeni_Input_ID &id,
+                                         const float &confidence,
+                                         const int &action)
 {
 	switch(action) {
     case 1:
