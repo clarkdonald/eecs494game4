@@ -74,9 +74,11 @@ void Game_State::perform_logic() {
     Point2f pos = player->get_position();
     
     // check movement around boundary
-    if ((pos.x + input.move_x) >= 0 || (pos.x + input.move_x) < dimension.width*UNIT_LENGTH)
+    float delta_x = pos.x + input.move_x;
+    float delta_y = pos.y + input.move_y;
+    if (delta_x >= 0.0f && delta_x < dimension.width*UNIT_LENGTH)
       player->move_x(input.move_x, time_step);
-    if ((pos.y + input.move_y) >= 0 || (pos.y + input.move_y) < dimension.height*UNIT_LENGTH)
+    if (delta_y >= 0.0f && delta_y < dimension.height*UNIT_LENGTH)
       player->move_y(input.move_y, time_step);
 
 	  Vector2f direction_vector(input.look_x, input.look_y);
@@ -346,5 +348,4 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
     default:
       break;
 	}
-	
 }

@@ -89,9 +89,6 @@ struct Dimension {
 /** Prints out msg and throws bad_excetion **/
 void error_handle(const std::string &msg);
 
-/** Prints out msg and throws bad_excetion **/
-void error_handle(const std::string &msg);
-
 /** Coordinates for Top Left Screen Coordinates**/
 std::pair<Zeni::Point2i, Zeni::Point2i> get_top_left_screen();
 
