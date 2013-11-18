@@ -68,4 +68,20 @@ struct Dimension {
 /** Prints out msg and throws bad_excetion **/
 void error_handle(const std::string &msg);
 
+/** Prints out msg and throws bad_excetion **/
+void error_handle(const std::string &msg);
+
+/** Coordinates for Top Left Screen Coordinates**/
+std::pair<Zeni::Point2i, Zeni::Point2i> get_top_left_screen();
+
+/** Coordinates for Top Right Screen Coordinates**/
+std::pair<Zeni::Point2i, Zeni::Point2i> get_top_right_screen();
+
+/** Coordinates for Bottom Left Screen Coordinates**/
+std::pair<Zeni::Point2i, Zeni::Point2i> get_bottom_left_screen();
+
+/** Coordinates for Bottom Rigth Screen Coordinates**/
+std::pair<Zeni::Point2i, Zeni::Point2i> get_bottom_right_screen();
+
+
 #endif /* UTILITY_H */

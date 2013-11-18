@@ -65,6 +65,16 @@ void Game_State::perform_logic() {
 	player -> handle_inputs(controls, time_step);
 }
 
+void Game_State::render_spawn_menu() {
+  Text_Button warrior(Point2f(200.0f, 250.0f), Point2f(600.0f, 310.0f), "system_36_800x600", "Warrior");
+  Text_Button archer(Point2f(200.0f, 330.0f), Point2f(600.0f, 390.0f), "system_36_800x600", "Archer");
+  Text_Button mage(Point2f(200.0f, 410.0f), Point2f(600.0f, 470.0f), "system_36_800x600", "Mage");
+  //warrior.
+  warrior.render();
+  archer.render();
+  mage.render();
+}
+
 void Game_State::render_all() {
   for (auto grass : grasss) grass->render();
   for (auto terrain : terrains) terrain->render();
@@ -80,17 +90,24 @@ void Game_State::render(){
   // for each player
 	get_Video().set_2d(VIDEO_DIMENSION, true);
  
-	/* // Top left corner  
-  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(0, 0), Point2i(427, 240)), true);
-  render_all();
-  // Top right corner
-  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(427, 0), Point2i(854, 240)), true);
-  render_all();
-  // Bottom left corner
-  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(0, 240), Point2i(427, 480)), true);
-  render_all();
-  // Bottom right corner  
-  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(427, 240), Point2i(854, 480)), true);    */
+  //// Top left corner  
+  //get_Video().set_2d_view(VIDEO_DIMENSION, get_top_left_screen(), true);
+  ////if(player_not_dead)
+  //render_all();
+  ////else
+  ////render_spawn_menu();  
+
+  //// Top right corner
+  //get_Video().set_2d_view(make_pair(Point2f(0.0f,0.0f), Point2f(100.0f,100.0f)), get_top_right_screen(), true);
+  //render_all();
+
+  //// Bottom left corner
+  //get_Video().set_2d_view(VIDEO_DIMENSION, get_bottom_left_screen(), true);
+  //render_all();
+
+  //// Bottom right corner  
+  //get_Video().set_2d_view(VIDEO_DIMENSION, get_bottom_right_screen(), true);    
+  //render_all();  
 
   render_all();  
 	player -> render();
