@@ -15,7 +15,6 @@
 #include "Tree.h"
 #include "Terrain.h"
 #include "Terrain_Factory.h"
-#include "Grass.h"
 #include "Player.h"
 #include "Health_Bar.h"
 #include "Player_Factory.h"
@@ -224,7 +223,7 @@ void Game_State::load_map(const std::string &file_) {
         string s = "Invalid character found: ";
         error_handle(s + line[width]);
       }
-      grasss.push_back(new Grass(position));
+      grasss.push_back(create_terrain("Grass", position));
     }
     ++height;
   }
