@@ -6,11 +6,7 @@
 //
 //
 
-#ifndef TERRAIN_INCLUDES_H
-#define TERRAIN_INCLUDES_H
+#ifndef ENVIRONMENT_INCLUDES_H
+#define ENVIRONMENT_INCLUDES_H
 
-#include "Terrain.h"
-#include "Ground.h"
-#include "Water.h"
-
-#endif /* TERRAIN_INCLUDES_H */
+#endif /* ENVIRONMENT_INCLUDES_H */
