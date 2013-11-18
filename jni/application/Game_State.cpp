@@ -126,7 +126,6 @@ void Game_State::render(){
  
   for (auto player : players) {    
     auto p_pos = player->get_position();
-    auto screen_pos = screen_coord_map[player->get_uid()]();
     get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
         p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);    
 
