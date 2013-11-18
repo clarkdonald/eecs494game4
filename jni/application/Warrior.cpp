@@ -8,13 +8,11 @@ Warrior::Warrior(const Zeni::Point2f &position_)
 {
   max_hp = 200.0f;
   hp = max_hp;
-
-
 }
 
-void Warrior::render()
+void Warrior::render() const
 {
-	
+	Game_Object::render("downidle");
 }
 
 Weapon* Warrior::melee()
@@ -22,7 +20,7 @@ Weapon* Warrior::melee()
   return equipped;
 }
 
-void Warrior::spc_attack()
+void Warrior::spc_skill()
 {
 }
 

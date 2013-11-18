@@ -92,6 +92,7 @@ void Game_State::render(){
   get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(427, 240), Point2i(854, 480)), true);    */
 
   render_all();  
+	player -> render();
 }
 
 void Game_State::load_map(const std::string &file_) {

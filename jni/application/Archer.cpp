@@ -10,7 +10,7 @@ Archer::Archer(const Zeni::Point2f &position_)
   hp = max_hp;
 }
 
-void Archer::render()
+void Archer::render() const
 {
 }
 
@@ -19,7 +19,7 @@ Weapon* Archer::range()
   return NULL;
 }
 
-void Archer::spc_attack()
+void Archer::spc_skill()
 {
 }
 
