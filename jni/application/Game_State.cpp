@@ -202,36 +202,128 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
                                          const int &action)
 {
 	switch(action) {
-    case 1:
+		/* player 1 */
+    case 11:
       break;
 
-    case 2:
-			controls.move_x = confidence;
+    case 12:
+			controls[0].move_x = confidence;
       break;
 
-    case 3:
-			controls.move_y = confidence;
+    case 13:
+			controls[0].move_y = confidence;
       break;
 
-    case 4:
-			controls.look_x = confidence;
+    case 14:
+			controls[0].look_x = confidence;
       break;
 
-    case 5:
-			controls.look_y = confidence;
+    case 15:
+			controls[0].look_y = confidence;
       break;
 
-    case 6:
+    case 16:
       break;
 
-    case 7:
-			controls.attack = true;
+    case 17:
+			controls[0].attack = true;
       break;
 
-    case 0:
+    case 10:
+      break;
+
+		/* player 2 */
+		case 21:
+      break;
+
+    case 22:
+			controls[1].move_x = confidence;
+      break;
+
+    case 23:
+			controls[1].move_y = confidence;
+      break;
+
+    case 24:
+			controls[1].look_x = confidence;
+      break;
+
+    case 25:
+			controls[1].look_y = confidence;
+      break;
+
+    case 26:
+      break;
+
+    case 27:
+			controls[1].attack = true;
+      break;
+
+    case 20:
+      break;
+
+		/* player 3 */
+		case 31:
+      break;
+
+    case 32:
+			controls[2].move_x = confidence;
+      break;
+
+    case 33:
+			controls[2].move_y = confidence;
+      break;
+
+    case 34:
+			controls[2].look_x = confidence;
+      break;
+
+    case 35:
+			controls[2].look_y = confidence;
+      break;
+
+    case 36:
+      break;
+
+    case 37:
+			controls[2].attack = true;
+      break;
+
+    case 30:
+      break;
+
+		/* player 4 */
+		case 41:
+      break;
+
+    case 42:
+			controls[3].move_x = confidence;
+      break;
+
+    case 43:
+			controls[3].move_y = confidence;
+      break;
+
+    case 44:
+			controls[3].look_x = confidence;
+      break;
+
+    case 45:
+			controls[3].look_y = confidence;
+      break;
+
+    case 46:
+      break;
+
+    case 47:
+			controls[3].attack = true;
+      break;
+
+    case 40:
       break;
 
     default:
       break;
 	}
+	
 }

@@ -5,14 +5,14 @@
 
 class Mage : public Player
 {
-public:
-  Mage(const Zeni::Point2f &position_, const int &uid_);
-  ~Mage();
+  public:
+    Mage(const Zeni::Point2f &position_, const int &uid_);
+    ~Mage();
 
-  void render() const override;
+    void render() const override;
 
-  Weapon* range() override;
-  void spc_skill() override;
+    Weapon* range() override;
+    void spc_skill() override;
 };
 
 

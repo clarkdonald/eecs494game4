@@ -17,7 +17,7 @@ void Warrior::render() const
 
 Weapon* Warrior::melee()
 {
-  return equipped;
+  return NULL;
 }
 
 void Warrior::spc_skill()
