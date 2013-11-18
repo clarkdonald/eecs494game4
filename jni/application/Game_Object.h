@@ -25,6 +25,8 @@ class Game_Object {
     bool touching(const Game_Object &rhs) const;
     
     const Zeni::Point2f & get_position() const;
+
+    const Zeni::Point2f & get_center() const;
     
     const Zeni::Vector2f & get_size() const;
     
