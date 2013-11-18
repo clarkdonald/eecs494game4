@@ -13,7 +13,7 @@
 
 class Game_State;
 
-class Play_State : public Zeni::Gamestate_Base {
+class Play_State : public Zeni::Gamestate_II {
   public:
     Play_State();
     
@@ -24,10 +24,15 @@ class Play_State : public Zeni::Gamestate_Base {
     void on_pop();
     
     void on_key(const SDL_KeyboardEvent &event);
+
+		//detect xbox controller button
+		void on_event(const Zeni::Zeni_Input_ID &id, const float &confidence, const int &action);
     
     void perform_logic();
     
     void render();
+
+	void initialize_xbox_controller();
     
   private:
     Game_State *game_state;

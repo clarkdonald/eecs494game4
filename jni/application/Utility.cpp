@@ -14,14 +14,10 @@ using std::bad_exception;
 using std::string;
 
 Controls::Controls()
-: move_forward(false),
-  move_left(false),
-  move_back(false),
-  move_right(false),
-  look_forward(false),
-  look_left(false),
-  look_back(false),
-  look_right(false),
+: move_y(0.0f),
+  move_x(0.0f),
+  look_y(0.0f),
+  look_x(0.0f),
   attack(false)
 {}
 
