@@ -63,4 +63,8 @@ void Game_Object::render(const String &texture, const Color &filter) const {
                position + 0.5f * size, // point to rotate & scale about
                false, // whether or not to horizontally flip the texture
                filter); // what Color to "paint" the texture
+  /*Vertex2f_Texture vtx(position, Point2f(0.0f, 0.0f));
+  Quadrilateral<Vertex2f_Texture> test;
+  Material mat("grass_tex");
+  test.lend_Material(&mat);*/
 }

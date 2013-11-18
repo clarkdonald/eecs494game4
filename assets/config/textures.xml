@@ -15,6 +15,15 @@
     <filepath>textures/Character/downidle.png</filepath>
     <tile>0</tile>
   </downidle>
+  <!-- Player Status -->
+  <health_bar>
+    <filepath>textures/GUI/health_bar.png</filepath>
+    <tile>0</tile>
+  </health_bar>
+  <health>
+    <filepath>textures/GUI/health.png</filepath>
+    <tile>0</tile>
+  </health>
   <!-- Weapons -->
   <arrow>
     <filepath>textures/Projectiles/arrow1.png</filepath>
