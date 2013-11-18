@@ -121,7 +121,6 @@ void Game_State::render(){
 
 	//get_Video().set_2d(VIDEO_DIMENSION, true);
  
-  // Top left corner
   for (auto player : players) {
     get_Video().set_2d_view(std::make_pair(player->get_position() - Vector2f(150.0f, 100.0f),
         player->get_position() + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);
