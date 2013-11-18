@@ -10,5 +10,6 @@
 #define ATMOSPHERE_INCLUDES_H
 
 #include "Atmosphere.h"
+#include "Cloud.h"
 
 #endif /* ATMOSPHERE_INCLUDES_H */

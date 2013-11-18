@@ -162,4 +162,8 @@
     <tile>0</tile>
   </windowright>
   <!-- Atmosphere -->
+  <cloud>
+    <filepath>textures/Atmosphere/cloud.png</filepath>
+    <tile>0</tile>
+  </cloud>
 </Textures>

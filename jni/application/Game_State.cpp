@@ -181,6 +181,10 @@ void Game_State::load_map(const std::string &file_) {
           create_terrain(
             Map_Manager::get_Instance().get_terrain(line[width]),position));
       }
+      else if (Map_Manager::get_Instance().find_atmosphere(line[width])) {
+        atmospheres.push_back(
+          create_atmosphere(Map_Manager::get_Instance().get_atmosphere(line[width]),position));
+      }
       else {
         string s = "Invalid character found: ";
         error_handle(s + line[width]);
