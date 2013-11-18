@@ -21,7 +21,9 @@ class Player : public Game_Object {
 
     virtual void render() const = 0;
   
-	  void handle_inputs(const Controls, const float);
+    void move_y(const float, const float);
+    void move_x(const float, const float);
+	  void turn_to_face(const float);
 
     virtual Weapon* melee() {return NULL;}	// sword
     virtual Weapon* range() {return NULL;}  // arrow, fireball
@@ -40,7 +42,6 @@ class Player : public Game_Object {
     const int & get_uid() const {return uid;}
 
   private:
-	  void turn_to_face(const float);
 
   protected:
 	  float facing;
@@ -49,6 +50,8 @@ class Player : public Game_Object {
     float max_hp;
 	  unsigned int n_crystals;
     int uid;
+
+    bool can_attack;
 };
 
 #endif /* PLAYER_H */

@@ -20,6 +20,7 @@
 #include "Player_Factory.h"
 #include "Map_Manager.h"
 #include "Warrior.h"				//for controls testing
+#include "Archer.h"
 #include <utility>
 #include <fstream>
 #include <map>
@@ -67,7 +68,29 @@ void Game_State::perform_logic() {
   time_passed = current_time;
   float time_step = processing_time;
   for (auto player : players)
-    player->handle_inputs(controls[player->get_uid()], time_step);
+  {
+    Controls input = controls[player->get_uid()];
+
+    player->move_x(input.move_x, time_step);
+    player->move_y(input.move_y, time_step);
+
+	  Vector2f direction_vector(input.look_x, input.look_y);
+	  player->turn_to_face(direction_vector.theta());
+
+    if(input.attack)
+    {
+      //player->melee();
+
+      Weapon* projectile = player->range();
+      if( projectile )
+        projectiles.push_back(projectile);
+    }
+  }
+
+  for(auto it = projectiles.begin(); it != projectiles.end(); it++)
+  {
+    (*it)->update(time_step);
+  }
 }
 
 void Game_State::render_spawn_menu() {
@@ -84,8 +107,9 @@ void Game_State::render_all() {
   for (auto grass : grasss) grass->render();
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
-  for (auto player : players) player->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
+  for (auto player : players) player->render();
+  for (auto projectile : projectiles) projectile->render();
 }
 
 void Game_State::render(){
@@ -226,7 +250,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 17:
-			controls[0].attack = true;
+      controls[0].attack = confidence > .5;
       break;
 
     case 10:
