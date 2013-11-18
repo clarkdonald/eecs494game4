@@ -12,7 +12,7 @@
 #include "Game_Object.h"
 #include "Weapon.h"
 
-#define MAX_SPD 20.0f
+#define MAX_SPD 75.0f
 
 class Player : public Game_Object {
   public:
@@ -38,8 +38,6 @@ class Player : public Game_Object {
 	  void drop_crystal();
 
   private:    
-	  void move_forward(const float);
-	  void move_right(const float);
 	  void turn_to_face(const float);
 
   protected:
