@@ -114,15 +114,35 @@ void Game_State::render(){
 }
 
 void Game_State::create_tree(const Point2f &position) {
+  if (position.y - UNIT_LENGTH < 0)
+    error_handle("Cannot place tree in the specified location");
+  
   environments.push_back(create_environment("Tree", position, BOTTOM));
-  if (position.y - UNIT_LENGTH < 0) error_handle("Cannot place tree in the specified location");
   environments.push_back(create_environment("Tree", position - Point2f(0, UNIT_LENGTH), TOP));
 }
 
 void Game_State::create_house(const Point2f &position) {
+  if ((position.y - UNIT_LENGTH*3) < 0 ||
+      (position.x - UNIT_LENGTH) < 0 ||
+      (position.x + UNIT_LENGTH) >= (dimension.width*UNIT_LENGTH))
+  {
+    error_handle("Cannot place house in the specified location");
+  }
+  
   environments.push_back(create_environment("House", position, DOOR));
   environments.push_back(create_environment("House", position - Point2f(UNIT_LENGTH, 0), WINDOW_LEFT));
   environments.push_back(create_environment("House", position + Point2f(UNIT_LENGTH, 0), WINDOW_RIGHT));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH), BLUE_ROOF_MIDDLE_EDGE));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_RIGHT_CORNER_1));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_LEFT_CORNER_1));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2),
+      BLUE_ROOF_MIDDLE));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_LEFT_SIDE));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_RIGHT_SIDE));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*3),
+      BLUE_ROOF_UP_MIDDLE));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*3) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_UP_RIGHT_CORNER));
+  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*3) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_UP_LEFT_CORNER));
 }
 
 void Game_State::load_map(const std::string &file_) {

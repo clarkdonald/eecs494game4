@@ -30,7 +30,7 @@ Dimension::Dimension(int width_, int height_)
 {}
 
 void error_handle(const string &msg) {
-  cerr << "Error: " << msg << endl;
+  std::cout << "Error: " << msg << endl;
   throw new bad_exception;
 }
 
