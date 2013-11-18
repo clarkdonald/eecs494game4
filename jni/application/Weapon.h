@@ -11,7 +11,7 @@ class Weapon : public Game_Object
 
 	  virtual void render() = 0;
 
-    private:
+  protected:
 	  float damage;
 };
 

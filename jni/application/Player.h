@@ -12,7 +12,6 @@
 #include "Game_Object.h"
 #include "Weapon.h"
 
-#define MAX_HP 100.0f
 #define MAX_SPD 20.0f
 
 class Player : public Game_Object {
@@ -24,7 +23,7 @@ class Player : public Game_Object {
   
 	  void handle_inputs(const Controls, const float);
 
-    virtual void melee() {}	                // sword
+    virtual Weapon* melee() {return NULL;}	// sword
     virtual Weapon* range() {return NULL;}  // arrow, fireball
 
 	  virtual void spc_skill() = 0; // special class-specific attack
@@ -48,6 +47,7 @@ class Player : public Game_Object {
 	  float facing;
 
 	  float hp;
+    float max_hp;
 	  unsigned int n_crystals;
 };
 

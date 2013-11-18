@@ -10,7 +10,7 @@ class Warrior : public Player
 
   void render();
 
-  void melee();
+  Weapon* melee();
   void spc_attack();
 };
 
