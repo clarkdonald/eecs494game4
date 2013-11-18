@@ -18,6 +18,7 @@
 #include "Player.h"
 #include "Player_Factory.h"
 #include "Map_Manager.h"
+#include "Warrior.h"				//for controls testing
 #include <utility>
 #include <fstream>
 #include <map>
@@ -40,6 +41,7 @@ Game_State::Game_State(const std::string &file_)
 : gameover(false)
 {
   load_map(file_);
+	player = new Warrior(Point2f(100, 100));
 }
 
 Game_State::~Game_State() {
@@ -58,6 +60,8 @@ void Game_State::perform_logic() {
   float processing_time = float(current_time.get_seconds_since(time_passed));
   time_passed = current_time;
   float time_step = processing_time;
+
+	player -> handle_inputs(controls, time_step);
 }
 
 void Game_State::render_all() {
@@ -73,8 +77,9 @@ void Game_State::render(){
 
   // Todo: Each VIDEO_DIMENSION should actually be the coordinates 
   // for each player
-
-  // Top left corner  
+	get_Video().set_2d(VIDEO_DIMENSION, true);
+ 
+	/* // Top left corner  
   get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(0, 0), Point2i(427, 240)), true);
   render_all();
   // Top right corner
@@ -84,7 +89,8 @@ void Game_State::render(){
   get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(0, 240), Point2i(427, 480)), true);
   render_all();
   // Bottom right corner  
-  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(427, 240), Point2i(854, 480)), true);    
+  get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(427, 240), Point2i(854, 480)), true);    */
+
   render_all();  
 }
 
@@ -138,4 +144,41 @@ void Game_State::load_map(const std::string &file_) {
   }
   
   file.close();
+}
+
+void Game_State::execute_controller_code(const Zeni_Input_ID &id, const float &confidence, const int &action)
+{
+	switch(action) {
+    case 1:
+      break;
+
+    case 2:
+			controls.move_x = confidence;
+      break;
+
+    case 3:
+			controls.move_y = confidence;
+      break;
+
+    case 4:
+			controls.look_x = confidence;
+      break;
+
+    case 5:
+			controls.look_y = confidence;
+      break;
+
+    case 6:
+      break;
+
+    case 7:
+			controls.attack = true;
+      break;
+
+    case 0:
+      break;
+
+    default:
+      break;
+	}
 }

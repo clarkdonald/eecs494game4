@@ -34,6 +34,8 @@ class Game_State {
     void render();
         
     bool is_gameover() const {return gameover;}
+
+		void execute_controller_code(const Zeni::Zeni_Input_ID &id, const float &confidence, const int &action);
     
   private:
     void clear();

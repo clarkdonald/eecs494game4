@@ -10,6 +10,7 @@ Warrior::Warrior(const Zeni::Point2f &position_)
 
 void Warrior::render()
 {
+	
 }
 
 void Warrior::melee()

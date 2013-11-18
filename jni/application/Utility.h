@@ -27,14 +27,10 @@ std::make_pair(Zeni::Point2f(0.0f, 0.0f), Zeni::Point2f(854.0f, 480.0f));
 /** Controls of the player **/
 struct Controls {
   Controls();
-  bool move_forward;
-  bool move_left;
-  bool move_back;
-  bool move_right;
-  bool look_forward;
-  bool look_left;
-  bool look_back;
-  bool look_right;
+  float move_y;
+  float move_x;
+  float look_y;
+  float look_x;
   bool attack;
 };
 
