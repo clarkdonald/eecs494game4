@@ -41,10 +41,10 @@ using std::endl;
 Game_State::Game_State(const std::string &file_)
 : gameover(false)
 {
-  screen_coord_map[0] = &get_top_left_screen;
-  screen_coord_map[1] = &get_bottom_left_screen;
-  screen_coord_map[2] = &get_top_right_screen;
-  screen_coord_map[3] = &get_bottom_right_screen;
+  screen_coord_map.push_back(&get_top_left_screen);
+  screen_coord_map.push_back(&get_bottom_left_screen);
+  screen_coord_map.push_back(&get_top_right_screen);
+  screen_coord_map.push_back(&get_bottom_right_screen);
   load_map(file_);
 }
 
@@ -66,7 +66,8 @@ void Game_State::perform_logic() {
   float processing_time = float(current_time.get_seconds_since(time_passed));
   time_passed = current_time;
   float time_step = processing_time;
-  for (auto player : players) player->handle_inputs(controls, time_step);
+  for (auto player : players)
+    player->handle_inputs(controls[player->get_uid()], time_step);
 }
 
 void Game_State::render_spawn_menu() {
@@ -158,6 +159,7 @@ void Game_State::load_map(const std::string &file_) {
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
     players.push_back(new Warrior(Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
+    controls.push_back(Controls());
   }
 
   // Get map information
@@ -191,39 +193,133 @@ void Game_State::load_map(const std::string &file_) {
   file.close();
 }
 
-void Game_State::execute_controller_code(const Zeni_Input_ID &id, const float &confidence, const int &action)
+void Game_State::execute_controller_code(const Zeni_Input_ID &id,
+                                         const float &confidence,
+                                         const int &action)
 {
 	switch(action) {
-    case 1:
+		/* player 1 */
+    case 11:
       break;
 
-    case 2:
-			controls.move_x = confidence;
+    case 12:
+			controls[0].move_x = confidence;
       break;
 
-    case 3:
-			controls.move_y = confidence;
+    case 13:
+			controls[0].move_y = confidence;
       break;
 
-    case 4:
-			controls.look_x = confidence;
+    case 14:
+			controls[0].look_x = confidence;
       break;
 
-    case 5:
-			controls.look_y = confidence;
+    case 15:
+			controls[0].look_y = confidence;
       break;
 
-    case 6:
+    case 16:
       break;
 
-    case 7:
-			controls.attack = true;
+    case 17:
+			controls[0].attack = true;
       break;
 
-    case 0:
+    case 10:
+      break;
+
+		/* player 2 */
+		case 21:
+      break;
+
+    case 22:
+			controls[1].move_x = confidence;
+      break;
+
+    case 23:
+			controls[1].move_y = confidence;
+      break;
+
+    case 24:
+			controls[1].look_x = confidence;
+      break;
+
+    case 25:
+			controls[1].look_y = confidence;
+      break;
+
+    case 26:
+      break;
+
+    case 27:
+			controls[1].attack = true;
+      break;
+
+    case 20:
+      break;
+
+		/* player 3 */
+		case 31:
+      break;
+
+    case 32:
+			controls[2].move_x = confidence;
+      break;
+
+    case 33:
+			controls[2].move_y = confidence;
+      break;
+
+    case 34:
+			controls[2].look_x = confidence;
+      break;
+
+    case 35:
+			controls[2].look_y = confidence;
+      break;
+
+    case 36:
+      break;
+
+    case 37:
+			controls[2].attack = true;
+      break;
+
+    case 30:
+      break;
+
+		/* player 4 */
+		case 41:
+      break;
+
+    case 42:
+			controls[3].move_x = confidence;
+      break;
+
+    case 43:
+			controls[3].move_y = confidence;
+      break;
+
+    case 44:
+			controls[3].look_x = confidence;
+      break;
+
+    case 45:
+			controls[3].look_y = confidence;
+      break;
+
+    case 46:
+      break;
+
+    case 47:
+			controls[3].attack = true;
+      break;
+
+    case 40:
       break;
 
     default:
       break;
 	}
+	
 }
