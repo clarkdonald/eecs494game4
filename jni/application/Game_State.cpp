@@ -9,7 +9,14 @@
 #include "Game_State.h"
 #include "Utility.h"
 #include "Ground.h"
+#include "Atmosphere.h"
+#include "Atmosphere_Factory.h"
+#include "Environment.h"
+#include "Environment_Factory.h"
+#include "Terrain.h"
 #include "Terrain_Factory.h"
+#include "Player.h"
+#include "Player_Factory.h"
 #include "Map_Manager.h"
 #include <utility>
 #include <fstream>
@@ -40,6 +47,10 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = terrains.begin(); it != terrains.end(); ++it)
     if (*it != nullptr) delete *it;
+  for (auto it = atmospheres.begin(); it != atmospheres.end(); ++it)
+    if (*it != nullptr) delete *it;
+  for (auto it = environments.begin(); it != environments.end(); ++it)
+    if (*it != nullptr) delete *it;
 }
 
 void Game_State::perform_logic() {
@@ -50,12 +61,14 @@ void Game_State::perform_logic() {
 }
 
 void Game_State::render(){
-  // If we're gameover with the level, don't render anyting
+  // If we're done with the level, don't render anything
   if (gameover) return;
 
   get_Video().set_2d(VIDEO_DIMENSION, true);
   for (auto ground : grounds) ground->render();
   for (auto terrain : terrains) terrain->render();
+  for (auto environment : environments) environment->render();
+  for (auto atmosphere : atmospheres) atmosphere->render();
 }
 
 void Game_State::load_map(const std::string &file_) {

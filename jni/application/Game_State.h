@@ -15,6 +15,9 @@
 
 class Ground;
 class Terrain;
+class Atmosphere;
+class Environment;
+class Player;
 
 class Game_State {
   public:
@@ -41,8 +44,11 @@ class Game_State {
     //Zeni::Chronometer<Zeni::Time> shooting_timer;
     Controls controls;
     std::list<Terrain*> terrains;
+    std::list<Environment*> environments;
+    std::list<Atmosphere*> atmospheres;
     std::list<Ground*> grounds;
     bool gameover;
+    Player *player;
     Dimension dimension;
 };
 
