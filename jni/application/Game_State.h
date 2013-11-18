@@ -57,8 +57,8 @@ class Game_State {
     std::list<Environment*> environments;
     std::list<Atmosphere*> atmospheres;
     std::list<Grass*> grasss;
+    std::list<Player*> players;
     bool gameover;
-    Player *player;
     Dimension dimension;
 };
 

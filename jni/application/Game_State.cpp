@@ -42,7 +42,6 @@ Game_State::Game_State(const std::string &file_)
 : gameover(false)
 {
   load_map(file_);
-	player = new Warrior(Point2f(100, 100));
 }
 
 Game_State::~Game_State() {
@@ -54,6 +53,8 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = environments.begin(); it != environments.end(); ++it)
     if (*it != nullptr) delete *it;
+  for (auto it = players.begin(); it != players.end(); ++it)
+    if (*it != nullptr) delete *it;
 }
 
 void Game_State::perform_logic() {
@@ -61,8 +62,7 @@ void Game_State::perform_logic() {
   float processing_time = float(current_time.get_seconds_since(time_passed));
   time_passed = current_time;
   float time_step = processing_time;
-
-	player -> handle_inputs(controls, time_step);
+  for (auto player : players) player->handle_inputs(controls, time_step);
 }
 
 void Game_State::render_spawn_menu() {
@@ -80,7 +80,7 @@ void Game_State::render_all() {
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
-  player -> render();
+  for (auto player : players) player->render();
 }
 
 void Game_State::render(){
@@ -167,7 +167,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
-    // TODO: create player at location
+    players.push_back(new Warrior(Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH)));
   }
 
   // Get map information
