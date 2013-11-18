@@ -40,8 +40,12 @@ void House::render() const {
       Game_Object::render("blueroofupleftcorner");
       break;
       
-    case BLUE_ROOF_SIDE:
-      Game_Object::render("blueroofside");
+    case BLUE_ROOF_LEFT_SIDE:
+      Game_Object::render("blueroofleftside");
+      break;
+      
+    case BLUE_ROOF_RIGHT_SIDE:
+      Game_Object::render("blueroofrightside");
       break;
       
     case BLUE_ROOF_MIDDLE_EDGE:
