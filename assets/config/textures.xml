@@ -15,6 +15,11 @@
     <filepath>textures/Character/downidle.png</filepath>
     <tile>0</tile>
   </downidle>
+  <!-- Weapons -->
+  <arrow>
+    <filepath>textures/Projectiles/arrow1.png</filepath>
+    <tile>0</tile>
+  </arrow>
   <!-- Terrain -->
   <dirt>
     <filepath>textures/Terrain/dirt.png</filepath>

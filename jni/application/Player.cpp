@@ -19,10 +19,15 @@ Player::Player(const Zeni::Point2f &position_, const int &uid_)
 
 void Player::handle_inputs(const Controls input, const float timestep)
 {
+	//move the player
 	Point2f pos = get_position();
 	pos.y += MAX_SPD * timestep * input.move_y;
 	pos.x += MAX_SPD * timestep * input.move_x;
 	set_position(pos);
+
+	//turn player around
+	Vector2f direction_vector(input.look_x, input.look_y);
+	turn_to_face(direction_vector.theta);
 }
 
 void Player::turn_to_face(const float theta)
