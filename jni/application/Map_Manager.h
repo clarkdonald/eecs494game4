@@ -29,7 +29,11 @@ class Map_Manager {
     bool find_terrain(char c) const;
     
     const Zeni::String & get_terrain(char c) const;
-    
+  
+    bool find_atmosphere(char c) const;
+  
+    const Zeni::String & get_atmosphere(char c) const;
+  
     const std::string & get_next();
     
     const std::string & get_previous();
@@ -40,6 +44,7 @@ class Map_Manager {
     int index;
     std::vector<std::string> files;
     std::map<char, Zeni::String> environment_charmap;
+    std::map<char, Zeni::String> atmosphere_charmap;
     std::map<char, Zeni::String> terrain_charmap;
 };
 

@@ -41,7 +41,8 @@ Map_Manager::Map_Manager()
   terrain_charmap['w'] = "Wood_Floor";
   terrain_charmap['b'] = "Bush";
   
-  // load the character mapping for environments
+  // load the character mapping for atmosphere
+  atmosphere_charmap['c'] = "Cloud";
 }
 
 const int & Map_Manager::get_files_left() const {
@@ -64,6 +65,19 @@ const String & Map_Manager::get_terrain(char c) const {
   map<char, String>::const_iterator it;
   if ((it = terrain_charmap.find(c)) == terrain_charmap.end()) {
     string s = "There is no terrain mapping to ";
+    error_handle(s + c);
+  }
+  return it->second;
+}
+
+bool Map_Manager::find_atmosphere(char c) const {
+  return atmosphere_charmap.find(c) != atmosphere_charmap.end();
+}
+
+const Zeni::String & Map_Manager::get_atmosphere(char c) const {
+  map<char, String>::const_iterator it;
+  if ((it = atmosphere_charmap.find(c)) == atmosphere_charmap.end()) {
+    string s = "There is no atmosphere mapping to ";
     error_handle(s + c);
   }
   return it->second;

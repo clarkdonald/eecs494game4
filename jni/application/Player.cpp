@@ -13,7 +13,6 @@ using namespace std;
 
 Player::Player(const Zeni::Point2f &position_, const int &uid_)
 : Game_Object(position_),
-  equipped(NULL),
   n_crystals(0),
   uid(uid_)
 {}
@@ -51,9 +50,9 @@ void Player::die()
 	// start spawn menu?
 }
 
-float Player::get_hp()
+float Player::get_hp_pctg()
 {
-  return hp;
+  return hp/max_hp;
 }
 
 unsigned int Player::get_crystals_held()
