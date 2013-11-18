@@ -9,10 +9,10 @@ public:
     Mage(const Zeni::Point2f &position_);
     ~Mage();
 
-  void render() const override;
+    void render() const override;
 
-  Weapon* range() override;
-  void spc_skill() override;
+    Weapon* range() override;
+    void spc_skill() override;
 };
 
 

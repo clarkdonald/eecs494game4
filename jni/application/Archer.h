@@ -9,10 +9,10 @@ class Archer : public Player
     Archer(const Zeni::Point2f &position_);
     ~Archer();
 
-  void render() const override;
+    void render() const override;
 
-  Weapon* range() override;
-  void spc_skill() override;
+    Weapon* range() override;
+    void spc_skill() override;
 };
 
 
