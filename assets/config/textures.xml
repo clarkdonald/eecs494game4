@@ -1,16 +1,16 @@
 <?xml version="1.0" ?>
 <Textures>
-  <!-- Logo -->
+  <!-------------- Logo ------------->
   <logo>
     <filepath>textures/Logo/logo.png</filepath>
     <tile>0</tile>
   </logo>
-  <!-- Crystal -->
+  <!-------------- Crystal ------------->
   <crystal>
     <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
   </crystal>
-  <!-- Main Player -->
+  <!-------------- Main Player ------------->
   <downidle>
     <filepath>textures/Character/downidle.png</filepath>
     <tile>0</tile>
@@ -75,12 +75,12 @@
     <filepath>textures/Character/uprun2.png</filepath>
     <tile>0</tile>
   </uprun2>
-  <!-- Weapons -->
+  <!-------------- Weapons ------------->
   <arrow>
     <filepath>textures/Projectiles/arrow1.png</filepath>
     <tile>0</tile>
   </arrow>
-  <!-- Terrain -->
+  <!-------------- Terrain ------------->
   <dirt>
     <filepath>textures/Terrain/dirt.png</filepath>
     <tile>0</tile>
@@ -161,7 +161,7 @@
     <filepath>textures/Terrain/bush.png</filepath>
     <tile>0</tile>
   </bush>
-  <!-- Environment -->
+  <!-------------- Environment ------------->
   <treetop>
     <filepath>textures/Terrain/treetop.png</filepath>
     <tile>0</tile>
@@ -226,7 +226,7 @@
     <filepath>textures/Buildings/windowright.png</filepath>
     <tile>0</tile>
   </windowright>
-  <!-- Atmosphere -->
+  <!-------------- Atmosphere ------------->
   <cloud>
     <filepath>textures/Atmosphere/cloud.png</filepath>
     <tile>0</tile>
