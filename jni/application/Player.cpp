@@ -27,7 +27,7 @@ void Player::handle_inputs(const Controls input, const float timestep)
 
 	//turn player around
 	Vector2f direction_vector(input.look_x, input.look_y);
-	turn_to_face(direction_vector.theta);
+	turn_to_face(direction_vector.theta());
 }
 
 void Player::turn_to_face(const float theta)
