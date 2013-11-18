@@ -16,6 +16,7 @@
 class Player;
 
 Player * create_player(const Zeni::String &type_,
-                       const Zeni::Point2f &position_);
+                       const Zeni::Point2f &position_,
+                       const int &uid_);
 
 #endif /* PLAYER_FACTORY_H */
