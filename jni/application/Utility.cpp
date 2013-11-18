@@ -7,11 +7,16 @@
 //
 
 #include "Utility.h"
+#include <utility>
+#include "zenilib.h"
 
 using std::cerr;
 using std::endl;
 using std::bad_exception;
 using std::string;
+using std::pair;
+using std::make_pair;
+using Zeni::Point2i;
 
 Controls::Controls()
 : move_y(0.0f),

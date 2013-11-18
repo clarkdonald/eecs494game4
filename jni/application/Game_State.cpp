@@ -80,6 +80,7 @@ void Game_State::render_all() {
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
+  player -> render();
 }
 
 void Game_State::render(){
@@ -88,29 +89,26 @@ void Game_State::render(){
 
   // Todo: Each VIDEO_DIMENSION should actually be the coordinates 
   // for each player
-	get_Video().set_2d(VIDEO_DIMENSION, true);
+	//get_Video().set_2d(VIDEO_DIMENSION, true);
  
-  //// Top left corner  
-  //get_Video().set_2d_view(VIDEO_DIMENSION, get_top_left_screen(), true);
-  ////if(player_not_dead)
-  //render_all();
-  ////else
-  ////render_spawn_menu();  
+  // Top left corner  
+  get_Video().set_2d_view(VIDEO_DIMENSION, get_top_left_screen(), true);
+  //if(player_not_dead)
+  render_all();
+  //else
+  //render_spawn_menu();  
 
-  //// Top right corner
-  //get_Video().set_2d_view(make_pair(Point2f(0.0f,0.0f), Point2f(100.0f,100.0f)), get_top_right_screen(), true);
-  //render_all();
+  // Top right corner
+  get_Video().set_2d_view(make_pair(Point2f(0.0f,0.0f), Point2f(100.0f,100.0f)), get_top_right_screen(), true);
+  render_all();
 
-  //// Bottom left corner
-  //get_Video().set_2d_view(VIDEO_DIMENSION, get_bottom_left_screen(), true);
-  //render_all();
+  // Bottom left corner
+  get_Video().set_2d_view(VIDEO_DIMENSION, get_bottom_left_screen(), true);
+  render_all();
 
-  //// Bottom right corner  
-  //get_Video().set_2d_view(VIDEO_DIMENSION, get_bottom_right_screen(), true);    
-  //render_all();  
-
-  render_all();  
-	player -> render();
+  // Bottom right corner  
+  get_Video().set_2d_view(VIDEO_DIMENSION, get_bottom_right_screen(), true);    
+  render_all();    
 }
 
 void Game_State::create_tree(const Point2f &position) {
