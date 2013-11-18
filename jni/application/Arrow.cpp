@@ -12,6 +12,7 @@ Arrow::Arrow(const Zeni::Point2f &position_, const float &theta)
 
 void Arrow::render() const
 {
+
 }
 
 void Arrow::update(const float timestep)

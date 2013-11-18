@@ -41,6 +41,10 @@ using std::endl;
 Game_State::Game_State(const std::string &file_)
 : gameover(false)
 {
+  screen_coord_map[0] = &get_top_left_screen;
+  screen_coord_map[1] = &get_bottom_left_screen;
+  screen_coord_map[2] = &get_top_right_screen;
+  screen_coord_map[3] = &get_bottom_right_screen;
   load_map(file_);
 }
 
@@ -87,29 +91,14 @@ void Game_State::render(){
   // If we're done with the level, don't render anything
   if (gameover) return;
 
-  // Todo: Each VIDEO_DIMENSION should actually be the coordinates 
-  // for each player
 	//get_Video().set_2d(VIDEO_DIMENSION, true);
  
-  // Top left corner  
-  get_Video().set_2d_view(std::make_pair(player->get_position() - Vector2f(300.0f, 200.0f),
-                                      player->get_position() + Vector2f(500.0f, 400.0f)), get_top_left_screen(), true);
-  //if(player_not_dead)
-  render_all();
-  //else
-  //render_spawn_menu();  
-
-  // Top right corner
-  get_Video().set_2d_view(make_pair(Point2f(0.0f,0.0f), Point2f(100.0f,100.0f)), get_top_right_screen(), true);
-  render_all();
-
-  // Bottom left corner
-  get_Video().set_2d_view(VIDEO_DIMENSION, get_bottom_left_screen(), true);
-  render_all();
-
-  // Bottom right corner  
-  get_Video().set_2d_view(VIDEO_DIMENSION, get_bottom_right_screen(), true);    
-  render_all();    
+  // Top left corner
+  for (auto player : players) {
+    get_Video().set_2d_view(std::make_pair(player->get_position() - Vector2f(150.0f, 100.0f),
+        player->get_position() + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);
+    render_all();
+  }
 }
 
 void Game_State::create_tree(const Point2f &position) {
@@ -168,7 +157,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
-    players.push_back(new Warrior(Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH)));
+    players.push_back(new Warrior(Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
   }
 
   // Get map information

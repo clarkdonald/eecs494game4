@@ -6,7 +6,7 @@
 class Archer : public Player
 {
   public:
-    Archer(const Zeni::Point2f &position_);
+    Archer(const Zeni::Point2f &position_, const int &uid_);
     ~Archer();
 
     void render() const override;

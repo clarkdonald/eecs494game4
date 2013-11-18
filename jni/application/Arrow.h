@@ -14,7 +14,7 @@ class Arrow : public Weapon
     void render() const override;
     void update(const float);
   private:
-    Vector2f move_vec;
+    Zeni::Vector2f move_vec;
 };
 
 
