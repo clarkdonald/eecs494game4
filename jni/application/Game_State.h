@@ -41,6 +41,8 @@ class Game_State {
     void clear();
 
 	  void render_all();
+
+    void render_spawn_menu();
   
     void create_tree(const Zeni::Point2f &position);
   
