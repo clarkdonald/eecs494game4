@@ -20,20 +20,9 @@ Player::Player(const Zeni::Point2f &position_)
 
 void Player::handle_inputs(const Controls input, const float timestep)
 {
-
-}
-
-void Player::move_forward(const float timestep)
-{
 	Point2f pos = get_position();
-	pos.y += MAX_SPD * timestep;
-	set_position(pos);
-}
-
-void Player::move_right(const float timestep)
-{
-	Point2f pos = get_position();
-	pos.x += MAX_SPD * timestep;
+	pos.y += MAX_SPD * timestep * input.move_y;
+	pos.x += MAX_SPD * timestep * input.move_x;
 	set_position(pos);
 }
 

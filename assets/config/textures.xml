@@ -129,10 +129,14 @@
     <filepath>textures/Buildings/blueroofmiddleedge.png</filepath>
     <tile>0</tile>
   </blueroofmiddleedge>
-  <blueroofside>
-    <filepath>textures/Buildings/blueroofside.png</filepath>
+  <blueroofleftside>
+    <filepath>textures/Buildings/blueroofleftside.png</filepath>
     <tile>0</tile>
-  </blueroofside>
+  </blueroofleftside>
+  <blueroofrightside>
+    <filepath>textures/Buildings/blueroofrightside.png</filepath>
+    <tile>0</tile>
+  </blueroofrightside>
   <blueroofupleftcorner>
     <filepath>textures/Buildings/blueroofupleftcorner.png</filepath>
     <tile>0</tile>
