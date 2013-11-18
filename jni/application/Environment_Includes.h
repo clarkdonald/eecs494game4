@@ -9,4 +9,8 @@
 #ifndef ENVIRONMENT_INCLUDES_H
 #define ENVIRONMENT_INCLUDES_H
 
+#include "Environment.h"
+#include "Tree.h"
+#include "House.h"
+
 #endif /* ENVIRONMENT_INCLUDES_H */

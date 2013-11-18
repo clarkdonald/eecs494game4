@@ -39,6 +39,7 @@ class Map_Manager {
     
     int index;
     std::vector<std::string> files;
+    std::map<char, Zeni::String> environment_charmap;
     std::map<char, Zeni::String> terrain_charmap;
 };
 
