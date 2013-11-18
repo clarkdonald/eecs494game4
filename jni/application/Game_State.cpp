@@ -70,9 +70,12 @@ void Game_State::perform_logic() {
   for (auto player : players)
   {
     Controls input = controls[player->get_uid()];
-
-    player->move_x(input.move_x, time_step);
-    player->move_y(input.move_y, time_step);
+    Point2f pos = player->get_position();
+    
+    if ((pos.x + input.move_x) >= 0 || (pos.x + input.move_x) < dimension.width*UNIT_LENGTH)
+      player->move_x(input.move_x, time_step);
+    if ((pos.y + input.move_y) >= 0 || (pos.y + input.move_y) < dimension.height*UNIT_LENGTH)
+      player->move_y(input.move_y, time_step);
 
 	  Vector2f direction_vector(input.look_x, input.look_y);
 	  player->turn_to_face(direction_vector.theta());
