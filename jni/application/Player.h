@@ -17,32 +17,36 @@
 
 class Player : public Game_Object {
   public:
-	Player(const Zeni::Point2f &position_);
-    virtual ~Player() = 0;
+	  Player(const Zeni::Point2f &position_);
+    virtual ~Player() {}
 
     virtual void render() = 0;
   
-	void handle_inputs(const Controls, const float);
+	  void handle_inputs(const Controls, const float);
 
-	void move_forward(const float);
-	void move_right(const float);
-	void turn_to_face(const float);
+	  virtual Weapon* std_attack() = 0;	  // sword, arrow, fireball
+	  virtual void spc_skill() = 0; // special class-specific attack
 
-	virtual Weapon* std_attack() = 0;	  // sword, arrow, fireball
-	virtual void spc_skill() = 0; // special class-specific attack
+	  void take_dmg(float);
+	  void die();
 
-	void take_dmg(float);
-	void die();
+    float get_hp();
+    unsigned int get_crystals_held();
 
-	void get_crystal();
-	void drop_crystal();
+	  void pick_up_crystal();
+	  void drop_crystal();
 
-  private:
-	Weapon* equipped;
-	float facing;
+  private:    
+	  void move_forward(const float);
+	  void move_right(const float);
+	  void turn_to_face(const float);
 
-	float hp;
-	int n_crystals;
+  protected:
+	  Weapon* equipped;
+	  float facing;
+
+	  float hp;
+	  unsigned int n_crystals;
 };
 
 #endif /* PLAYER_H */

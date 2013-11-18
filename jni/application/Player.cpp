@@ -52,20 +52,30 @@ void Player::take_dmg(float dmg)
 
 void Player::die()
 {
-	while(n_crystals > 0)
+	while(n_crystals != 0)
 		drop_crystal();
 
 	// start spawn menu?
 }
 
-void Player::get_crystal()
+float Player::get_hp()
+{
+  return hp;
+}
+
+unsigned int Player::get_crystals_held()
+{
+  return n_crystals;
+}
+
+void Player::pick_up_crystal()
 {
 	n_crystals++;
 }
 
 void Player::drop_crystal()
 {
-	if(n_crystals > 0)
+	if(n_crystals != 0)
 		n_crystals--;
 
 	// add crystal to some global render queue?
