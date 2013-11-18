@@ -10,8 +10,8 @@
 
 using namespace Zeni;
 
-Game_Object::Game_Object(const Point2f &position_)
-: position(position_), size(OBJECT_SIZE)
+Game_Object::Game_Object(const Point2f &position_, const Vector2f &size_)
+: position(position_), size(size_)
 {}
 
 bool Game_Object::pseudo_touching(const Game_Object &rhs) const {
