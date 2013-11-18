@@ -8,13 +8,14 @@
 
 #include "Game_State.h"
 #include "Utility.h"
-#include "Dirt.h"
 #include "Atmosphere.h"
 #include "Atmosphere_Factory.h"
 #include "Environment.h"
 #include "Environment_Factory.h"
+#include "Tree.h"
 #include "Terrain.h"
 #include "Terrain_Factory.h"
+#include "Grass.h"
 #include "Player.h"
 #include "Player_Factory.h"
 #include "Map_Manager.h"
@@ -43,7 +44,7 @@ Game_State::Game_State(const std::string &file_)
 }
 
 Game_State::~Game_State() {
-  for (auto it = dirts.begin(); it != dirts.end(); ++it)
+  for (auto it = grasss.begin(); it != grasss.end(); ++it)
     if (*it != nullptr) delete *it;
   for (auto it = terrains.begin(); it != terrains.end(); ++it)
     if (*it != nullptr) delete *it;
@@ -61,7 +62,7 @@ void Game_State::perform_logic() {
 }
 
 void Game_State::render_all() {
-  for (auto dirt : dirts) dirt->render();
+  for (auto grass : grasss) grass->render();
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
@@ -86,6 +87,18 @@ void Game_State::render(){
   // Bottom right corner  
   get_Video().set_2d_view(VIDEO_DIMENSION, make_pair(Point2i(427, 240), Point2i(854, 480)), true);    
   render_all();  
+}
+
+void Game_State::create_tree(const Point2f &position) {
+  environments.push_back(create_environment("Tree", position, BOTTOM));
+  if (position.y - UNIT_LENGTH < 0) error_handle("Cannot place tree in the specified location");
+  environments.push_back(create_environment("Tree", position - Point2f(0, UNIT_LENGTH), TOP));
+}
+
+void Game_State::create_house(const Point2f &position) {
+  environments.push_back(create_environment("House", position, DOOR));
+  environments.push_back(create_environment("House", position - Point2f(UNIT_LENGTH, 0), WINDOW_LEFT));
+  environments.push_back(create_environment("House", position + Point2f(UNIT_LENGTH, 0), WINDOW_RIGHT));
 }
 
 void Game_State::load_map(const std::string &file_) {
@@ -123,6 +136,12 @@ void Game_State::load_map(const std::string &file_) {
     for (int width = 0; width < line.length() && width < dimension.width; ++width) {
       Point2f position(UNIT_LENGTH*width, UNIT_LENGTH*height);
       if (line[width] == '.');
+      else if (line[width] == 't') {
+        create_tree(position);
+      }
+      else if (line[width] == 'h') {
+        create_house(position);
+      }
       else if (Map_Manager::get_Instance().find_terrain(line[width])) {
         terrains.push_back(
           create_terrain(
@@ -132,7 +151,7 @@ void Game_State::load_map(const std::string &file_) {
         string s = "Invalid character found: ";
         error_handle(s + line[width]);
       }
-      dirts.push_back(new Dirt(position));
+      grasss.push_back(new Grass(position));
     }
     ++height;
   }

@@ -93,10 +93,6 @@
     <tile>0</tile>
   </bush>
   <!-- Environment -->
-  <tree>
-    <filepath>textures/Terrain/tree.png</filepath>
-    <tile>0</tile>
-  </tree>
   <treetop>
     <filepath>textures/Terrain/treetop.png</filepath>
     <tile>0</tile>
@@ -105,5 +101,57 @@
     <filepath>textures/Terrain/treebottom.png</filepath>
     <tile>0</tile>
   </treebottom>
+  <blueroofdownleftcorner1>
+    <filepath>textures/Buildings/blueroofdownleftcorner1.png</filepath>
+    <tile>0</tile>
+  </blueroofdownleftcorner1>
+  <blueroofdownleftcorner2>
+    <filepath>textures/Buildings/blueroofdownleftcorner2.png</filepath>
+    <tile>0</tile>
+  </blueroofdownleftcorner2>
+  <blueroofdownrightcorner1>
+    <filepath>textures/Buildings/blueroofdownrightcorner1.png</filepath>
+    <tile>0</tile>
+  </blueroofdownrightcorner1>
+  <blueroofdownrightcorner2>
+    <filepath>textures/Buildings/blueroofdownrightcorner2.png</filepath>
+    <tile>0</tile>
+  </blueroofdownrightcorner2>
+  <blueroofmiddle>
+    <filepath>textures/Buildings/blueroofmiddle.png</filepath>
+    <tile>0</tile>
+  </blueroofmiddle>
+  <blueroofmiddleedge>
+    <filepath>textures/Buildings/blueroofmiddleedge.png</filepath>
+    <tile>0</tile>
+  </blueroofmiddleedge>
+  <blueroofside>
+    <filepath>textures/Buildings/blueroofside.png</filepath>
+    <tile>0</tile>
+  </blueroofside>
+  <blueroofupleftcorner>
+    <filepath>textures/Buildings/blueroofupleftcorner.png</filepath>
+    <tile>0</tile>
+  </blueroofupleftcorner>
+  <blueroofupmiddle>
+    <filepath>textures/Buildings/blueroofupmiddle.png</filepath>
+    <tile>0</tile>
+  </blueroofupmiddle>
+  <blueroofuprightcorner>
+    <filepath>textures/Buildings/blueroofuprightcorner.png</filepath>
+    <tile>0</tile>
+  </blueroofuprightcorner>
+  <door>
+    <filepath>textures/Buildings/doorclose.png</filepath>
+    <tile>0</tile>
+  </door>
+  <windowleft>
+    <filepath>textures/Buildings/windowleft.png</filepath>
+    <tile>0</tile>
+  </windowleft>
+  <windowright>
+    <filepath>textures/Buildings/windowright.png</filepath>
+    <tile>0</tile>
+  </windowright>
   <!-- Atmosphere -->
 </Textures>

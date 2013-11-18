@@ -38,6 +38,29 @@ struct Controls {
   bool attack;
 };
 
+/** Parts of the Tree object for rendering **/
+enum Two_Part_Object {
+  TOP,
+  BOTTOM
+};
+
+/** Parts of the House object for rendering **/
+enum House_Part {
+  DOOR,
+  WINDOW_RIGHT,
+  WINDOW_LEFT,
+  BLUE_ROOF_UP_RIGHT_CORNER,
+  BLUE_ROOF_UP_MIDDLE,
+  BLUE_ROOF_UP_LEFT_CORNER,
+  BLUE_ROOF_SIDE,
+  BLUE_ROOF_MIDDLE_EDGE,
+  BLUE_ROOF_MIDDLE,
+  BLUE_ROOF_DOWN_RIGHT_CORNER_1,
+  BLUE_ROOF_DOWN_RIGHT_CORNER_2,
+  BLUE_ROOF_DOWN_LEFT_CORNER_1,
+  BLUE_ROOF_DOWN_LEFT_CORNER_2
+};
+
 /** Dimension for the map **/
 struct Dimension {
   Dimension();

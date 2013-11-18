@@ -9,4 +9,6 @@
 #ifndef ATMOSPHERE_INCLUDES_H
 #define ATMOSPHERE_INCLUDES_H
 
+#include "Atmosphere.h"
+
 #endif /* ATMOSPHERE_INCLUDES_H */

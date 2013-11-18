@@ -13,7 +13,7 @@
 #include <zenilib.h>
 #include <string>
 
-class Dirt;
+class Grass;
 class Terrain;
 class Atmosphere;
 class Environment;
@@ -38,8 +38,12 @@ class Game_State {
   private:
     void clear();
 
-	void render_all();
-        
+	  void render_all();
+  
+    void create_tree(const Zeni::Point2f &position);
+  
+    void create_house(const Zeni::Point2f &position);
+  
     void load_map(const std::string &file_);
     
     Zeni::Time_HQ time_passed;
@@ -48,7 +52,7 @@ class Game_State {
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
     std::list<Atmosphere*> atmospheres;
-    std::list<Dirt*> dirts;
+    std::list<Grass*> grasss;
     bool gameover;
     Player *player;
     Dimension dimension;

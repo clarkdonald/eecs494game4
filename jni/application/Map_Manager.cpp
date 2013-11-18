@@ -35,11 +35,13 @@ Map_Manager::Map_Manager()
   
   // load the character mapping for terrains
   //terrain_charmap['w'] = "Water";
-  terrain_charmap['g'] = "Grass";
+  terrain_charmap['d'] = "Dirt";
   terrain_charmap['r'] = "Rock_Pile";
   terrain_charmap['s'] = "Stone_Road";
   terrain_charmap['w'] = "Wood_Floor";
   terrain_charmap['b'] = "Bush";
+  
+  // load the character mapping for environments
 }
 
 const int & Map_Manager::get_files_left() const {

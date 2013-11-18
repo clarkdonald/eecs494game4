@@ -18,4 +18,12 @@ class Environment;
 Environment * create_environment(const Zeni::String &type_,
                                  const Zeni::Point2f &position_);
 
+Environment * create_environment(const Zeni::String &type_,
+                                 const Zeni::Point2f &position_,
+                                 const Two_Part_Object &part_);
+
+Environment * create_environment(const Zeni::String &type_,
+                                 const Zeni::Point2f &position_,
+                                 const House_Part &part_);
+
 #endif /* ENVIRONMENT_FACTORY_H */
