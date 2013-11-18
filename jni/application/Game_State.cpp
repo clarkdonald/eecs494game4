@@ -17,6 +17,7 @@
 #include "Terrain_Factory.h"
 #include "Grass.h"
 #include "Player.h"
+#include "Health_Bar.h"
 #include "Player_Factory.h"
 #include "Map_Manager.h"
 #include "Warrior.h"				//for controls testing
@@ -46,6 +47,11 @@ Game_State::Game_State(const std::string &file_)
   screen_coord_map.push_back(&get_bottom_left_screen);
   screen_coord_map.push_back(&get_top_right_screen);
   screen_coord_map.push_back(&get_bottom_right_screen);
+ 
+  health_bars.push_back(new Health_Bar());
+  health_bars.push_back(new Health_Bar());
+  health_bars.push_back(new Health_Bar());
+  health_bars.push_back(new Health_Bar());
   load_map(file_);
 }
 
@@ -59,6 +65,8 @@ Game_State::~Game_State() {
   for (auto it = environments.begin(); it != environments.end(); ++it)
     if (*it != nullptr) delete *it;
   for (auto it = players.begin(); it != players.end(); ++it)
+    if (*it != nullptr) delete *it;
+  for (auto it = health_bars.begin(); it != health_bars.end(); ++it)
     if (*it != nullptr) delete *it;
 }
 
@@ -103,7 +111,7 @@ void Game_State::render_spawn_menu() {
   mage.render();
 }
 
-void Game_State::render_all() {
+void Game_State::render_all() {  
   for (auto grass : grasss) grass->render();
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
@@ -115,13 +123,18 @@ void Game_State::render_all() {
 void Game_State::render(){
   // If we're done with the level, don't render anything
   if (gameover) return;
-
-	//get_Video().set_2d(VIDEO_DIMENSION, true);
  
-  for (auto player : players) {
-    get_Video().set_2d_view(std::make_pair(player->get_position() - Vector2f(150.0f, 100.0f),
-        player->get_position() + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);
+  for (auto player : players) {    
+    auto p_pos = player->get_position();
+    auto screen_pos = screen_coord_map[player->get_uid()]();
+    get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
+        p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);    
+
     render_all();
+
+    // TODO: this position should be done once not every time. And the hp_pct should not be added on the hp_pctg
+    health_bars[player->get_uid()]->set_position(p_pos - Vector2f(145.0f, 95.0f));
+    health_bars[player->get_uid()]->render(player->get_hp_pctg());    
   }
 }
 

@@ -19,6 +19,7 @@ class Terrain;
 class Atmosphere;
 class Environment;
 class Player;
+class Health_Bar;
 
 class Game_State {
   public:
@@ -66,6 +67,7 @@ class Game_State {
     bool gameover;
     Dimension dimension;
     std::vector<std::pair<Zeni::Point2i, Zeni::Point2i> (*)()> screen_coord_map;
+    std::vector<Health_Bar*> health_bars;
 };
 
 #endif /* GAME_STATE_H */
