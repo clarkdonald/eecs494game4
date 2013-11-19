@@ -25,9 +25,11 @@
 #include <fstream>
 #include <map>
 #include <vector>
+#include <sstream>
 
 using namespace Zeni;
 using namespace Zeni::Collision;
+using std::stringstream;
 using std::make_pair;
 using std::string;
 using std::getline;
@@ -182,8 +184,11 @@ void Game_State::load_map(const std::string &file_) {
   if (!(file >> dimension.width)) error_handle("Could not input width");
   
   // Get starting location of players
+  string line;
   int start_y, start_x;
   for (int i = 0; i < NUM_PLAYERS; ++i) {
+    getline(file,line); // waste new line
+    getline(file,line); // waste comment
     if (!(file >> start_y))
       error_handle("Could not input starting y");
     if (start_y < 0 || start_y >= dimension.height)
@@ -197,7 +202,6 @@ void Game_State::load_map(const std::string &file_) {
   }
 
   // Get map information
-  string line;
   getline(file,line); // waste a newline
   for (int height = 0; getline(file,line) && height < dimension.height;) {
     if (line.find('#') != std::string::npos) continue;
