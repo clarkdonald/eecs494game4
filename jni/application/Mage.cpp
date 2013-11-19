@@ -14,7 +14,7 @@ void Mage::render() const
 {
 }
 
-Weapon* Mage::range()
+Weapon* Mage::range(const float timestep)
 {
   return NULL;
 }

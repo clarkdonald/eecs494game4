@@ -15,7 +15,7 @@ void Warrior::render() const
 	Game_Object::render("downidle");
 }
 
-Weapon* Warrior::melee()
+Weapon* Warrior::melee(const float timestep)
 {
   return NULL;
 }

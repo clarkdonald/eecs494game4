@@ -11,7 +11,7 @@ class Warrior : public Player
 
     void render() const override;
 
-    Weapon* melee() override;
+    Weapon* melee(const float) override;
     void spc_skill() override;
 };
 

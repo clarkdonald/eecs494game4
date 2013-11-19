@@ -16,21 +16,24 @@ void Archer::render() const
 	Game_Object::render("downidle");
 }
 
-Weapon* Archer::range()
+Weapon* Archer::range(const float timestep)
 {
   Arrow* projectile = NULL;
-  if(can_attack)
+
+  if(std_cd <= 0)
   {
-    Point2f pos = get_center();
+    Point2f pos = get_position();
     Vector2f size = get_size();
 
-    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * sin(facing)) * 2; // this is the center of the arrow
-    pos -= size * 0.5f; // top left corner of arrow image
+    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * sin(facing)); // top left of arrow image
 
     projectile = new Arrow(pos, facing);
-
-    can_attack = false;
+    
+    std_cd = RANGE_CD;
   }
+  else
+    std_cd -= timestep;
+
   return projectile;
 }
 

@@ -89,12 +89,13 @@ void Game_State::perform_logic() {
       player->move_y(input.move_y, time_step);
 
 	  Vector2f direction_vector(input.look_x, input.look_y);
-    if(direction_vector.magnitude() > 0.2f) // deadzone for right stick; magnitude : [0,1]
+    if(direction_vector.magnitude() > 0.4f) // deadzone for right stick; magnitude : [0,1]
 	    player->turn_to_face(direction_vector.theta());
     
+
     if (input.attack) {
       //player->melee();
-      Weapon* projectile = player->range();
+      Weapon* projectile = player->range(time_step);
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
   }
@@ -195,7 +196,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
-    players.push_back(create_player("Warrior", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
+    players.push_back(create_player("Archer", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
     controls.push_back(Controls());
   }
 

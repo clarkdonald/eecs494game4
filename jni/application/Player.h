@@ -25,8 +25,8 @@ class Player : public Game_Object {
     void move_x(const float, const float);
 	  void turn_to_face(const float);
 
-    virtual Weapon* melee() {return NULL;}	// sword
-    virtual Weapon* range() {return NULL;}  // arrow, fireball
+    virtual Weapon* melee(const float) {return NULL;}	// sword
+    virtual Weapon* range(const float) {return NULL;}  // arrow, fireball
 
 	  virtual void spc_skill() = 0; // special class-specific attack
 
@@ -35,6 +35,7 @@ class Player : public Game_Object {
 
     float get_hp_pctg();
     unsigned int get_crystals_held();
+    float get_facing();
 
 	  void pick_up_crystal();
 	  void drop_crystal();
@@ -50,6 +51,9 @@ class Player : public Game_Object {
     float max_hp;
 	  unsigned int n_crystals;
     int uid;
+
+    float std_cd; // standard attack cooldown
+    float spc_cd; // special attack cooldown
 
     bool can_attack;
 };
