@@ -22,7 +22,7 @@ class Terrain : public Game_Object {
     
     virtual void affect(Player &player_);
 
-    const Zeni::Material get_material() const {return terrain_material;}
+    const Zeni::Material * const get_material() const {return &terrain_material;}
 
   protected:
     Zeni::Material terrain_material;
