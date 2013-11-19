@@ -26,10 +26,7 @@ Map_Manager& Map_Manager::get_Instance()
 }
 
 Map_Manager::Map_Manager()
-: vbo_ptr_lower(new Vertex_Buffer),
-  vbo_ptr_middle(new Vertex_Buffer),
-  vbo_ptr_upper(new Vertex_Buffer),
-  index(0)
+: index(0)
 {
   for (int i = 0; i < NUM_FILES; ++i) {
     string str = "../assets/maps/level" + std::to_string(i) + ".txt";
@@ -48,11 +45,7 @@ Map_Manager::Map_Manager()
   atmosphere_charmap['c'] = "Cloud";
 }
 
-Map_Manager::~Map_Manager() {
-  delete vbo_ptr_lower;
-  delete vbo_ptr_middle;
-  delete vbo_ptr_upper;
-}
+Map_Manager::~Map_Manager() {}
 
 const int & Map_Manager::get_files_left() const {
   return index;

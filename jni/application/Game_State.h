@@ -62,10 +62,13 @@ class Game_State {
     std::list<Terrain*> grasss;
     std::list<Player*> players;
     std::list<Weapon*> projectiles;
+    std::vector<Health_Bar*> health_bars;
     bool gameover;
     Dimension dimension;
     std::vector<std::pair<Zeni::Point2i, Zeni::Point2i> (*)()> screen_coord_map;
-    std::vector<Health_Bar*> health_bars;
+    Zeni::Vertex_Buffer *vbo_ptr_lower;
+    Zeni::Vertex_Buffer *vbo_ptr_middle;
+    Zeni::Vertex_Buffer *vbo_ptr_upper;
 };
 
 #endif /* GAME_STATE_H */
