@@ -12,7 +12,6 @@ using Zeni::Point2f;
 
 Terrain::Terrain(const Point2f &position_, const Zeni::String &texture_)
 : Game_Object(position_),
-  terrain_material(texture_),
   texture(texture_)
 {}
 

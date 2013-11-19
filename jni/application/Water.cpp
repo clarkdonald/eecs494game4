@@ -15,7 +15,7 @@ Water::Water(const Point2f &position_)
 {}
 
 void Water::render() const {
-  Game_Object::render(texture);
+  Game_Object::render(get_texture());
 }
 
 void Water::affect(Player &player_) {

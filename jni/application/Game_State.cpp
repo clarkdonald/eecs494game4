@@ -115,12 +115,14 @@ void Game_State::render_spawn_menu() {
 void Game_State::render_all() {    
 
   // This renders the static textures below the movable objects (The Map)
-  Map_Manager::get_Instance().get_vbo_ptr()->render();
+  Map_Manager::get_Instance().get_vbo_ptr_below()->render();
   
-  for (auto environment : environments) environment->render();
+  // Movable objects
   for (auto player : players) player->render();
-  for (auto atmosphere : atmospheres) atmosphere->render();
   for (auto projectile : projectiles) projectile->render();
+
+  // This renders the static textures above the movable objects (Atmosphere)
+  Map_Manager::get_Instance().get_vbo_ptr_above()->render();  
 }
 
 void Game_State::render(){
@@ -130,14 +132,15 @@ void Game_State::render(){
   for (auto player : players) {    
     auto p_pos = player->get_position();
     get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
-        p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);    
+        p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), false);    
 
     render_all();
 
     // TODO: this position should be done once not every time. And the hp_pct should not be added on the hp_pctg
-    health_bars[player->get_uid()]->set_position(p_pos - Vector2f(145.0f, 95.0f));
+    health_bars[player->get_uid()]->set_position(p_pos - Vector2f(140.0f, 90.0f));
     health_bars[player->get_uid()]->render(player->get_hp_pctg());    
   }
+  
 }
 
 void Game_State::create_tree(const Point2f &position) {
@@ -235,12 +238,20 @@ void Game_State::load_map(const std::string &file_) {
     ++height;
   }
 
-  // Put it into the Vertex_Buffer
+  // Put it into the Vertex_Buffer Below
   for(auto grass_ptr : grasss) {
-    Map_Manager::get_Instance().get_vbo_ptr()->give_Quadrilateral(create_quad_ptr(grass_ptr)); 
+    Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(grass_ptr)); 
   }
   for(auto terrain_ptr : terrains) {    
-    Map_Manager::get_Instance().get_vbo_ptr()->give_Quadrilateral(create_quad_ptr(terrain_ptr));
+    Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(terrain_ptr));
+  }
+  for(auto environment_ptr : environments) {
+     Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(environment_ptr));
+  }
+
+  // Put it into the Vertex_Buffer Above
+  for(auto atmosphere_ptr : atmospheres) {
+     Map_Manager::get_Instance().get_vbo_ptr_above()->give_Quadrilateral(create_quad_ptr(atmosphere_ptr));
   }
   
   file.close();

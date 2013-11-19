@@ -14,17 +14,21 @@ Tree::Tree(const Point2f &position_, const Two_Part_Object &part_)
 : Environment(position_), part(part_)
 {}
 
-void Tree::render() const {
+Zeni::String Tree::get_texture() const {
   switch (part) {
     case TOP:
-      Game_Object::render("treetop");
+      return "treetop";
       break;
     
     case BOTTOM:
-      Game_Object::render("treebottom");
+      return "treebottom";
       break;
       
     default:
       error_handle("Unknown tree part orientation for Tree");
   }
+}
+
+void Tree::render() const {
+  Game_Object::render(get_texture());  
 }
