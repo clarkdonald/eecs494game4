@@ -18,9 +18,6 @@ class Simple_Terrain : public Terrain {
     Simple_Terrain(const Zeni::Point2f &position_, const Zeni::String &texture_);
     
     void render() const override;
-  
-  private:
-    Zeni::String texture;
 };
 
 #endif /* SIMPLE_TERRAIN_H */

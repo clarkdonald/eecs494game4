@@ -28,6 +28,8 @@ Map_Manager& Map_Manager::get_Instance()
 Map_Manager::Map_Manager()
 : index(0)
 {
+  vbo_ptr = new Vertex_Buffer;
+
   for (int i = 0; i < NUM_FILES; ++i) {
     string str = "../assets/maps/level" + std::to_string(i) + ".txt";
     files.push_back(str);
@@ -43,6 +45,10 @@ Map_Manager::Map_Manager()
   
   // load the character mapping for atmosphere
   atmosphere_charmap['c'] = "Cloud";
+}
+
+Map_Manager::~Map_Manager() {
+  delete vbo_ptr;
 }
 
 const int & Map_Manager::get_files_left() const {
@@ -92,4 +98,8 @@ const std::string & Map_Manager::get_previous() {
   if (index == 0) error_handle("Map Manager index is 0; cannot get previous");
   --index;
   return files[index++];
+}
+
+Vertex_Buffer * Map_Manager::get_vbo_ptr() {
+  return vbo_ptr;
 }

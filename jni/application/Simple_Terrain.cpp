@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Simple_Terrain::Simple_Terrain(const Point2f &position_, const Zeni::String &texture_)
-: Terrain(position_), texture(texture_)
+: Terrain(position_, texture_)
 {}
 
 void Simple_Terrain::render() const {

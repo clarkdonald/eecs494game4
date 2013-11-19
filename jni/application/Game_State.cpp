@@ -111,9 +111,11 @@ void Game_State::render_spawn_menu() {
   mage.render();
 }
 
-void Game_State::render_all() {  
-  for (auto grass : grasss) grass->render();
-  for (auto terrain : terrains) terrain->render();
+void Game_State::render_all() {    
+
+  // This renders the static textures below the movable objects (The Map)
+  Map_Manager::get_Instance().get_vbo_ptr()->render();
+  
   for (auto environment : environments) environment->render();
   for (auto player : players) player->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
@@ -204,6 +206,9 @@ void Game_State::load_map(const std::string &file_) {
     if (line.find('#') != std::string::npos) continue;
     for (int width = 0; width < line.length() && width < dimension.width; ++width) {
       Point2f position(UNIT_LENGTH*width, UNIT_LENGTH*height);
+
+      grasss.push_back(create_terrain("Grass", position));
+           
       if (line[width] == '.');
       else if (line[width] == 't') {
         create_tree(position);
@@ -211,10 +216,9 @@ void Game_State::load_map(const std::string &file_) {
       else if (line[width] == 'h') {
         create_house(position);
       }
-      else if (Map_Manager::get_Instance().find_terrain(line[width])) {
-        terrains.push_back(
-          create_terrain(
-            Map_Manager::get_Instance().get_terrain(line[width]),position));
+      else if (Map_Manager::get_Instance().find_terrain(line[width])) {  
+        terrains.push_back(create_terrain(
+            Map_Manager::get_Instance().get_terrain(line[width]),position));                  
       }
       else if (Map_Manager::get_Instance().find_atmosphere(line[width])) {
         atmospheres.push_back(
@@ -223,10 +227,17 @@ void Game_State::load_map(const std::string &file_) {
       else {
         string s = "Invalid character found: ";
         error_handle(s + line[width]);
-      }
-      grasss.push_back(create_terrain("Grass", position));
+      }      
     }
     ++height;
+  }
+
+  // Put it into the Vertex_Buffer
+  for(auto grass_ptr : grasss) {
+    Map_Manager::get_Instance().get_vbo_ptr()->give_Quadrilateral(create_quad_ptr(grass_ptr)); 
+  }
+  for(auto terrain_ptr : terrains) {    
+    Map_Manager::get_Instance().get_vbo_ptr()->give_Quadrilateral(create_quad_ptr(terrain_ptr));
   }
   
   file.close();
