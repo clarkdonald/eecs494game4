@@ -11,9 +11,9 @@
 using namespace Zeni;
 
 Cloud::Cloud(const Point2f &position_)
-: Atmosphere(position_)
+: Atmosphere(position_, "cloud")
 {}
 
 void Cloud::render() const {
-  Game_Object::render("cloud");
+  Game_Object::render(get_texture());
 }

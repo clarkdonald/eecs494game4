@@ -29,6 +29,7 @@ Map_Manager::Map_Manager()
 : index(0)
 {
   vbo_ptr = new Vertex_Buffer;
+  vbo_ptr2 = new Vertex_Buffer;
 
   for (int i = 0; i < NUM_FILES; ++i) {
     string str = "../assets/maps/level" + std::to_string(i) + ".txt";
@@ -40,6 +41,7 @@ Map_Manager::Map_Manager()
   terrain_charmap['d'] = "Dirt";
   terrain_charmap['r'] = "Rock_Pile";
   terrain_charmap['s'] = "Stone_Road";
+  terrain_charmap['W'] = "Water";
   terrain_charmap['w'] = "Wood_Floor";
   terrain_charmap['b'] = "Bush";
   
@@ -49,6 +51,7 @@ Map_Manager::Map_Manager()
 
 Map_Manager::~Map_Manager() {
   delete vbo_ptr;
+  delete vbo_ptr2;
 }
 
 const int & Map_Manager::get_files_left() const {
@@ -100,6 +103,11 @@ const std::string & Map_Manager::get_previous() {
   return files[index++];
 }
 
-Vertex_Buffer * Map_Manager::get_vbo_ptr() {
+Vertex_Buffer * Map_Manager::get_vbo_ptr_below() {
   return vbo_ptr;
 }
+
+Vertex_Buffer * Map_Manager::get_vbo_ptr_above() {
+  return vbo_ptr2;
+}
+

@@ -19,7 +19,7 @@ void Archer::render() const
 Weapon* Archer::range()
 {
   Weapon* projectile = nullptr;
-  if(can_attack)
+  if (can_attack)
   {
     Point2f pos = get_position();
     Vector2f size = get_size();

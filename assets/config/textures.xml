@@ -90,6 +90,10 @@
     <tile>0</tile>
   </uprun2> 
   <!-------------- Terrain ------------->
+  <water>
+    <filepath>textures/Terrain/water.png</filepath>
+    <tile>0</tile>
+  </water>
   <dirt>
     <filepath>textures/Terrain/dirt.png</filepath>
     <tile>0</tile>

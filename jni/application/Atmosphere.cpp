@@ -10,8 +10,9 @@
 
 using Zeni::Point2f;
 
-Atmosphere::Atmosphere(const Point2f &position_)
-: Game_Object(position_, LARGE_SIZE)
+Atmosphere::Atmosphere(const Point2f &position_,  const Zeni::String &texture_)
+: Game_Object(position_, LARGE_SIZE),
+  texture(texture_)
 {}
 
 Atmosphere::~Atmosphere() {}

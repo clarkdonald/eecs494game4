@@ -14,6 +14,8 @@
 #include "zenilib.h"
 
 class Terrain;
+class Environment;
+class Atmosphere;
 
 /** Game Information **/
 const int NUM_PLAYERS = 4;
@@ -88,7 +90,9 @@ struct Dimension {
   int height;
 };
 
-Zeni::Quadrilateral<Zeni::Vertex2f_Texture> * create_quad_ptr(Terrain * terrain_ptr);
+Zeni::Quadrilateral<Zeni::Vertex2f_Texture> * create_quad_ptr(const Terrain * const terrain_ptr);
+Zeni::Quadrilateral<Zeni::Vertex2f_Texture> * create_quad_ptr(const Environment * const terrain_ptr);
+Zeni::Quadrilateral<Zeni::Vertex2f_Texture> * create_quad_ptr(const Atmosphere * const terrain_ptr);
 
 /** Prints out msg and throws bad_excetion **/
 void error_handle(const std::string &msg);

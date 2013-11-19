@@ -15,5 +15,5 @@ Simple_Terrain::Simple_Terrain(const Point2f &position_, const Zeni::String &tex
 {}
 
 void Simple_Terrain::render() const {
-  Game_Object::render(texture);
+  Game_Object::render(get_texture());
 }

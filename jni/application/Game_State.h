@@ -61,7 +61,6 @@ class Game_State {
     std::list<Atmosphere*> atmospheres;
     std::list<Terrain*> grasss;
     std::list<Player*> players;
-
     std::list<Weapon*> projectiles;
     bool gameover;
     Dimension dimension;

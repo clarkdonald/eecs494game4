@@ -30,7 +30,9 @@ bool Game_Object::touching(const Game_Object &rhs) const {
   
   if ((abs(centerX - rhsCenterX) < distance) &&
       (abs(centerY - rhsCenterY) < distance))
+  {
     return true;
+  }
   return false;
 }
 
