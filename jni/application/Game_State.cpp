@@ -81,18 +81,25 @@ void Game_State::perform_logic() {
   float time_step = processing_time;
   
   for (auto player : players) {
+    // get controls for each player
     Controls input = controls[player->get_uid()];
-    Point2f pos = player->get_position();
     
-    // check movement around boundary
+    // check collision with environment on movement
+    Point2f pos = player->get_position();
     float delta_x = pos.x + input.move_x;
     float delta_y = pos.y + input.move_y;
     if ((input.move_x > 0.0f &&
          delta_x < (dimension.width*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
-         (input.move_x < 0.0f &&
+        (input.move_x < 0.0f &&
          delta_x > 0.0f))
     {
       player->move_x(input.move_x, time_step);
+      for (auto environment : environments) {
+        if (player->touching(*environment)) {
+          player->move_x(-input.move_x, time_step);
+          break;
+        }
+      }
     }
     if ((input.move_y > 0.0f &&
          delta_y < (dimension.height*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
@@ -100,6 +107,12 @@ void Game_State::perform_logic() {
          delta_y > 0.0f))
     {
       player->move_y(input.move_y, time_step);
+      for (auto environment : environments) {
+        if (player->touching(*environment)) {
+          player->move_y(-input.move_y, time_step);
+          break;
+        }
+      }
     }
 
 	  Vector2f direction_vector(input.look_x, input.look_y);
