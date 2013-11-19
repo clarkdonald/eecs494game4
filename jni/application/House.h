@@ -17,6 +17,8 @@ class House : public Environment {
   public:
     House(const Zeni::Point2f &position_, const House_Part &house_part_);
     
+    Zeni::String get_texture() const override;
+
     void render() const override;
     
   private:

@@ -14,65 +14,69 @@ House::House(const Point2f &position_, const House_Part &house_part_)
 : Environment(position_), house_part(house_part_)
 {}
 
-void House::render() const {
+String House::get_texture() const {
   switch (house_part) {
     case DOOR:
-      Game_Object::render("door");
+      return "door";
       break;
       
     case WINDOW_RIGHT:
-      Game_Object::render("windowright");
+      return "windowright";
       break;
       
     case WINDOW_LEFT:
-      Game_Object::render("windowleft");
+      return "windowleft";
       break;
       
     case BLUE_ROOF_UP_RIGHT_CORNER:
-      Game_Object::render("blueroofuprightcorner");
+      return "blueroofuprightcorner";
       break;
       
     case BLUE_ROOF_UP_MIDDLE:
-      Game_Object::render("blueroofupmiddle");
+      return "blueroofupmiddle";
       break;
       
     case BLUE_ROOF_UP_LEFT_CORNER:
-      Game_Object::render("blueroofupleftcorner");
+      return "blueroofupleftcorner";
       break;
       
     case BLUE_ROOF_LEFT_SIDE:
-      Game_Object::render("blueroofleftside");
+      return "blueroofleftside";
       break;
       
     case BLUE_ROOF_RIGHT_SIDE:
-      Game_Object::render("blueroofrightside");
+      return "blueroofrightside";
       break;
       
     case BLUE_ROOF_MIDDLE_EDGE:
-      Game_Object::render("blueroofmiddleedge");
+      return "blueroofmiddleedge";
       break;
       
     case BLUE_ROOF_MIDDLE:
-      Game_Object::render("blueroofmiddle");
+      return "blueroofmiddle";
       break;
       
     case BLUE_ROOF_DOWN_RIGHT_CORNER_1:
-      Game_Object::render("blueroofdownrightcorner1");
+      return "blueroofdownrightcorner1";
       break;
       
     case BLUE_ROOF_DOWN_RIGHT_CORNER_2:
-      Game_Object::render("blueroofdownrightcorner2");
+      return "blueroofdownrightcorner2";
       break;
       
     case BLUE_ROOF_DOWN_LEFT_CORNER_1:
-      Game_Object::render("blueroofdownleftcorner1");
+      return "blueroofdownleftcorner1";
       break;
       
     case BLUE_ROOF_DOWN_LEFT_CORNER_2:
-      Game_Object::render("blueroofdownleftcorner2");
+      return "blueroofdownleftcorner2";
       break;
       
     default:
       error_handle("Unknown House part orientation for House");
   }
+}
+
+void House::render() const {
+  Game_Object::render(get_texture());
 }

@@ -15,5 +15,5 @@ Stone_Road::Stone_Road(const Point2f &position_)
 {}
 
 void Stone_Road::render() const {
-  Game_Object::render(texture);
+  Game_Object::render(get_texture());
 }
