@@ -5,7 +5,7 @@ using namespace Zeni;
 using namespace std;
 
 Warrior::Warrior(const Zeni::Point2f &position_, const int &uid_)
-: Player(position_, uid_, 200.0f)
+: Player(position_, uid_, 60.0f, 200.0f)
 {}
 
 void Warrior::render() const {

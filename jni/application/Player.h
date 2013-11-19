@@ -12,11 +12,12 @@
 #include "Game_Object.h"
 #include "Weapon.h"
 
-#define MAX_SPD 75.0f
-
 class Player : public Game_Object {
   public:
-	  Player(const Zeni::Point2f &position_, const int &uid_, const float &max_hp_);
+	  Player(const Zeni::Point2f &position_,
+           const int &uid_,
+           const float &speed_,
+           const float &max_hp_);
   
     virtual ~Player() = 0;
 
@@ -59,6 +60,7 @@ class Player : public Game_Object {
     Zeni::Point2f calc_weapon_pos();
   
   private:
+    float speed;
     float facing;
     float max_hp;
     float hp;

@@ -5,7 +5,7 @@ using namespace Zeni;
 using namespace std;
 
 Archer::Archer(const Zeni::Point2f &position_, const int &uid_)
-: Player(position_, uid_, 150.0f)
+: Player(position_, uid_, 100.0f, 150.0f)
 {}
 
 void Archer::render() const {

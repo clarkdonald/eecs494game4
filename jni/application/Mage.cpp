@@ -5,7 +5,7 @@ using namespace Zeni;
 using namespace std;
 
 Mage::Mage(const Zeni::Point2f &position_, const int &uid_)
-: Player(position_, uid_, 100.0f)
+: Player(position_, uid_, 80.0f, 100.0f)
 {}
 
 void Mage::render() const {

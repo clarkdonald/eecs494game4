@@ -11,8 +11,12 @@
 using namespace Zeni;
 using namespace std;
 
-Player::Player(const Point2f &position_, const int &uid_, const float &max_hp_)
+Player::Player(const Point2f &position_,
+               const int &uid_,
+               const float &speed_,
+               const float &max_hp_)
 : Game_Object(position_),
+  speed(speed_),
   facing(Global::pi_over_two),
   max_hp(max_hp_),
   hp(max_hp_),
@@ -25,13 +29,13 @@ Player::~Player() {}
 
 void Player::move_x(const float &mag, const float &timestep) {
 	Point2f pos = get_position();
-	pos.x += MAX_SPD * timestep * mag;
+	pos.x += speed * timestep * mag;
 	set_position(pos);
 }
 
 void Player::move_y(const float &mag, const float &timestep) {
 	Point2f pos = get_position();
-	pos.y += MAX_SPD * timestep * mag;
+	pos.y += speed * timestep * mag;
 	set_position(pos);
 }
 
