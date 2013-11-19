@@ -21,11 +21,7 @@ Weapon* Mage::range()
   Weapon* projectile = nullptr;
   if(can_attack)
   {
-    Point2f pos = get_position();
-    Vector2f size = get_size();
-
-    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * sin(facing)); // top left of magic image
-
+    Point2f pos = calc_weapon_pos();
     projectile = new Magic(pos, facing);
     
     can_attack = false;

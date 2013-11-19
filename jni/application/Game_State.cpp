@@ -289,7 +289,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
-    players.push_back(create_player("Archer", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
+    players.push_back(create_player("Mage", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
     controls.push_back(new Controls());
     health_bars.push_back(new Health_Bar());
   }

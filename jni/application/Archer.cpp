@@ -21,11 +21,7 @@ Weapon* Archer::range()
   Weapon* projectile = nullptr;
   if (can_attack)
   {
-    Point2f pos = get_position();
-    Vector2f size = get_size();
-
-    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * sin(facing)); // top left of arrow image
-
+    Point2f pos = calc_weapon_pos();
     projectile = new Arrow(pos, facing);
     
     can_attack = false;
