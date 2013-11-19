@@ -20,7 +20,7 @@ class Terrain : public Game_Object {
     
     virtual ~Terrain() = 0;
     
-    virtual void affect(Player &player_);
+    virtual bool slow_player_down() const;
 
     const Zeni::String get_texture() const {return texture;}
 

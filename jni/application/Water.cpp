@@ -18,5 +18,6 @@ void Water::render() const {
   Game_Object::render(get_texture());
 }
 
-void Water::affect(Player &player_) {
+bool Water::slow_player_down() const {
+  return true;
 }

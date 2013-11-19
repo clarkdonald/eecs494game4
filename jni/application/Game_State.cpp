@@ -90,32 +90,42 @@ void Game_State::perform_logic() {
     // get controls for each player
     Controls* input = controls[player->get_uid()];
     
+    // check collision with terrain on movement
+    float move_x = input->move_x;
+    float move_y = input->move_y;
+    for (auto terrain : terrains) {
+      if (terrain->slow_player_down() && player->touching(*terrain)) {
+        move_x *= 0.5f;
+        move_y *= 0.5f;
+        break;
+      }
+    }
+    
     // check collision with environment on movement
-    Point2f pos = player->get_position();
-    float delta_x = pos.x + input->move_x;
-    float delta_y = pos.y + input->move_y;
-    if ((input->move_x > 0.0f &&
+    float delta_x = player->get_position().x + move_x;
+    float delta_y = player->get_position().y + move_y;
+    if ((move_x > 0.0f &&
          delta_x < (dimension.width*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
-        (input->move_x < 0.0f &&
+        (move_x < 0.0f &&
          delta_x > 0.0f))
     {
-      player->move_x(input->move_x, time_step);
+      player->move_x(move_x, time_step);
       for (auto environment : environments) {
         if (player->touching(*environment)) {
-          player->move_x(-input->move_x, time_step);
+          player->move_x(-move_x, time_step);
           break;
         }
       }
     }
-    if ((input->move_y > 0.0f &&
+    if ((move_y > 0.0f &&
          delta_y < (dimension.height*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
-        (input->move_y < 0.0f &&
+        (move_y < 0.0f &&
          delta_y > 0.0f))
     {
-      player->move_y(input->move_y, time_step);
+      player->move_y(move_y, time_step);
       for (auto environment : environments) {
         if (player->touching(*environment)) {
-          player->move_y(-input->move_y, time_step);
+          player->move_y(-move_y, time_step);
           break;
         }
       }
