@@ -9,11 +9,11 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 
-#include "Utility.h"
 #include "Weapon.h"
 #include <zenilib.h>
 #include <string>
 
+class Control;
 class Terrain;
 class Atmosphere;
 class Environment;
@@ -55,7 +55,7 @@ class Game_State {
     
     Zeni::Time_HQ time_passed;
     //Zeni::Chronometer<Zeni::Time> shooting_timer;
-    std::vector<Controls> controls;
+    std::vector<Controls*> controls;
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
     std::list<Atmosphere*> atmospheres;
