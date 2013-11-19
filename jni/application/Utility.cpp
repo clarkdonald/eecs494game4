@@ -42,7 +42,7 @@ Zeni::Quadrilateral<Zeni::Vertex2f_Texture> * create_quad_ptr(Terrain * terrain_
   Vertex2f_Texture lr(Point2f(pos.x + size.x, pos.y + size.y), Point2f(1.0f, 1.0f));
   Vertex2f_Texture ur(Point2f(pos.x + size.x, pos.y), Point2f(1.0f, 0.0f));
   Quadrilateral<Vertex2f_Texture> * quad = new Quadrilateral<Vertex2f_Texture>(ul,ll,lr,ur);  
-  quad->fax_Material(&terrain_ptr->get_material());  
+  quad->fax_Material(terrain_ptr->get_material());
   return quad;
 }
 
