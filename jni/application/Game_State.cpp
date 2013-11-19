@@ -42,7 +42,10 @@ using std::cerr;
 using std::endl;
 
 Game_State::Game_State(const std::string &file_)
-: gameover(false)
+: gameover(false),
+  vbo_ptr_lower(new Vertex_Buffer),
+  vbo_ptr_middle(new Vertex_Buffer),
+  vbo_ptr_upper(new Vertex_Buffer)
 {
   // set up function pointers for split screen methods
   screen_coord_map.push_back(&get_top_left_screen);
@@ -71,6 +74,9 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
     if (*it != nullptr) delete *it;
+  delete vbo_ptr_lower;
+  delete vbo_ptr_middle;
+  delete vbo_ptr_upper;
 }
 
 void Game_State::perform_logic() {
@@ -200,17 +206,12 @@ void Game_State::render_spawn_menu() {
   mage.render();
 }
 
-void Game_State::render_all() {    
-
-  // This renders the static textures below the movable objects (The Map)
-  Map_Manager::get_Instance().get_vbo_ptr_below()->render();
-  
-  // Movable objects
+void Game_State::render_all() {
+  vbo_ptr_lower->render();
+  vbo_ptr_middle->render();
   for (auto player : players) player->render();
   for (auto projectile : projectiles) projectile->render();
-
-  // This renders the static textures above the movable objects (Atmosphere)
-  Map_Manager::get_Instance().get_vbo_ptr_above()->render();  
+  vbo_ptr_upper->render();
 }
 
 void Game_State::render(){
@@ -328,15 +329,17 @@ void Game_State::load_map(const std::string &file_) {
 
   // Put it into the Vertex_Buffer Below
   for (auto grass : grasss)
-    Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(grass));
+    vbo_ptr_lower->give_Quadrilateral(create_quad_ptr(grass));
   for (auto terrain : terrains)
-    Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(terrain));
+    vbo_ptr_lower->give_Quadrilateral(create_quad_ptr(terrain));
+  
+  // Put it into the Vertex_Buffer Middle
   for (auto environment : environments)
-     Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(environment));
+     vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
 
   // Put it into the Vertex_Buffer Above
   for (auto atmosphere : atmospheres)
-     Map_Manager::get_Instance().get_vbo_ptr_above()->give_Quadrilateral(create_quad_ptr(atmosphere));
+     vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
   
   file.close();
 }

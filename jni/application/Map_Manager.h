@@ -38,19 +38,9 @@ class Map_Manager {
     
     const std::string & get_previous();
 
-    Zeni::Vertex_Buffer * get_vbo_ptr_below();
-
-    Zeni::Vertex_Buffer * get_vbo_ptr_above();
-    
   private:
     Map_Manager();
     ~Map_Manager();
-
-    // This is used for rendering the lower level of the map
-    Zeni::Vertex_Buffer *vbo_ptr;
-
-    // This is used for rendering the level above the movable objects (i.e. Atmosphere)
-    Zeni::Vertex_Buffer *vbo_ptr2;
     
     int index;
     std::vector<std::string> files;

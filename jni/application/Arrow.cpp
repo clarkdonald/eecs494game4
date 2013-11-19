@@ -14,7 +14,6 @@ void Arrow::render() const
 {
   char msg[256];
   sprintf(msg, "%0.02f %0.02f\n", get_position().x, get_position().y);
-  OutputDebugString(msg);
 
   //render_image("arrow",
   //             get_position(),              // upper left

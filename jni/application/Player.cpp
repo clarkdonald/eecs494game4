@@ -13,10 +13,10 @@ using namespace std;
 
 Player::Player(const Zeni::Point2f &position_, const int &uid_)
 : Game_Object(position_),
+  facing(Global::pi_over_two),
   n_crystals(0),
   uid(uid_),
-  can_attack(true),
-  facing(Global::pi_over_two)
+  can_attack(true)
 {}
 
 void Player::move_x(const float mag, const float timestep)
