@@ -28,8 +28,10 @@ Map_Manager& Map_Manager::get_Instance()
 Map_Manager::Map_Manager()
 : index(0)
 {
-  vbo_ptr = new Vertex_Buffer;
-  vbo_ptr2 = new Vertex_Buffer;
+  vbo_ptr_grass = new Vertex_Buffer;
+  vbo_ptr_terrain = new Vertex_Buffer;
+  vbo_ptr_environment = new Vertex_Buffer;
+  vbo_ptr_atmosphere = new Vertex_Buffer;       
 
   for (int i = 0; i < NUM_FILES; ++i) {
     string str = "../assets/maps/level" + std::to_string(i) + ".txt";
@@ -49,8 +51,10 @@ Map_Manager::Map_Manager()
 }
 
 Map_Manager::~Map_Manager() {
-  delete vbo_ptr;
-  delete vbo_ptr2;
+  delete vbo_ptr_grass;
+  delete vbo_ptr_terrain;
+  delete vbo_ptr_environment;
+  delete vbo_ptr_atmosphere;
 }
 
 const int & Map_Manager::get_files_left() const {
@@ -102,11 +106,20 @@ const std::string & Map_Manager::get_previous() {
   return files[index++];
 }
 
-Vertex_Buffer * Map_Manager::get_vbo_ptr_below() {
-  return vbo_ptr;
+
+Vertex_Buffer * Map_Manager::get_vbo_ptr_grass() {
+  return vbo_ptr_grass;
 }
 
-Vertex_Buffer * Map_Manager::get_vbo_ptr_above() {
-  return vbo_ptr2;
+Vertex_Buffer * Map_Manager::get_vbo_ptr_terrain() {
+  return vbo_ptr_terrain;
+}
+
+Vertex_Buffer * Map_Manager::get_vbo_ptr_environment() {
+  return vbo_ptr_environment;
+}
+
+Vertex_Buffer * Map_Manager::get_vbo_ptr_atmosphere() {
+  return vbo_ptr_atmosphere;
 }
 
