@@ -44,15 +44,13 @@ using std::endl;
 Game_State::Game_State(const std::string &file_)
 : gameover(false)
 {
+  // set up function pointers for split screen methods
   screen_coord_map.push_back(&get_top_left_screen);
   screen_coord_map.push_back(&get_bottom_left_screen);
   screen_coord_map.push_back(&get_top_right_screen);
   screen_coord_map.push_back(&get_bottom_right_screen);
- 
-  health_bars.push_back(new Health_Bar());
-  health_bars.push_back(new Health_Bar());
-  health_bars.push_back(new Health_Bar());
-  health_bars.push_back(new Health_Bar());
+  
+  // load map from the input file
   load_map(file_);
 }
 
@@ -69,6 +67,8 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = health_bars.begin(); it != health_bars.end(); ++it)
     if (*it != nullptr) delete *it;
+  for (auto it = controls.begin(); it != controls.end(); ++it)
+    if (*it != nullptr) delete *it;
   for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
     if (*it != nullptr) delete *it;
 }
@@ -82,43 +82,43 @@ void Game_State::perform_logic() {
   
   for (auto player : players) {
     // get controls for each player
-    Controls input = controls[player->get_uid()];
+    Controls* input = controls[player->get_uid()];
     
     // check collision with environment on movement
     Point2f pos = player->get_position();
-    float delta_x = pos.x + input.move_x;
-    float delta_y = pos.y + input.move_y;
-    if ((input.move_x > 0.0f &&
+    float delta_x = pos.x + input->move_x;
+    float delta_y = pos.y + input->move_y;
+    if ((input->move_x > 0.0f &&
          delta_x < (dimension.width*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
-        (input.move_x < 0.0f &&
+        (input->move_x < 0.0f &&
          delta_x > 0.0f))
     {
-      player->move_x(input.move_x, time_step);
+      player->move_x(input->move_x, time_step);
       for (auto environment : environments) {
         if (player->touching(*environment)) {
-          player->move_x(-input.move_x, time_step);
+          player->move_x(-input->move_x, time_step);
           break;
         }
       }
     }
-    if ((input.move_y > 0.0f &&
+    if ((input->move_y > 0.0f &&
          delta_y < (dimension.height*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
-        (input.move_y < 0.0f &&
+        (input->move_y < 0.0f &&
          delta_y > 0.0f))
     {
-      player->move_y(input.move_y, time_step);
+      player->move_y(input->move_y, time_step);
       for (auto environment : environments) {
         if (player->touching(*environment)) {
-          player->move_y(-input.move_y, time_step);
+          player->move_y(-input->move_y, time_step);
           break;
         }
       }
     }
 
-	  Vector2f direction_vector(input.look_x, input.look_y);
+	  Vector2f direction_vector(input->look_x, input->look_y);
 	  player->turn_to_face(direction_vector.theta());
 
-    if (input.attack) {
+    if (input->attack) {
       //player->melee();
       Weapon* projectile = player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
@@ -165,7 +165,6 @@ void Game_State::render(){
     health_bars[player->get_uid()]->set_position(p_pos - Vector2f(140.0f, 90.0f));
     health_bars[player->get_uid()]->render(player->get_hp_pctg());    
   }
-  
 }
 
 void Game_State::create_tree(const Point2f &position) {
@@ -228,7 +227,8 @@ void Game_State::load_map(const std::string &file_) {
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
     players.push_back(create_player("Warrior", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
-    controls.push_back(Controls());
+    controls.push_back(new Controls());
+    health_bars.push_back(new Health_Bar());
   }
 
   // Get map information
@@ -239,7 +239,7 @@ void Game_State::load_map(const std::string &file_) {
       Point2f position(UNIT_LENGTH*width, UNIT_LENGTH*height);
 
       grasss.push_back(create_terrain("Grass", position));
-           
+
       if (line[width] == '.');
       else if (line[width] == 't') {
         create_tree(position);
@@ -264,20 +264,16 @@ void Game_State::load_map(const std::string &file_) {
   }
 
   // Put it into the Vertex_Buffer Below
-  for(auto grass_ptr : grasss) {
-    Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(grass_ptr)); 
-  }
-  for(auto terrain_ptr : terrains) {    
-    Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(terrain_ptr));
-  }
-  for(auto environment_ptr : environments) {
-     Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(environment_ptr));
-  }
+  for (auto grass : grasss)
+    Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(grass));
+  for (auto terrain : terrains)
+    Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(terrain));
+  for (auto environment : environments)
+     Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(environment));
 
   // Put it into the Vertex_Buffer Above
-  for(auto atmosphere_ptr : atmospheres) {
-     Map_Manager::get_Instance().get_vbo_ptr_above()->give_Quadrilateral(create_quad_ptr(atmosphere_ptr));
-  }
+  for (auto atmosphere : atmospheres)
+     Map_Manager::get_Instance().get_vbo_ptr_above()->give_Quadrilateral(create_quad_ptr(atmosphere));
   
   file.close();
 }
@@ -286,32 +282,32 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
                                          const float &confidence,
                                          const int &action)
 {
-	switch(action) {
+	switch (action) {
 		/* player 1 */
     case 11:
       break;
 
     case 12:
-			controls[0].move_x = confidence;
+			controls[0]->move_x = confidence;
       break;
 
     case 13:
-			controls[0].move_y = confidence;
+			controls[0]->move_y = confidence;
       break;
 
     case 14:
-			controls[0].look_x = confidence;
+			controls[0]->look_x = confidence;
       break;
 
     case 15:
-			controls[0].look_y = confidence;
+			controls[0]->look_y = confidence;
       break;
 
     case 16:
       break;
 
     case 17:
-      controls[0].attack = confidence > .5;
+      controls[0]->attack = confidence > 0.5f;
       break;
 
     case 10:
@@ -322,26 +318,26 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 22:
-			controls[1].move_x = confidence;
+			controls[1]->move_x = confidence;
       break;
 
     case 23:
-			controls[1].move_y = confidence;
+			controls[1]->move_y = confidence;
       break;
 
     case 24:
-			controls[1].look_x = confidence;
+			controls[1]->look_x = confidence;
       break;
 
     case 25:
-			controls[1].look_y = confidence;
+			controls[1]->look_y = confidence;
       break;
 
     case 26:
       break;
 
     case 27:
-			controls[1].attack = true;
+			controls[1]->attack = confidence > 0.5f;
       break;
 
     case 20:
@@ -352,26 +348,26 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 32:
-			controls[2].move_x = confidence;
+			controls[2]->move_x = confidence;
       break;
 
     case 33:
-			controls[2].move_y = confidence;
+			controls[2]->move_y = confidence;
       break;
 
     case 34:
-			controls[2].look_x = confidence;
+			controls[2]->look_x = confidence;
       break;
 
     case 35:
-			controls[2].look_y = confidence;
+			controls[2]->look_y = confidence;
       break;
 
     case 36:
       break;
 
     case 37:
-			controls[2].attack = true;
+			controls[2]->attack = confidence > 0.5f;
       break;
 
     case 30:
@@ -382,26 +378,26 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 42:
-			controls[3].move_x = confidence;
+			controls[3]->move_x = confidence;
       break;
 
     case 43:
-			controls[3].move_y = confidence;
+			controls[3]->move_y = confidence;
       break;
 
     case 44:
-			controls[3].look_x = confidence;
+			controls[3]->look_x = confidence;
       break;
 
     case 45:
-			controls[3].look_y = confidence;
+			controls[3]->look_y = confidence;
       break;
 
     case 46:
       break;
 
     case 47:
-			controls[3].attack = true;
+			controls[3]->attack = confidence > 0.5f;
       break;
 
     case 40:
