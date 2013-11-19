@@ -11,11 +11,11 @@
 using namespace Zeni;
 
 Water::Water(const Point2f &position_)
-: Terrain(position_)
+: Terrain(position_,"water")
 {}
 
 void Water::render() const {
-  Game_Object::render("water");
+  Game_Object::render(texture);
 }
 
 void Water::affect(Player &player_) {
