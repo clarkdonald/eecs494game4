@@ -40,6 +40,7 @@ Map_Manager::Map_Manager()
   terrain_charmap['d'] = "Dirt";
   terrain_charmap['r'] = "Rock_Pile";
   terrain_charmap['s'] = "Stone_Road";
+  terrain_charmap['W'] = "Water";
   terrain_charmap['w'] = "Wood_Floor";
   terrain_charmap['b'] = "Bush";
   

@@ -69,6 +69,8 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = health_bars.begin(); it != health_bars.end(); ++it)
     if (*it != nullptr) delete *it;
+  for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
+    if (*it != nullptr) delete *it;
 }
 
 void Game_State::perform_logic() {
