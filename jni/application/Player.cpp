@@ -15,7 +15,8 @@ Player::Player(const Zeni::Point2f &position_, const int &uid_)
 : Game_Object(position_),
   n_crystals(0),
   uid(uid_),
-  can_attack(true)
+  can_attack(true),
+  facing(Global::pi_over_two)
 {}
 
 void Player::move_x(const float mag, const float timestep)
@@ -60,6 +61,16 @@ float Player::get_hp_pctg()
 unsigned int Player::get_crystals_held()
 {
   return n_crystals;
+}
+
+float Player::get_facing()
+{
+  return facing;
+}
+
+void Player::set_can_attack()
+{
+  can_attack = true;
 }
 
 void Player::pick_up_crystal()

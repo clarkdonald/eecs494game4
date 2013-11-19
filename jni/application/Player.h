@@ -35,6 +35,9 @@ class Player : public Game_Object {
 
     float get_hp_pctg();
     unsigned int get_crystals_held();
+    float get_facing();
+
+    void set_can_attack();
 
 	  void pick_up_crystal();
 	  void drop_crystal();

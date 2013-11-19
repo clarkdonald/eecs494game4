@@ -1,4 +1,5 @@
 #include "Warrior.h"
+#include "Sword.h"
 
 using namespace Zeni;
 using namespace std;
@@ -17,7 +18,19 @@ void Warrior::render() const
 
 Weapon* Warrior::melee()
 {
-  return NULL;
+  Weapon* sword = nullptr;
+  if(can_attack)
+  {
+    Point2f pos = get_position();
+    Vector2f size = get_size();
+
+    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * sin(facing)); // top left of sword image
+
+    sword = new Sword(pos, facing);
+    
+    can_attack = false;
+  }
+  return sword;
 }
 
 void Warrior::spc_skill()

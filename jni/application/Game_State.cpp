@@ -116,16 +116,79 @@ void Game_State::perform_logic() {
     }
 
 	  Vector2f direction_vector(input->look_x, input->look_y);
-	  player->turn_to_face(direction_vector.theta());
+    if(direction_vector.magnitude() > 0.4f) // deadzone for right stick; magnitude : [0,1]
+	    player->turn_to_face(direction_vector.theta());
+    
 
-    if (input->attack) {
-      //player->melee();
+    if (input->attack) 
+    {
+      // Warrior melee sword attack
+
+      Weapon* melee = player->melee();
+      if(melee != nullptr)
+      {
+        // do collision checks 
+        for(auto player_check : players)
+        {
+          if(player_check == player)
+            continue;
+
+          if(melee->touching(*player_check))
+            player_check->take_dmg(melee->get_damage());
+        }
+      }
+
+      delete melee;
+
+      // Archer/Mage ranged attack
       Weapon* projectile = player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
+    else
+      player->set_can_attack();
   }
   
-  for (auto projectile : projectiles) projectile->update(time_step);
+  for (auto projectile = projectiles.begin(); projectile != projectiles.end();) 
+  {
+    (*projectile)->update(time_step);
+
+    bool should_remove = false;
+
+    // do player collision checks 
+    for(auto player : players)
+    {
+      if((*projectile)->touching(*player))
+      {
+        player->take_dmg((*projectile)->get_damage());
+        should_remove = true;
+        break;
+      }
+    }
+
+    // do environment collision checks
+    for(auto environment : environments)
+    {
+      if((*projectile)->touching(*environment))
+      {
+        should_remove = true;
+        break;
+      }
+    }
+
+    // do map boundary checks
+    Point2f proj_pos = (*projectile)->get_center();
+    if(proj_pos.x < 0.0f || proj_pos.x >= dimension.width*UNIT_LENGTH ||
+       proj_pos.y < 0.0f || proj_pos.y >= dimension.height*UNIT_LENGTH)
+       should_remove = true;
+
+    if(should_remove)
+    {
+      delete *projectile;
+      projectile = projectiles.erase(projectile);
+    }
+    else
+      projectile++;
+  }
 }
 
 void Game_State::render_spawn_menu() {
@@ -221,7 +284,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
-    players.push_back(create_player("Warrior", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
+    players.push_back(create_player("Archer", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
     controls.push_back(new Controls());
     health_bars.push_back(new Health_Bar());
   }

@@ -18,17 +18,16 @@ void Archer::render() const
 
 Weapon* Archer::range()
 {
-  Arrow* projectile = nullptr;
+  Weapon* projectile = nullptr;
   if (can_attack)
   {
-    Point2f pos = get_center();
+    Point2f pos = get_position();
     Vector2f size = get_size();
 
-    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * -sin(facing)) * 2; // this is the center of the arrow
-    pos -= size * 0.5f; // top left corner of arrow image
+    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * sin(facing)); // top left of arrow image
 
     projectile = new Arrow(pos, facing);
-
+    
     can_attack = false;
   }
   return projectile;
