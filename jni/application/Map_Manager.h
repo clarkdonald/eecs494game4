@@ -37,9 +37,15 @@ class Map_Manager {
     const std::string & get_next();
     
     const std::string & get_previous();
+
+    Zeni::Vertex_Buffer * get_vbo_ptr();
     
   private:
     Map_Manager();
+    ~Map_Manager();
+
+    // This is used for rendering
+    Zeni::Vertex_Buffer *vbo_ptr;
     
     int index;
     std::vector<std::string> files;

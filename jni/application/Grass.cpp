@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Grass::Grass(const Point2f &position_)
-: Terrain(position_)
+: Terrain(position_, "grass")
 {}
 
 void Grass::render() const {

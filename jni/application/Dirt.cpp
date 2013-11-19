@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Dirt::Dirt(const Point2f &position_)
-: Terrain(position_)
+: Terrain(position_,"dirt")
 {}
 
 void Dirt::render() const {

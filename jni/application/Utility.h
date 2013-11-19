@@ -11,7 +11,9 @@
 
 #include <utility>
 #include <string>
-#include <Zeni/Coordinate.h>
+#include "zenilib.h"
+
+class Terrain;
 
 /** Game Information **/
 const int NUM_PLAYERS = 4;
@@ -85,6 +87,8 @@ struct Dimension {
   int width;
   int height;
 };
+
+Zeni::Quadrilateral<Zeni::Vertex2f_Texture> * create_quad_ptr(Terrain * terrain_ptr);
 
 /** Prints out msg and throws bad_excetion **/
 void error_handle(const std::string &msg);

@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Wood_Floor::Wood_Floor(const Point2f &position_)
-: Terrain(position_)
+: Terrain(position_, "woodfloor")
 {}
 
 void Wood_Floor::render() const {

@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Stone_Road::Stone_Road(const Point2f &position_)
-: Terrain(position_)
+: Terrain(position_, "stonevertical")
 {}
 
 void Stone_Road::render() const {

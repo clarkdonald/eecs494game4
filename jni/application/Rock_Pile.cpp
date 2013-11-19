@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Rock_Pile::Rock_Pile(const Point2f &position_)
-: Terrain(position_)
+: Terrain(position_,"rockpile")
 {}
 
 void Rock_Pile::render() const {

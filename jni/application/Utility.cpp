@@ -8,15 +8,15 @@
 
 #include "Utility.h"
 #include <utility>
-#include "zenilib.h"
+#include "Terrain.h"
 
+using namespace Zeni;
 using std::cout;
 using std::endl;
 using std::bad_exception;
 using std::string;
 using std::pair;
 using std::make_pair;
-using Zeni::Point2i;
 
 Controls::Controls()
 : move_y(0.0f),
@@ -33,6 +33,18 @@ Dimension::Dimension()
 Dimension::Dimension(int width_, int height_)
 : width(width_), height(height_)
 {}
+
+Zeni::Quadrilateral<Zeni::Vertex2f_Texture> * create_quad_ptr(Terrain * terrain_ptr) {
+  auto pos = terrain_ptr->get_position();
+  auto size = terrain_ptr->get_size();
+  Vertex2f_Texture ul(Point2f(pos.x, pos.y), Point2f(0.0f, 0.0f));
+  Vertex2f_Texture ll(Point2f(pos.x, pos.y + size.y), Point2f(0.0f, 1.0f));
+  Vertex2f_Texture lr(Point2f(pos.x + size.x, pos.y + size.y), Point2f(1.0f, 1.0f));
+  Vertex2f_Texture ur(Point2f(pos.x + size.x, pos.y), Point2f(1.0f, 0.0f));
+  Quadrilateral<Vertex2f_Texture> * quad = new Quadrilateral<Vertex2f_Texture>(ul,ll,lr,ur);  
+  quad->fax_Material(&terrain_ptr->get_material());  
+  return quad;
+}
 
 void error_handle(const string &msg) {
   cout << "Error: " << msg << endl;

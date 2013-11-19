@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Water::Water(const Point2f &position_)
-: Terrain(position_)
+: Terrain(position_,"water")
 {}
 
 void Water::render() const {

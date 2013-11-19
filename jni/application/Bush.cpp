@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Bush::Bush(const Point2f &position_)
-: Terrain(position_)
+: Terrain(position_,"bush")
 {}
 
 void Bush::render() const {
