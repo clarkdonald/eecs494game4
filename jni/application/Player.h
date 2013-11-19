@@ -37,10 +37,12 @@ class Player : public Game_Object {
 
 	  void take_dmg(const float &);
   
+    bool is_dead() const {return hp <= 0.0f;}
+  
 	  void die();
 
     float get_hp_pctg() const;
-  
+    
     const unsigned int & get_crystals_held() const {return n_crystals;}
   
     const float & get_facing() const {return facing;}

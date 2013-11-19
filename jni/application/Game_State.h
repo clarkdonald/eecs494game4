@@ -10,6 +10,7 @@
 #define GAME_STATE_H
 
 #include "Weapon.h"
+#include "Health_Bar.h"
 #include <zenilib.h>
 #include <string>
 
@@ -18,7 +19,20 @@ class Terrain;
 class Atmosphere;
 class Environment;
 class Player;
-class Health_Bar;
+
+struct Player_Wrapper {
+  Player_Wrapper(Player *player_, const int &uid_);
+  ~Player_Wrapper();
+  Player* player;
+  int uid;
+};
+
+struct Player_Info {
+  Player_Info(const Zeni::Point2f &start_position_);
+  Controls controls;
+  Health_Bar health_bar;
+  Zeni::Point2f start_position;
+};
 
 class Game_State {
   public:
@@ -55,14 +69,13 @@ class Game_State {
     
     Zeni::Time_HQ time_passed;
     //Zeni::Chronometer<Zeni::Time> shooting_timer;
-    std::vector<Controls*> controls;
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
     std::list<Atmosphere*> atmospheres;
     std::list<Terrain*> grasss;
-    std::list<Player*> players;
+    std::list<Player_Wrapper*> player_wrappers;
+    std::vector<Player_Info*> player_infos;
     std::list<Weapon*> projectiles;
-    std::vector<Health_Bar*> health_bars;
     bool gameover;
     Dimension dimension;
     std::vector<std::pair<Zeni::Point2i, Zeni::Point2i> (*)()> screen_coord_map;
