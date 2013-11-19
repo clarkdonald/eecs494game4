@@ -35,7 +35,7 @@ class Game_Object {
     void set_position(const Zeni::Point2f& position_);
     
   protected:
-    void render(const Zeni::String &texture, const Zeni::Color &filter = Zeni::Color()) const;
+    void render(const Zeni::String &texture, const Zeni::Color &filter = Zeni::Color(), const float &theta = 0.0f) const;
     
   private:
     Zeni::Point2f position;

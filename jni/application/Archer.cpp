@@ -16,11 +16,10 @@ void Archer::render() const
 	Game_Object::render("downidle");
 }
 
-Weapon* Archer::range(const float timestep)
+Weapon* Archer::range()
 {
-  Arrow* projectile = NULL;
-
-  if(std_cd <= 0)
+  Weapon* projectile = nullptr;
+  if(can_attack)
   {
     Point2f pos = get_position();
     Vector2f size = get_size();
@@ -29,11 +28,8 @@ Weapon* Archer::range(const float timestep)
 
     projectile = new Arrow(pos, facing);
     
-    std_cd = RANGE_CD;
+    can_attack = false;
   }
-  else
-    std_cd -= timestep;
-
   return projectile;
 }
 

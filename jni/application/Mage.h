@@ -11,7 +11,7 @@ class Mage : public Player
 
     void render() const override;
 
-    Weapon* range(const float) override;
+    Weapon* range() override;
     void spc_skill() override;
 };
 

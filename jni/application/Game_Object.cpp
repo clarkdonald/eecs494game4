@@ -54,11 +54,11 @@ void Game_Object::set_position(const Point2f& position_) {
   position = position_;
 }
 
-void Game_Object::render(const String &texture, const Color &filter) const {
+void Game_Object::render(const String &texture, const Color &filter, const float &theta) const {
   render_image(texture, // which texture to use
                position, // upper-left corner
                position + size, // lower-right corner
-               0.0f, // rotation in radians
+               theta, // rotation in radians
                1.0f, // scaling factor
                position + 0.5f * size, // point to rotate & scale about
                false, // whether or not to horizontally flip the texture

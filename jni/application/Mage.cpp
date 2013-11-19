@@ -1,4 +1,5 @@
 #include "Mage.h"
+#include "Magic.h"
 
 using namespace Zeni;
 using namespace std;
@@ -12,11 +13,24 @@ Mage::Mage(const Zeni::Point2f &position_, const int &uid_)
 
 void Mage::render() const
 {
+	Game_Object::render("downidle");
 }
 
-Weapon* Mage::range(const float timestep)
+Weapon* Mage::range()
 {
-  return NULL;
+  Weapon* projectile = nullptr;
+  if(can_attack)
+  {
+    Point2f pos = get_position();
+    Vector2f size = get_size();
+
+    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * sin(facing)); // top left of magic image
+
+    projectile = new Magic(pos, facing);
+    
+    can_attack = false;
+  }
+  return projectile;
 }
 
 void Mage::spc_skill()

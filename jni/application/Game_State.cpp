@@ -105,14 +105,71 @@ void Game_State::perform_logic() {
 	    player->turn_to_face(direction_vector.theta());
     
 
-    if (input.attack) {
-      //player->melee();
-      Weapon* projectile = player->range(time_step);
+    if (input.attack) 
+    {
+      // Warrior melee sword attack
+
+      Weapon* melee = player->melee();
+      if(melee != nullptr)
+      {
+        // do collision checks 
+        for(auto player_check : players)
+        {
+          if(player_check == player)
+            continue;
+
+          if(melee->touching(*player_check))
+            player_check->take_dmg(melee->get_damage());
+        }
+      }
+
+      delete melee;
+
+      // Archer/Mage ranged attack
+      Weapon* projectile = player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
+    else
+      player->set_can_attack();
   }
   
-  for (auto projectile : projectiles) projectile->update(time_step);
+  for (auto projectile = projectiles.begin(); projectile != projectiles.end();) 
+  {
+    (*projectile)->update(time_step);
+
+    bool should_remove = false;
+
+    // do player collision checks 
+    for(auto player : players)
+    {
+      if((*projectile)->touching(*player))
+      {
+        player->take_dmg((*projectile)->get_damage());
+        should_remove = true;
+        break;
+      }
+    }
+
+    // do environment collision checks
+    for(auto environment : environments)
+    {
+      if((*projectile)->touching(*environment))
+      {
+        should_remove = true;
+        break;
+      }
+    }
+
+    // do map boundary checks
+
+    if(should_remove)
+    {
+      delete *projectile;
+      projectile = projectiles.erase(projectile);
+    }
+    else
+      projectile++;
+  }
 }
 
 void Game_State::render_spawn_menu() {
@@ -131,8 +188,8 @@ void Game_State::render_all() {
   
   for (auto environment : environments) environment->render();
   for (auto player : players) player->render();
-  for (auto atmosphere : atmospheres) atmosphere->render();
   for (auto projectile : projectiles) projectile->render();
+  for (auto atmosphere : atmospheres) atmosphere->render();
 }
 
 void Game_State::render(){
