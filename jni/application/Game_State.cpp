@@ -137,17 +137,12 @@ void Game_State::render_spawn_menu() {
   mage.render();
 }
 
-void Game_State::render_all() {    
-
-  // This renders the static textures below the movable objects (The Map)
+void Game_State::render_all() {
   Map_Manager::get_Instance().get_vbo_ptr_below()->render();
-  
-  // Movable objects
+  Map_Manager::get_Instance().get_vbo_ptr_middle()->render();
   for (auto player : players) player->render();
   for (auto projectile : projectiles) projectile->render();
-
-  // This renders the static textures above the movable objects (Atmosphere)
-  Map_Manager::get_Instance().get_vbo_ptr_above()->render();  
+  Map_Manager::get_Instance().get_vbo_ptr_above()->render();
 }
 
 void Game_State::render(){
@@ -268,8 +263,10 @@ void Game_State::load_map(const std::string &file_) {
     Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(grass));
   for (auto terrain : terrains)
     Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(terrain));
+  
+  // Put it into the Vertex_Buffer Middle
   for (auto environment : environments)
-     Map_Manager::get_Instance().get_vbo_ptr_below()->give_Quadrilateral(create_quad_ptr(environment));
+     Map_Manager::get_Instance().get_vbo_ptr_middle()->give_Quadrilateral(create_quad_ptr(environment));
 
   // Put it into the Vertex_Buffer Above
   for (auto atmosphere : atmospheres)
