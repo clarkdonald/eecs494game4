@@ -14,7 +14,6 @@
 #include <zenilib.h>
 #include <string>
 
-class Grass;
 class Terrain;
 class Atmosphere;
 class Environment;
@@ -60,7 +59,7 @@ class Game_State {
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
     std::list<Atmosphere*> atmospheres;
-    std::list<Grass*> grasss;
+    std::list<Terrain*> grasss;
     std::list<Player*> players;
 
     std::list<Weapon*> projectiles;

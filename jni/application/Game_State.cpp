@@ -15,7 +15,6 @@
 #include "Tree.h"
 #include "Terrain.h"
 #include "Terrain_Factory.h"
-#include "Grass.h"
 #include "Player.h"
 #include "Health_Bar.h"
 #include "Player_Factory.h"
@@ -84,9 +83,9 @@ void Game_State::perform_logic() {
     // check movement around boundary
     float delta_x = pos.x + input.move_x;
     float delta_y = pos.y + input.move_y;
-    if (delta_x >= 0.0f && delta_x < dimension.width*UNIT_LENGTH)
+    if (delta_x > 0.0f && delta_x < (dimension.width*UNIT_LENGTH - UNIT_LENGTH))
       player->move_x(input.move_x, time_step);
-    if (delta_y >= 0.0f && delta_y < dimension.height*UNIT_LENGTH)
+    if (delta_y > 0.0f && delta_y < (dimension.height*UNIT_LENGTH - UNIT_LENGTH))
       player->move_y(input.move_y, time_step);
 
 	  Vector2f direction_vector(input.look_x, input.look_y);
@@ -128,7 +127,6 @@ void Game_State::render(){
  
   for (auto player : players) {    
     auto p_pos = player->get_position();
-    auto screen_pos = screen_coord_map[player->get_uid()]();
     get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
         p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);    
 
@@ -208,7 +206,7 @@ void Game_State::load_map(const std::string &file_) {
     for (int width = 0; width < line.length() && width < dimension.width; ++width) {
       Point2f position(UNIT_LENGTH*width, UNIT_LENGTH*height);
 
-      grasss.push_back(new Grass(position));
+      grasss.push_back(create_terrain("Grass", position));
            
       if (line[width] == '.');
       else if (line[width] == 't') {

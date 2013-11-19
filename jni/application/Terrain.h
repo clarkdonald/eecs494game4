@@ -12,8 +12,7 @@
 #include "Game_Object.h"
 #include "Player.h"
 #include "Utility.h"
-#include <Zeni/Coordinate.h>
-#include <Zeni/Material.h>
+#include <zenilib.h>
 
 class Terrain : public Game_Object {
   public:
@@ -27,6 +26,7 @@ class Terrain : public Game_Object {
 
   protected:
     Zeni::Material terrain_material;
+    Zeni::String texture;
 };
 
 #endif /* TERRAIN_H */
