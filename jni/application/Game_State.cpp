@@ -15,8 +15,8 @@
 #include "Tree.h"
 #include "Terrain.h"
 #include "Terrain_Factory.h"
-#include "Grass.h"
 #include "Player.h"
+#include "Health_Bar.h"
 #include "Player_Factory.h"
 #include "Map_Manager.h"
 #include "Warrior.h"				//for controls testing
@@ -46,6 +46,11 @@ Game_State::Game_State(const std::string &file_)
   screen_coord_map.push_back(&get_bottom_left_screen);
   screen_coord_map.push_back(&get_top_right_screen);
   screen_coord_map.push_back(&get_bottom_right_screen);
+ 
+  health_bars.push_back(new Health_Bar());
+  health_bars.push_back(new Health_Bar());
+  health_bars.push_back(new Health_Bar());
+  health_bars.push_back(new Health_Bar());
   load_map(file_);
 }
 
@@ -60,67 +65,75 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = players.begin(); it != players.end(); ++it)
     if (*it != nullptr) delete *it;
+  for (auto it = health_bars.begin(); it != health_bars.end(); ++it)
+    if (*it != nullptr) delete *it;
 }
 
 void Game_State::perform_logic() {
+  // calculate game time
   const Time_HQ current_time = get_Timer_HQ().get_time();
   float processing_time = float(current_time.get_seconds_since(time_passed));
   time_passed = current_time;
   float time_step = processing_time;
-  for (auto player : players)
-  {
+  
+  for (auto player : players) {
     Controls input = controls[player->get_uid()];
-
-    player->move_x(input.move_x, time_step);
-    player->move_y(input.move_y, time_step);
+    Point2f pos = player->get_position();
+    
+    // check movement around boundary
+    float delta_x = pos.x + input.move_x;
+    float delta_y = pos.y + input.move_y;
+    if (delta_x > 0.0f && delta_x < (dimension.width*UNIT_LENGTH - UNIT_LENGTH))
+      player->move_x(input.move_x, time_step);
+    if (delta_y > 0.0f && delta_y < (dimension.height*UNIT_LENGTH - UNIT_LENGTH))
+      player->move_y(input.move_y, time_step);
 
 	  Vector2f direction_vector(input.look_x, input.look_y);
-	  player->turn_to_face(direction_vector.theta());
-
-    if(input.attack)
-    {
+    if(direction_vector.magnitude() > 0.2f) // deadzone for right stick; magnitude : [0,1]
+	    player->turn_to_face(direction_vector.theta());
+    
+    if (input.attack) {
       //player->melee();
-
       Weapon* projectile = player->range();
-      if( projectile )
-        projectiles.push_back(projectile);
+      if (projectile != nullptr) projectiles.push_back(projectile);
     }
   }
-
-  for(auto projectile : projectiles)
-    projectile->update(time_step);
+  
+  for (auto projectile : projectiles) projectile->update(time_step);
 }
 
 void Game_State::render_spawn_menu() {
   Text_Button warrior(Point2f(200.0f, 250.0f), Point2f(600.0f, 310.0f), "system_36_800x600", "Warrior");
   Text_Button archer(Point2f(200.0f, 330.0f), Point2f(600.0f, 390.0f), "system_36_800x600", "Archer");
   Text_Button mage(Point2f(200.0f, 410.0f), Point2f(600.0f, 470.0f), "system_36_800x600", "Mage");
-  //warrior.
   warrior.render();
   archer.render();
   mage.render();
 }
 
-void Game_State::render_all() {
+void Game_State::render_all() {  
   for (auto grass : grasss) grass->render();
   for (auto terrain : terrains) terrain->render();
   for (auto environment : environments) environment->render();
-  for (auto atmosphere : atmospheres) atmosphere->render();
   for (auto player : players) player->render();
+  for (auto atmosphere : atmospheres) atmosphere->render();
   for (auto projectile : projectiles) projectile->render();
 }
 
 void Game_State::render(){
   // If we're done with the level, don't render anything
   if (gameover) return;
-
-	//get_Video().set_2d(VIDEO_DIMENSION, true);
  
-  // Top left corner
-  for (auto player : players) {
-    get_Video().set_2d_view(std::make_pair(player->get_position() - Vector2f(150.0f, 100.0f),
-        player->get_position() + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);
+  for (auto player : players) {    
+    auto p_pos = player->get_position();
+    get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
+        p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), true);    
+
     render_all();
+
+    // TODO: this position should be done once not every time. And the hp_pct should not be added on the hp_pctg
+    health_bars[player->get_uid()]->set_position(p_pos - Vector2f(145.0f, 95.0f));
+    health_bars[player->get_uid()]->render(player->get_hp_pctg());    
   }
 }
 
@@ -211,7 +224,7 @@ void Game_State::load_map(const std::string &file_) {
         string s = "Invalid character found: ";
         error_handle(s + line[width]);
       }
-      grasss.push_back(new Grass(position));
+      grasss.push_back(create_terrain("Grass", position));
     }
     ++height;
   }
@@ -347,5 +360,4 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
     default:
       break;
 	}
-	
 }

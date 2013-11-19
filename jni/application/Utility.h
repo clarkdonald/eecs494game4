@@ -59,6 +59,25 @@ enum House_Part {
   BLUE_ROOF_DOWN_LEFT_CORNER_2
 };
 
+/** Parts of the Stone Road object for rendering **/
+enum Stone_Road_Part {
+  STONE_DOWN,
+  STONE_DOWN_END,
+  STONE_DOWN_LEFT,
+  STONE_DOWN_RIGHT,
+  STONE_HORIZONTAL,
+  STONE_LEFT,
+  STONE_LEFT_END,
+  STONE_MIDDLE,
+  STONE_RIGHT,
+  STONE_RIGHT_END,
+  STONE_UP,
+  STONE_UP_END,
+  STONE_UP_LEFT,
+  STONE_UP_RIGHT,
+  STONE_VERTICAL
+};
+
 /** Dimension for the map **/
 struct Dimension {
   Dimension();
@@ -66,9 +85,6 @@ struct Dimension {
   int width;
   int height;
 };
-
-/** Prints out msg and throws bad_excetion **/
-void error_handle(const std::string &msg);
 
 /** Prints out msg and throws bad_excetion **/
 void error_handle(const std::string &msg);

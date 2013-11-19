@@ -18,14 +18,14 @@ Instructions_State::Instructions_State()
      "system_36_800x600",
      "P U R P O S E\n"
      "Your goal is to find and capture crystals scattered randomly around "
-     "the map back to your stronghold. Your enemies will try to do the same.\n\n"
+     "the map back to your stronghold.\n\n"
      "C O N T R O L S\n"
      "Left Stick: Move the explorer\n"
      "Right Stick: Look around, aim\n"
      "Right Trigger: Attack\n"
      "Start Button: Pause\n"
-     "A Key: Pick up Items\n"
-     "P Key: Retry level\n"
+     "A Key: Pick up or Drop Items\n"
+     "P Key: Restart level\n"
      "ESC Key: Pause entire game",
      Color())
 {
