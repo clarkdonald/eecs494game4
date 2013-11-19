@@ -11,12 +11,13 @@
 using namespace Zeni;
 
 Water::Water(const Point2f &position_)
-: Terrain(position_,"water")
+: Terrain(position_, "water")
 {}
 
 void Water::render() const {
   Game_Object::render(get_texture());
 }
 
-void Water::affect(Player &player_) {
+bool Water::slow_player_down() const {
+  return true;
 }

@@ -19,8 +19,8 @@ class Water : public Terrain {
     Water(const Zeni::Point2f &position_);
     
     void render() const;
-    
-    void affect(Player &player_) override;
+  
+    bool slow_player_down() const override;
 };
 
 #endif /* WATER_H */

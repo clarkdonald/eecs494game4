@@ -29,6 +29,10 @@
     <filepath>textures/Projectiles/arrow1.png</filepath>
     <tile>0</tile>
   </arrow>
+  <magic>
+    <filepath>textures/Projectiles/magic.png</filepath>
+    <tile>0</tile>
+  </magic>
   <attackdown>
     <filepath>textures/Character/attackdown.png</filepath>
     <tile>0</tile>
@@ -90,6 +94,10 @@
     <tile>0</tile>
   </uprun2> 
   <!-------------- Terrain ------------->
+  <water>
+    <filepath>textures/Terrain/water.png</filepath>
+    <tile>0</tile>
+  </water>
   <dirt>
     <filepath>textures/Terrain/dirt.png</filepath>
     <tile>0</tile>

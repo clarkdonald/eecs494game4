@@ -17,6 +17,6 @@ Terrain::Terrain(const Point2f &position_, const Zeni::String &texture_)
 
 Terrain::~Terrain() {}
 
-void Terrain::affect(Player &player_) {
-  // default behavior: do nothing
+bool Terrain::slow_player_down() const {
+  return false;
 }

@@ -39,10 +39,10 @@ Map_Manager::Map_Manager()
   }
   
   // load the character mapping for terrains
-  //terrain_charmap['w'] = "Water";
   terrain_charmap['d'] = "Dirt";
   terrain_charmap['r'] = "Rock_Pile";
   terrain_charmap['s'] = "Stone_Road";
+  terrain_charmap['W'] = "Water";
   terrain_charmap['w'] = "Wood_Floor";
   terrain_charmap['b'] = "Bush";
   
@@ -106,7 +106,6 @@ const std::string & Map_Manager::get_previous() {
   return files[index++];
 }
 
-
 Vertex_Buffer * Map_Manager::get_vbo_ptr_grass() {
   return vbo_ptr_grass;
 }
@@ -122,4 +121,3 @@ Vertex_Buffer * Map_Manager::get_vbo_ptr_environment() {
 Vertex_Buffer * Map_Manager::get_vbo_ptr_atmosphere() {
   return vbo_ptr_atmosphere;
 }
-

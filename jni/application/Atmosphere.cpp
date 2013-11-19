@@ -16,7 +16,3 @@ Atmosphere::Atmosphere(const Point2f &position_,  const Zeni::String &texture_)
 {}
 
 Atmosphere::~Atmosphere() {}
-
-void Atmosphere::affect(Player &player_) {
-  // default behavior: do nothing
-}

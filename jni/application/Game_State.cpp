@@ -19,8 +19,6 @@
 #include "Health_Bar.h"
 #include "Player_Factory.h"
 #include "Map_Manager.h"
-#include "Warrior.h"				//for controls testing
-#include "Archer.h"
 #include <utility>
 #include <fstream>
 #include <map>
@@ -41,18 +39,28 @@ using std::vector;
 using std::cerr;
 using std::endl;
 
+Player_Wrapper::Player_Wrapper(Player *player_, const int &uid_)
+: player(player_), uid(uid_)
+{}
+  
+Player_Wrapper::~Player_Wrapper() {
+  if (player != nullptr) delete player;
+}
+
+Player_Info::Player_Info(const Zeni::Point2f &start_position_)
+: start_position(start_position_)
+{}
+
 Game_State::Game_State(const std::string &file_)
-: gameover(false)
+: gameover(false)  
 {
+  // set up function pointers for split screen methods
   screen_coord_map.push_back(&get_top_left_screen);
   screen_coord_map.push_back(&get_bottom_left_screen);
   screen_coord_map.push_back(&get_top_right_screen);
   screen_coord_map.push_back(&get_bottom_right_screen);
- 
-  health_bars.push_back(new Health_Bar());
-  health_bars.push_back(new Health_Bar());
-  health_bars.push_back(new Health_Bar());
-  health_bars.push_back(new Health_Bar());
+  
+  // load map from the input file
   load_map(file_);
 }
 
@@ -65,9 +73,11 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = environments.begin(); it != environments.end(); ++it)
     if (*it != nullptr) delete *it;
-  for (auto it = players.begin(); it != players.end(); ++it)
+  for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
     if (*it != nullptr) delete *it;
-  for (auto it = health_bars.begin(); it != health_bars.end(); ++it)
+  for (auto it = player_wrappers.begin(); it != player_wrappers.end(); ++it)
+    if (*it != nullptr) delete *it;
+  for (auto it = player_infos.begin(); it != player_infos.end(); ++it)
     if (*it != nullptr) delete *it;
 }
 
@@ -78,39 +88,132 @@ void Game_State::perform_logic() {
   time_passed = current_time;
   float time_step = processing_time;
   
-  for (auto player : players) {
-    Controls input = controls[player->get_uid()];
-    Point2f pos = player->get_position();
+  // iterate through each player, updating its state
+  for (auto player_wrapper : player_wrappers) {
+    if (player_wrapper->player->is_dead()) continue;
     
-    // check movement around boundary
-    float delta_x = pos.x + input.move_x;
-    float delta_y = pos.y + input.move_y;
-    if ((input.move_x > 0.0f &&
+    // get controls for each player
+    Controls input = player_infos[player_wrapper->uid]->controls;
+    
+    // check collision with terrain on movement
+    float move_x = input.move_x;
+    float move_y = input.move_y;
+    for (auto terrain : terrains) {
+      if (terrain->slow_player_down() && player_wrapper->player->touching(*terrain)) {
+        move_x *= 0.5f;
+        move_y *= 0.5f;
+        break;
+      }
+    }
+    
+    // check collision with environment on movement
+    float delta_x = player_wrapper->player->get_position().x + move_x;
+    float delta_y = player_wrapper->player->get_position().y + move_y;
+    if ((move_x > 0.0f &&
          delta_x < (dimension.width*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
-         (input.move_x < 0.0f &&
+        (move_x < 0.0f &&
          delta_x > 0.0f))
     {
-      player->move_x(input.move_x, time_step);
+      player_wrapper->player->move_x(move_x, time_step);
+      for (auto environment : environments) {
+        if (player_wrapper->player->touching(*environment)) {
+          player_wrapper->player->move_x(-move_x, time_step);
+          break;
+        }
+      }
     }
-    if ((input.move_y > 0.0f &&
+    if ((move_y > 0.0f &&
          delta_y < (dimension.height*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
-        (input.move_y < 0.0f &&
+        (move_y < 0.0f &&
          delta_y > 0.0f))
     {
-      player->move_y(input.move_y, time_step);
+      player_wrapper->player->move_y(move_y, time_step);
+      for (auto environment : environments) {
+        if (player_wrapper->player->touching(*environment)) {
+          player_wrapper->player->move_y(-move_y, time_step);
+          break;
+        }
+      }
     }
 
+    // directional logic for player
 	  Vector2f direction_vector(input.look_x, input.look_y);
-	  player->turn_to_face(direction_vector.theta());
-
+    if (direction_vector.magnitude() > 0.4f) // deadzone for right stick; magnitude : [0,1]
+	    player_wrapper->player->turn_to_face(direction_vector.theta());
+    
+    // attack logic for player
     if (input.attack) {
-      //player->melee();
-      Weapon* projectile = player->range();
+      // Warrior melee sword attack
+      Weapon* melee = player_wrapper->player->melee();
+      if (melee != nullptr) {
+        for (auto player_check : player_wrappers) {
+          if (player_check->player == player_wrapper->player ||
+              player_check->player->is_dead())
+          {
+            continue;
+          }
+          if (melee->touching(*(player_check->player)))
+            player_check->player->take_dmg(melee->get_damage());
+        }
+      }
+      delete melee;
+
+      // Archer/Mage ranged attack
+      Weapon* projectile = player_wrapper->player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
+    } else {
+      player_wrapper->player->set_can_attack();
     }
   }
   
-  for (auto projectile : projectiles) projectile->update(time_step);
+  // iterate through each projectile, updating it
+  for (auto projectile = projectiles.begin(); projectile != projectiles.end();) {
+    (*projectile)->update(time_step);
+
+    bool should_remove = false;
+
+    // do player collision checks 
+    for (auto player_wrapper : player_wrappers) {
+      if (player_wrapper->player->is_dead()) continue;
+      if ((*projectile)->touching(*(player_wrapper->player))) {
+        player_wrapper->player->take_dmg((*projectile)->get_damage());
+        should_remove = true;
+        break;
+      }
+    }
+
+    // do environment collision checks
+    for (auto environment : environments) {
+      if ((*projectile)->touching(*environment)) {
+        should_remove = true;
+        break;
+      }
+    }
+
+    // do map boundary checks
+    Point2f proj_pos = (*projectile)->get_center();
+    if (proj_pos.x < 0.0f || proj_pos.x >= dimension.width*UNIT_LENGTH ||
+       proj_pos.y < 0.0f || proj_pos.y >= dimension.height*UNIT_LENGTH)
+    {
+       should_remove = true;
+    }
+
+    if (should_remove) {
+      delete *projectile;
+      projectile = projectiles.erase(projectile);
+    } else {
+      projectile++;
+    }
+  }
+  
+  // respawn dead players
+  for (auto player_wrapper : player_wrappers) {
+    if (!player_wrapper->player->is_dead()) continue;
+    Player *dead = player_wrapper->player;
+    // TODO: logic to choose right player type
+    player_wrapper->player = create_player("Mage", player_infos[player_wrapper->uid]->start_position, player_wrapper->uid);
+    delete dead;
+  }
 }
 
 void Game_State::render_spawn_menu() {
@@ -130,7 +233,7 @@ void Game_State::render_all() {
   Map_Manager::get_Instance().get_vbo_ptr_environment()->render();
   
   // Movable objects
-  for (auto player : players) player->render();
+  for (auto player_wrapper : player_wrappers) player_wrapper->player->render();
   for (auto projectile : projectiles) projectile->render();
 
   // This renders the static textures above the movable objects (Atmosphere)
@@ -141,18 +244,14 @@ void Game_State::render(){
   // If we're done with the level, don't render anything
   if (gameover) return;
  
-  for (auto player : players) {    
-    auto p_pos = player->get_position();
+  for (auto player_wrapper : player_wrappers) {
+    auto p_pos = player_wrapper->player->get_position();
     get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
-        p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player->get_uid()](), false);    
-
+        p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player_wrapper->uid](), false);
     render_all();
-
-    // TODO: this position should be done once not every time. And the hp_pct should not be added on the hp_pctg
-    health_bars[player->get_uid()]->set_position(p_pos - Vector2f(140.0f, 90.0f));
-    health_bars[player->get_uid()]->render(player->get_hp_pctg());    
+    player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 90.0f));
+    player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg());
   }
-  
 }
 
 void Game_State::create_tree(const Point2f &position) {
@@ -214,8 +313,9 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x");
-    players.push_back(create_player("Warrior", Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), i));
-    controls.push_back(Controls());
+    Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
+    player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i), i));
+    player_infos.push_back(new Player_Info(pos));
   }
 
   // Get map information
@@ -225,27 +325,24 @@ void Game_State::load_map(const std::string &file_) {
     for (int width = 0; width < line.length() && width < dimension.width; ++width) {
       Point2f position(UNIT_LENGTH*width, UNIT_LENGTH*height);
 
+      // every space will always have a grass tile
       grasss.push_back(create_terrain("Grass", position));
-           
+
       if (line[width] == '.');
       else if (line[width] == 't') {
         create_tree(position);
-      }
-      else if (line[width] == 'h') {
+      } else if (line[width] == 'h') {
         create_house(position);
-      }
-      else if (Map_Manager::get_Instance().find_terrain(line[width])) {  
+      } else if (Map_Manager::get_Instance().find_terrain(line[width])) {
         terrains.push_back(create_terrain(
             Map_Manager::get_Instance().get_terrain(line[width]),position));                  
-      }
-      else if (Map_Manager::get_Instance().find_atmosphere(line[width])) {
+      } else if (Map_Manager::get_Instance().find_atmosphere(line[width])) {
         atmospheres.push_back(
           create_atmosphere(Map_Manager::get_Instance().get_atmosphere(line[width]),position));
-      }
-      else {
-        string s = "Invalid character found: ";
+      } else {
+        string s = "Invalid character found in map: ";
         error_handle(s + line[width]);
-      }      
+      }
     }
     ++height;
   }
@@ -273,32 +370,32 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
                                          const float &confidence,
                                          const int &action)
 {
-	switch(action) {
+	switch (action) {
 		/* player 1 */
     case 11:
       break;
 
     case 12:
-			controls[0].move_x = confidence;
+			player_infos[0]->controls.move_x = confidence;
       break;
 
     case 13:
-			controls[0].move_y = confidence;
+			player_infos[0]->controls.move_y = confidence;
       break;
 
     case 14:
-			controls[0].look_x = confidence;
+			player_infos[0]->controls.look_x = confidence;
       break;
 
     case 15:
-			controls[0].look_y = confidence;
+			player_infos[0]->controls.look_y = confidence;
       break;
 
     case 16:
       break;
 
     case 17:
-      controls[0].attack = confidence > .5;
+      player_infos[0]->controls.attack = confidence > 0.5f;
       break;
 
     case 10:
@@ -309,26 +406,26 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 22:
-			controls[1].move_x = confidence;
+			player_infos[1]->controls.move_x = confidence;
       break;
 
     case 23:
-			controls[1].move_y = confidence;
+			player_infos[1]->controls.move_y = confidence;
       break;
 
     case 24:
-			controls[1].look_x = confidence;
+			player_infos[1]->controls.look_x = confidence;
       break;
 
     case 25:
-			controls[1].look_y = confidence;
+			player_infos[1]->controls.look_y = confidence;
       break;
 
     case 26:
       break;
 
     case 27:
-			controls[1].attack = true;
+			player_infos[1]->controls.attack = confidence > 0.5f;
       break;
 
     case 20:
@@ -339,26 +436,26 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 32:
-			controls[2].move_x = confidence;
+			player_infos[2]->controls.move_x = confidence;
       break;
 
     case 33:
-			controls[2].move_y = confidence;
+			player_infos[2]->controls.move_y = confidence;
       break;
 
     case 34:
-			controls[2].look_x = confidence;
+			player_infos[2]->controls.look_x = confidence;
       break;
 
     case 35:
-			controls[2].look_y = confidence;
+			player_infos[2]->controls.look_y = confidence;
       break;
 
     case 36:
       break;
 
     case 37:
-			controls[2].attack = true;
+			player_infos[2]->controls.attack = confidence > 0.5f;
       break;
 
     case 30:
@@ -369,26 +466,26 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 42:
-			controls[3].move_x = confidence;
+			player_infos[3]->controls.move_x = confidence;
       break;
 
     case 43:
-			controls[3].move_y = confidence;
+			player_infos[3]->controls.move_y = confidence;
       break;
 
     case 44:
-			controls[3].look_x = confidence;
+			player_infos[3]->controls.look_x = confidence;
       break;
 
     case 45:
-			controls[3].look_y = confidence;
+			player_infos[3]->controls.look_y = confidence;
       break;
 
     case 46:
       break;
 
     case 47:
-			controls[3].attack = true;
+			player_infos[3]->controls.attack = confidence > 0.5f;
       break;
 
     case 40:
