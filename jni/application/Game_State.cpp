@@ -87,10 +87,8 @@ void Game_State::perform_logic() {
     }
   }
 
-  for(auto it = projectiles.begin(); it != projectiles.end(); it++)
-  {
-    (*it)->update(time_step);
-  }
+  for(auto projectile : projectiles)
+    projectile->update(time_step);
 }
 
 void Game_State::render_spawn_menu() {
