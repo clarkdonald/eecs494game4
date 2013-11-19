@@ -5,34 +5,24 @@ using namespace Zeni;
 using namespace std;
 
 Archer::Archer(const Zeni::Point2f &position_, const int &uid_)
-  : Player(position_, uid_)
-{
-  max_hp = 150.0f;
-  hp = max_hp;
-}
+: Player(position_, uid_, 150.0f)
+{}
 
-void Archer::render() const
-{
+void Archer::render() const {
 	Game_Object::render("downidle");
 }
 
 Weapon* Archer::range()
 {
   Weapon* projectile = nullptr;
-  if (can_attack)
-  {
+  if (can_attack()) {
     Point2f pos = calc_weapon_pos();
-    projectile = new Arrow(pos, facing);
-    
-    can_attack = false;
+    projectile = new Arrow(pos, get_facing());
+    set_cannot_attack();
   }
   return projectile;
 }
 
 void Archer::spc_skill()
-{
-}
-
-Archer::~Archer()
 {
 }

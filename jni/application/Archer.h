@@ -3,17 +3,15 @@
 
 #include "Player.h"
 
-class Archer : public Player
-{
+class Archer : public Player {
   public:
     Archer(const Zeni::Point2f &position_, const int &uid_);
-    ~Archer();
 
     void render() const override;
 
     Weapon* range() override;
+  
     void spc_skill() override;
 };
-
 
 #endif /* ARCHER_H */

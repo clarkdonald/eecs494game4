@@ -3,7 +3,8 @@
 using namespace Zeni;
 using namespace std;
 
-Weapon::Weapon(const Zeni::Point2f &position_)
-	: Game_Object(position_)
-{
-}
+Weapon::Weapon(const Zeni::Point2f &position_, const float &damage_)
+: Game_Object(position_), damage(damage_)
+{}
+
+Weapon::~Weapon() {}

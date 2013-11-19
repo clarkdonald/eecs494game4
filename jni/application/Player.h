@@ -16,47 +16,55 @@
 
 class Player : public Game_Object {
   public:
-	  Player(const Zeni::Point2f &position_, const int &uid_);
-    virtual ~Player() {}
+	  Player(const Zeni::Point2f &position_, const int &uid_, const float &max_hp_);
+  
+    virtual ~Player() = 0;
 
     virtual void render() const = 0;
   
-    void move_y(const float, const float);
-    void move_x(const float, const float);
-	  void turn_to_face(const float);
+    void move_y(const float &, const float &);
+  
+    void move_x(const float &, const float &);
+  
+	  void turn_to_face(const float &);
 
-    virtual Weapon* melee() {return NULL;}	// sword
-    virtual Weapon* range() {return NULL;}  // arrow, fireball
+    virtual Weapon* melee() {return nullptr;}	// sword
+  
+    virtual Weapon* range() {return nullptr;}  // arrow, fireball
 
 	  virtual void spc_skill() = 0; // special class-specific attack
 
-	  void take_dmg(float);
+	  void take_dmg(const float &);
+  
 	  void die();
 
-    float get_hp_pctg();
-    unsigned int get_crystals_held();
-    float get_facing();
+    float get_hp_pctg() const;
+  
+    const unsigned int & get_crystals_held() const {return n_crystals;}
+  
+    const float & get_facing() const {return facing;}
 
     void set_can_attack();
+  
+    void set_cannot_attack();
 
-	  void pick_up_crystal();
+    void pick_up_crystal();
+  
 	  void drop_crystal();
   
     const int & get_uid() const {return uid;}
-
-  private:
-
+  
   protected:
+    bool can_attack() const {return attackable;}
     Zeni::Point2f calc_weapon_pos();
-
-	  float facing;
-
-	  float hp;
+  
+  private:
+    float facing;
     float max_hp;
-	  unsigned int n_crystals;
+    float hp;
+    unsigned int n_crystals;
     int uid;
-
-    bool can_attack;
+    bool attackable;
 };
 
 #endif /* PLAYER_H */

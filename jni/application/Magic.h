@@ -5,13 +5,12 @@
 
 #define MAGIC_SPD 200.0f
 
-class Magic : public Weapon
-{
+class Magic : public Weapon {
   public:
     Magic(const Zeni::Point2f&, const float&);
-    ~Magic();
 
     void render() const override;
+  
     void update(const float) override;
 
   private:
