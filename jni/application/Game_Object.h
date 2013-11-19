@@ -26,7 +26,7 @@ class Game_Object {
     
     const Zeni::Point2f & get_position() const;
 
-    const Zeni::Point2f & get_center() const;
+    Zeni::Point2f get_center() const;
     
     const Zeni::Vector2f & get_size() const;
     

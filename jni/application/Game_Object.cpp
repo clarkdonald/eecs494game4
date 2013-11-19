@@ -40,7 +40,7 @@ const Point2f & Game_Object::get_position() const {
   return position;
 }
 
-const Point2f & Game_Object::get_center() const {
+Point2f Game_Object::get_center() const {
   return position + size * 0.5f;
 }
 

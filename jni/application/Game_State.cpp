@@ -43,6 +43,7 @@ using std::endl;
 
 Game_State::Game_State(const std::string &file_)
 : gameover(false),
+  vbo_ptr_floor(new Vertex_Buffer),
   vbo_ptr_lower(new Vertex_Buffer),
   vbo_ptr_middle(new Vertex_Buffer),
   vbo_ptr_upper(new Vertex_Buffer)
@@ -74,6 +75,7 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
     if (*it != nullptr) delete *it;
+  delete vbo_ptr_floor;
   delete vbo_ptr_lower;
   delete vbo_ptr_middle;
   delete vbo_ptr_upper;
@@ -131,25 +133,20 @@ void Game_State::perform_logic() {
       }
     }
 
+    // directional logic for player
 	  Vector2f direction_vector(input->look_x, input->look_y);
     if(direction_vector.magnitude() > 0.4f) // deadzone for right stick; magnitude : [0,1]
 	    player->turn_to_face(direction_vector.theta());
     
-
-    if (input->attack) 
-    {
+    // attack logic for player
+    if (input->attack) {
       // Warrior melee sword attack
-
       Weapon* melee = player->melee();
-      if(melee != nullptr)
-      {
-        // do collision checks 
-        for(auto player_check : players)
-        {
-          if(player_check == player)
-            continue;
+      if(melee != nullptr) {
+        for (auto player_check : players) {
+          if (player_check == player) continue;
 
-          if(melee->touching(*player_check))
+          if (melee->touching(*player_check))
             player_check->take_dmg(melee->get_damage());
         }
       }
@@ -217,6 +214,7 @@ void Game_State::render_spawn_menu() {
 }
 
 void Game_State::render_all() {
+  vbo_ptr_floor->render();
   vbo_ptr_lower->render();
   vbo_ptr_middle->render();
   for (auto player : players) player->render();
@@ -312,6 +310,7 @@ void Game_State::load_map(const std::string &file_) {
     for (int width = 0; width < line.length() && width < dimension.width; ++width) {
       Point2f position(UNIT_LENGTH*width, UNIT_LENGTH*height);
 
+      // every space will always have a grass tile
       grasss.push_back(create_terrain("Grass", position));
 
       if (line[width] == '.');
@@ -332,22 +331,18 @@ void Game_State::load_map(const std::string &file_) {
       else {
         string s = "Invalid character found: ";
         error_handle(s + line[width]);
-      }      
+      }
     }
     ++height;
   }
 
-  // Put it into the Vertex_Buffer Below
+  // Put objects into the Vertex_Buffer
   for (auto grass : grasss)
-    vbo_ptr_lower->give_Quadrilateral(create_quad_ptr(grass));
+    vbo_ptr_floor->give_Quadrilateral(create_quad_ptr(grass));
   for (auto terrain : terrains)
     vbo_ptr_lower->give_Quadrilateral(create_quad_ptr(terrain));
-  
-  // Put it into the Vertex_Buffer Middle
   for (auto environment : environments)
      vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
-
-  // Put it into the Vertex_Buffer Above
   for (auto atmosphere : atmospheres)
      vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
   

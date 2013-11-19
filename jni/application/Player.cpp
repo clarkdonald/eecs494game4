@@ -40,15 +40,15 @@ void Player::turn_to_face(const float theta)
 
 void Player::take_dmg(float dmg)
 {
-	hp -= dmg;
-	if(hp <= 0)
-		die();
+  if ((hp -= dmg) < 0.0f) {
+    hp = 0.0f;
+    die();
+  }
 }
 
 void Player::die()
 {
-	while(n_crystals != 0)
-		drop_crystal();
+	while (n_crystals != 0) drop_crystal();
 
 	// start spawn menu?
 }

@@ -66,6 +66,7 @@ class Game_State {
     bool gameover;
     Dimension dimension;
     std::vector<std::pair<Zeni::Point2i, Zeni::Point2i> (*)()> screen_coord_map;
+    Zeni::Vertex_Buffer *vbo_ptr_floor;
     Zeni::Vertex_Buffer *vbo_ptr_lower;
     Zeni::Vertex_Buffer *vbo_ptr_middle;
     Zeni::Vertex_Buffer *vbo_ptr_upper;
