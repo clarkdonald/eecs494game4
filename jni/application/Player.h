@@ -47,6 +47,8 @@ class Player : public Game_Object {
   private:
 
   protected:
+    Zeni::Point2f calc_weapon_pos();
+
 	  float facing;
 
 	  float hp;

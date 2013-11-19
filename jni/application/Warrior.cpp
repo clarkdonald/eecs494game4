@@ -21,11 +21,7 @@ Weapon* Warrior::melee()
   Weapon* sword = nullptr;
   if(can_attack)
   {
-    Point2f pos = get_position();
-    Vector2f size = get_size();
-
-    pos += Vector2f(size.magnitude() * cos(facing), size.magnitude() * sin(facing)); // top left of sword image
-
+    Point2f pos = calc_weapon_pos();
     sword = new Sword(pos, facing);
     
     can_attack = false;

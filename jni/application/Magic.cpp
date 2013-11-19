@@ -12,18 +12,6 @@ Magic::Magic(const Zeni::Point2f &position_, const float &theta)
 
 void Magic::render() const
 {
-  //char msg[256];
-  //sprintf(msg, "%0.02f %0.02f\n", get_position().x, get_position().y);
-  //OutputDebugString(msg);
-
-  //render_image("magic",
-  //             get_position(),              // upper left
-  //             get_position() + get_size(), // bottom right
-  //             move_vec.theta(),            // rotation in radians
-  //             1.0f,                        // scale factor
-  //             get_center(),                // point to rotate about
-  //             false,                       // flip horizontal
-  //             Color());                    // texture color
   Game_Object::render("magic", Color(), move_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two);
 }
 

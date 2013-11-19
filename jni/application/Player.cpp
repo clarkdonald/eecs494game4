@@ -85,3 +85,14 @@ void Player::drop_crystal()
 
 	// add crystal to some global render queue?
 }
+
+
+Point2f Player::calc_weapon_pos()
+{
+    Point2f pos = get_position();
+    Vector2f size = get_size();
+
+    pos += Vector2f(size.magnitude() * 0.9f * cos(facing), size.magnitude() * 0.9f * sin(facing)); // top left of magic image
+
+    return pos;
+}
