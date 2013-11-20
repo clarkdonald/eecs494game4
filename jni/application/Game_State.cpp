@@ -129,11 +129,11 @@ void Game_State::perform_logic() {
          delta_x > 0.0f))
     {
       // make an initial attempt at movement
-      player_wrapper->player->move_x(move_x, time_step);
+      player_wrapper->player->move_x(move_x, time_step, true);
       
       for (auto environment : environments) {
         if (player_wrapper->player->touching(*environment)) {
-          player_wrapper->player->move_x(-move_x, time_step);
+          player_wrapper->player->move_x(-move_x, time_step, false);
           moved_back = true;
           break;
         }
@@ -141,7 +141,7 @@ void Game_State::perform_logic() {
       if (!moved_back) {
         for (auto npc : npcs) {
           if (player_wrapper->player->touching(*npc)) {
-            player_wrapper->player->move_x(-move_x, time_step);
+            player_wrapper->player->move_x(-move_x, time_step, false);
             moved_back = true;
             break;
           }
@@ -155,7 +155,7 @@ void Game_State::perform_logic() {
             continue;
           }
           if (player_wrapper->player->touching(*(player_check->player))) {
-            player_wrapper->player->move_x(-move_x, time_step);
+            player_wrapper->player->move_x(-move_x, time_step, false);
             break;
           }
         }
@@ -168,11 +168,11 @@ void Game_State::perform_logic() {
          delta_y > 0.0f))
     {
       // make an initial attempt at movement
-      player_wrapper->player->move_y(move_y, time_step);
+      player_wrapper->player->move_y(move_y, time_step, true);
       
       for (auto environment : environments) {
         if (player_wrapper->player->touching(*environment)) {
-          player_wrapper->player->move_y(-move_y, time_step);
+          player_wrapper->player->move_y(-move_y, time_step, false);
           moved_back = true;
           break;
         }
@@ -180,7 +180,7 @@ void Game_State::perform_logic() {
       if (!moved_back) {
         for (auto npc : npcs) {
           if (player_wrapper->player->touching(*npc)) {
-            player_wrapper->player->move_y(-move_y, time_step);
+            player_wrapper->player->move_y(-move_y, time_step, false);
             moved_back = true;
             break;
           }
@@ -194,7 +194,7 @@ void Game_State::perform_logic() {
             continue;
           }
           if (player_wrapper->player->touching(*(player_check->player))) {
-            player_wrapper->player->move_y(-move_y, time_step);
+            player_wrapper->player->move_y(-move_y, time_step, false);
             break;
           }
         }
@@ -480,6 +480,9 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       player_infos[0]->controls.attack = confidence > 0.5f;
       break;
 
+		case 18:
+			break;
+
     case 10:
       break;
 
@@ -509,6 +512,9 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
     case 27:
 			player_infos[1]->controls.attack = confidence > 0.5f;
       break;
+
+		case 28:
+			break;
 
     case 20:
       break;
@@ -540,6 +546,9 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			player_infos[2]->controls.attack = confidence > 0.5f;
       break;
 
+		case 38:
+			break;
+
     case 30:
       break;
 
@@ -569,6 +578,9 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
     case 47:
 			player_infos[3]->controls.attack = confidence > 0.5f;
       break;
+
+		case 48:
+			break;
 
     case 40:
       break;

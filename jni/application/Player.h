@@ -25,9 +25,9 @@ class Player : public Game_Object {
 
     virtual void render() const = 0;
   
-    void move_y(const float &, const float &);
+    void move_y(const float &, const float &, bool);
   
-    void move_x(const float &, const float &);
+    void move_x(const float &, const float &, bool);
   
 	  void turn_to_face(const float &);
 
