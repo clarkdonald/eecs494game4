@@ -131,7 +131,7 @@
   </health>
   <!-------------- Weapons ------------->
   <arrow>
-    <filepath>textures/Projectiles/arrow1.png</filepath>
+    <filepath>textures/Projectiles/arrow4.png</filepath>
     <tile>0</tile>
   </arrow>
   <magic>
