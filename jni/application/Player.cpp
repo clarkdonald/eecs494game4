@@ -25,8 +25,8 @@ Player::Player(const Point2f &position_,
   n_crystals(0),
   uid(uid_),
   attackable(true),
+  player_direction(DOWN),
 	sprite_distance_traveled(0.0f),
-	player_direction(DOWN),
 	sprite_frame(0),
   team(team_)
 {}
@@ -99,8 +99,11 @@ void Player::take_dmg(const float &dmg) {
 }
 
 void Player::die() {
-	while (n_crystals != 0) drop_crystal();
-	// TODO: start spawn menu?
+	while (n_crystals != 0) --n_crystals;
+}
+
+void Player::kill() {
+  hp = 0.0f;
 }
 
 float Player::get_hp_pctg() const {
@@ -135,7 +138,7 @@ Point2f Player::calc_weapon_pos() {
 }
 
 void Player::render() const {
-	
+	if(is_dead()) return;
 	String str;
 	switch(player_direction)
 	{

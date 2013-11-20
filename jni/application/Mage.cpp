@@ -10,8 +10,7 @@ Mage::Mage(const Zeni::Point2f &position_,
 : Player(position_, uid_, 80.0f, 100.0f, team_)
 {}
 
-void Mage::render() const 
-{
+void Mage::render() const {
 	Player::render();
 }
 
