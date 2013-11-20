@@ -19,7 +19,8 @@ class Player : public Game_Object {
            const int &uid_,
            const float &speed_,
            const float &max_hp_,
-           const Team &team_);
+           const Team &team_,
+					 const Zeni::String& sprite_prefix_);
   
     virtual ~Player() = 0;
 
@@ -85,6 +86,7 @@ class Player : public Game_Object {
 		Player_Direction player_direction;
 		float sprite_distance_traveled;
 		int sprite_frame;
+		Zeni::String sprite_prefix;
     Team team;
 };
 

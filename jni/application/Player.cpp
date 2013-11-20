@@ -16,7 +16,8 @@ Player::Player(const Point2f &position_,
                const int &uid_,
                const float &speed_,
                const float &max_hp_,
-               const Team &team_)
+               const Team &team_,
+							 const String& sprite_prefix_)
 : Game_Object(position_),
   speed(speed_),
   facing(Global::pi_over_two),
@@ -28,7 +29,8 @@ Player::Player(const Point2f &position_,
   player_direction(DOWN),
 	sprite_distance_traveled(0.0f),
 	sprite_frame(0),
-  team(team_)
+  team(team_),
+	sprite_prefix(sprite_prefix_)
 {}
 
 Player::~Player() {}
@@ -143,22 +145,22 @@ void Player::render() const {
 	switch(player_direction)
 	{
 		case UP:
-			str = "mage_uprun";
+			str = sprite_prefix + "uprun";
 			str += to_string(sprite_frame + 1).c_str();
 			Game_Object::render(str);
 			break;
 		case DOWN:
-			str = "mage_downrun";
+			str = sprite_prefix + "downrun";
 			str += to_string(sprite_frame + 1).c_str();
 			Game_Object::render(str);
 			break;
 		case LEFT:
-			str = "mage_leftrun";
+			str = sprite_prefix + "leftrun";
 			str += to_string(sprite_frame + 1).c_str();
 			Game_Object::render(str);
 			break;
 		case RIGHT:
-			str = "mage_rightrun";
+			str = sprite_prefix + "rightrun";
 			str += to_string(sprite_frame + 1).c_str();
 			Game_Object::render(str);
 			break;
