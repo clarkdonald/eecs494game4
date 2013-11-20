@@ -55,6 +55,10 @@ void Player::die() {
 	// TODO: start spawn menu?
 }
 
+void Player::kill() {
+  hp = 0.0f;
+}
+
 float Player::get_hp_pctg() const {
   return hp/max_hp;
 }

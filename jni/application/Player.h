@@ -41,6 +41,8 @@ class Player : public Game_Object {
   
 	  void die();
 
+    void kill();
+
     float get_hp_pctg() const;
     
     const unsigned int & get_crystals_held() const {return n_crystals;}

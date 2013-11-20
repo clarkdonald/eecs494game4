@@ -19,19 +19,22 @@ class Terrain;
 class Atmosphere;
 class Environment;
 class Player;
+class Spawn_Menu;
 
 struct Player_Wrapper {
   Player_Wrapper(Player *player_, const int &uid_);
   ~Player_Wrapper();
   Player* player;
-  int uid;
+  int uid;  
 };
 
 struct Player_Info {
-  Player_Info(const Zeni::Point2f &start_position_);
+  Player_Info(const Zeni::Point2f &start_position_, Spawn_Menu * spawn_menu_);
+  ~Player_Info();
   Controls controls;
   Health_Bar health_bar;
   Zeni::Point2f start_position;
+  Spawn_Menu * spawn_menu;
 };
 
 class Game_State {
@@ -57,9 +60,9 @@ class Game_State {
   private:
     void clear();
 
-	  void render_all();
+	  void render_all(Player_Wrapper * player_wrapper);
 
-    void render_spawn_menu();
+    void render_spawn_menu(Player_Wrapper * player_wrapper);
   
     void create_tree(const Zeni::Point2f &position);
   

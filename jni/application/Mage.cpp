@@ -9,7 +9,8 @@ Mage::Mage(const Zeni::Point2f &position_, const int &uid_)
 {}
 
 void Mage::render() const {
-	Game_Object::render("downidle");
+	if(!is_dead())
+    Game_Object::render("downidle");
 }
 
 Weapon* Mage::range() {
