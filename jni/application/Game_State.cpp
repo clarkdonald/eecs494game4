@@ -276,6 +276,7 @@ void Game_State::perform_logic() {
           else {
             if (player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() > DEPOSIT_TIME) {
               player_wrapper->player->drop_crystal();
+              --crystals_in_play;
               player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
             }
           }
@@ -347,15 +348,21 @@ void Game_State::perform_logic() {
   
   // respawn dead players
   for (auto player_wrapper : player_wrappers) {
-    if(!player_wrapper->player->is_dead()) continue;        
-    if(player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
+    if(!player_wrapper->player->is_dead()) continue;
+    crystals_in_play += player_wrapper->player->get_crystals_held();
+    if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
       Player *dead = player_wrapper->player;
       player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()),
                                              player_infos[player_wrapper->uid]->start_position, 
                                              player_wrapper->uid,
                                              player_wrapper->player->get_team());      
       delete dead;
-    }     
+    }
+  }
+
+  if (crystals_in_play < total_num_crystals) {
+    crystals.push_back(new Crystal(crystal_locations[rand()%crystal_locations.size()]));
+    crystals_in_play++;
   }
 }
 
@@ -538,6 +545,9 @@ void Game_State::load_map(const std::string &file_) {
      vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
   
   // TEMP: spawn a couple crystals for now
+  crystal_locations.push_back(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8));
+  crystal_locations.push_back(Point2f(UNIT_LENGTH*11, UNIT_LENGTH*9));
+  crystal_locations.push_back(Point2f(UNIT_LENGTH*13, UNIT_LENGTH*8));
   crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8)));
   crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*11, UNIT_LENGTH*9)));
   

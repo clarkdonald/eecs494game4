@@ -96,6 +96,7 @@ class Game_State {
     std::list<Weapon*> projectiles;
     std::list<Npc*> npcs;
     std::list<Crystal*> crystals;
+    std::vector<Zeni::Point2f> crystal_locations;
     int total_num_crystals;
     int crystals_in_play;
     bool gameover;
