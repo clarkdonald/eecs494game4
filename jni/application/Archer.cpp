@@ -11,7 +11,8 @@ Archer::Archer(const Zeni::Point2f &position_,
 {}
 
 void Archer::render() const {
-	Game_Object::render("downidle");
+  String turnsprite = facing_str + "idle";
+	Game_Object::render(turnsprite);
 }
 
 Weapon* Archer::range()

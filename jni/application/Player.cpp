@@ -24,7 +24,8 @@ Player::Player(const Point2f &position_,
   n_crystals(0),
   uid(uid_),
   attackable(true),
-  team(team_)
+  team(team_),
+  facing_str("down")
 {}
 
 Player::~Player() {}
@@ -43,6 +44,7 @@ void Player::move_y(const float &mag, const float &timestep) {
 
 void Player::turn_to_face(const float &theta) {
 	facing = theta;
+  set_facing_str();
 }
 
 void Player::take_dmg(const float &dmg) {
@@ -86,4 +88,27 @@ Point2f Player::calc_weapon_pos() {
     // Offset for centering the weapon wrt player's center
     pos -= (SMALL_SIZE / 2);
     return pos;
+}
+
+void Player::set_facing_str()
+{  
+  if(facing >= Global::pi_over_two / 2.0f &&
+     facing < Global::three_pi_over_two / 2.0f)
+  {
+    facing_str = "down";
+  }
+  else if(facing >= Global::three_pi_over_two / 2.0f ||
+          facing < -Global::three_pi_over_two / 2.0f)
+  {
+    facing_str = "left";
+  }
+  else if(facing >= -Global::three_pi_over_two / 2.0f &&
+          facing < -Global::pi_over_two / 2.0f)
+  {
+    facing_str = "up";
+  }
+  else
+  {
+    facing_str = "right";
+  }
 }

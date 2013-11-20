@@ -11,7 +11,8 @@ Mage::Mage(const Zeni::Point2f &position_,
 {}
 
 void Mage::render() const {
-	Game_Object::render("downidle");
+  String turnsprite = facing_str + "idle";
+	Game_Object::render(turnsprite);
 }
 
 Weapon* Mage::range() {

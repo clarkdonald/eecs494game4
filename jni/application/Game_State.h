@@ -53,14 +53,14 @@ class Game_State {
         
     bool is_gameover() const {return gameover;}
 
-		void execute_controller_code(const Zeni::Zeni_Input_ID &id,
+                void execute_controller_code(const Zeni::Zeni_Input_ID &id,
                                  const float &confidence,
                                  const int &action);
     
   private:  
     void clear();
 
-	  void render_all();
+          void render_all();
 
     void render_spawn_menu();
   
@@ -85,6 +85,10 @@ class Game_State {
     bool gameover;
     Dimension dimension;
     std::vector<std::pair<Zeni::Point2i, Zeni::Point2i> (*)()> screen_coord_map;
+    Zeni::Vertex_Buffer *vbo_ptr_floor;
+    Zeni::Vertex_Buffer *vbo_ptr_lower;
+    Zeni::Vertex_Buffer *vbo_ptr_middle;
+    Zeni::Vertex_Buffer *vbo_ptr_upper;
 };
 
 #endif /* GAME_STATE_H */

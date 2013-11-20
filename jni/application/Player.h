@@ -64,7 +64,9 @@ class Player : public Game_Object {
   protected:
     bool can_attack() const {return attackable;}
     Zeni::Point2f calc_weapon_pos();
-  
+
+    Zeni::String facing_str;  // used for picking turning sprite
+
   private:
     float speed;
     float facing;
@@ -74,6 +76,8 @@ class Player : public Game_Object {
     int uid;
     bool attackable;
     Team team;
+
+    void set_facing_str();
 };
 
 #endif /* PLAYER_H */
