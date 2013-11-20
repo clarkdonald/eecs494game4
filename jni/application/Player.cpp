@@ -25,8 +25,8 @@ Player::Player(const Point2f &position_,
   n_crystals(0),
   uid(uid_),
   attackable(true),
+  player_direction(DOWN),
 	sprite_distance_traveled(0.0f),
-	player_direction(DOWN),
 	sprite_frame(0),
   team(team_)
 {}
