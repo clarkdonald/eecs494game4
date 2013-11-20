@@ -9,6 +9,7 @@
 #ifndef PLAYER_INCLUDES_H
 #define PLAYER_INCLUDES_H
 
+#include "Player_Factory.h"
 #include "Player.h"
 #include "Warrior.h"
 #include "Archer.h"

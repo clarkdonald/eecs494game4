@@ -20,9 +20,13 @@ class Atmosphere;
 /** Game Information **/
 const int NUM_PLAYERS = 4;
 
+/** Required crystal deposit duration time **/
+const float DEPOSIT_TIME = 5.0f;
+
 /** Size of units in the game **/
 const float UNIT_LENGTH = 32.0f;
 const Zeni::Vector2f OBJECT_SIZE = Zeni::Vector2f(UNIT_LENGTH, UNIT_LENGTH);
+const Zeni::Vector2f SMALL_SIZE = Zeni::Vector2f(0.25f*UNIT_LENGTH, 0.25f*UNIT_LENGTH);
 const Zeni::Vector2f LARGE_SIZE = Zeni::Vector2f(3*UNIT_LENGTH, 3*UNIT_LENGTH);
 
 /** Relative size of entire video window **/
@@ -36,7 +40,14 @@ struct Controls {
   float move_x;
   float look_y;
   float look_x;
+  bool deposit_crystal;
   bool attack;
+};
+
+/** Team identifier **/
+enum Team {
+  WHITE,
+  BLACK
 };
 
 /** Parts of the Tree object for rendering **/
@@ -108,5 +119,8 @@ std::pair<Zeni::Point2i, Zeni::Point2i> get_bottom_left_screen();
 
 /** Coordinates for Bottom Rigth Screen Coordinates**/
 std::pair<Zeni::Point2i, Zeni::Point2i> get_bottom_right_screen();
+
+/** Check if two teams are the same **/
+bool same_team(const Team &lhs, const Team &rhs);
 
 #endif /* UTILITY_H */

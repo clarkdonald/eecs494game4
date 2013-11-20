@@ -9,8 +9,9 @@
 #include "Atmosphere.h"
 
 using Zeni::Point2f;
+using Zeni::String;
 
-Atmosphere::Atmosphere(const Point2f &position_,  const Zeni::String &texture_)
+Atmosphere::Atmosphere(const Point2f &position_,  const String &texture_)
 : Game_Object(position_, LARGE_SIZE),
   texture(texture_)
 {}

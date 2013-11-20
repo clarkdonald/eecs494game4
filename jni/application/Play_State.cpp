@@ -30,7 +30,7 @@ Play_State::Play_State()
   
   // Load BGM
   Sound &sr = get_Sound();
-  sr.set_BGM("music/battle_song");
+  sr.set_BGM("music/evanescence");
   sr.set_BGM_looping(true);
   sr.play_BGM();
 }
@@ -92,6 +92,7 @@ void Play_State::initialize_xbox_controller()
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_RIGHTY, 0 /* y-rotation */), 15);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERLEFT, 0 /* z-axis */), 16);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERRIGHT, 0 /* z-axis */), 17);
+
 
 	//initialize player 2
 	set_action(Zeni_Input_ID(SDL_KEYDOWN, SDLK_ESCAPE, 1), 21);

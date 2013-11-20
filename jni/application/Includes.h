@@ -11,16 +11,17 @@
 
 #include "Utility.h"
 #include "Terrain_Includes.h"
-#include "Terrain_Factory.h"
 #include "Environment_Includes.h"
-#include "Environment_Factory.h"
 #include "Atmosphere_Includes.h"
-#include "Atmosphere_Factory.h"
 #include "Player_Includes.h"
-#include "Player_Factory.h"
+#include "Weapon_Includes.h"
 #include "Crystal.h"
+#include "Percent_Bar.h"
+#include "Game_State.h"
 #include "Play_State.h"
 #include "Instructions_State.h"
 #include "Title_State_Custom.h"
+#include "Game_Object.h"
+#include "Map_Manager.h"
 
 #endif /* INCLUDES_H */

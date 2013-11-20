@@ -10,7 +10,8 @@
 #define GAME_STATE_H
 
 #include "Weapon.h"
-#include "Health_Bar.h"
+#include "Percent_Bar.h"
+#include "Utility.h"
 #include <zenilib.h>
 #include <string>
 
@@ -20,6 +21,7 @@ class Atmosphere;
 class Environment;
 class Player;
 class Spawn_Menu;
+class Npc;
 
 struct Player_Wrapper {
   Player_Wrapper(Player *player_, const int &uid_);
@@ -29,12 +31,18 @@ struct Player_Wrapper {
 };
 
 struct Player_Info {
-  Player_Info(const Zeni::Point2f &start_position_, Spawn_Menu * spawn_menu_);
+
+  Player_Info(const Zeni::Point2f &start_position_, const Team &team_, Spawn_Menu * spawn_menu_);
   ~Player_Info();
+  
   Controls controls;
-  Health_Bar health_bar;
+  Percent_Bar health_bar;
+  Percent_Bar crystal_bar;
   Zeni::Point2f start_position;
   Spawn_Menu * spawn_menu;
+  Team team;
+  Zeni::Chronometer<Zeni::Time> deposit_crystal_timer;
+
 };
 
 class Game_State {
@@ -53,11 +61,11 @@ class Game_State {
         
     bool is_gameover() const {return gameover;}
 
-		void execute_controller_code(const Zeni::Zeni_Input_ID &id,
+                void execute_controller_code(const Zeni::Zeni_Input_ID &id,
                                  const float &confidence,
                                  const int &action);
     
-  private:
+  private:  
     void clear();
 
 	  void render_all(Player_Wrapper * player_wrapper);
@@ -79,6 +87,9 @@ class Game_State {
     std::list<Player_Wrapper*> player_wrappers;
     std::vector<Player_Info*> player_infos;
     std::list<Weapon*> projectiles;
+    std::list<Npc*> npcs;
+    int total_num_crystals;
+    int crystals_in_play;
     bool gameover;
     Dimension dimension;
     std::vector<std::pair<Zeni::Point2i, Zeni::Point2i> (*)()> screen_coord_map;

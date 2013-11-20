@@ -3,8 +3,10 @@
 using namespace Zeni;
 using namespace std;
 
-Magic::Magic(const Zeni::Point2f &position_, const float &theta)
-: Weapon(position_, 40.0f),
+Magic::Magic(const Zeni::Point2f &position_,
+             const float &theta,
+             const Team& team_)
+: Weapon(position_, 40.0f, team_, SMALL_SIZE),
   move_vec(Vector2f(MAGIC_SPD*cos(theta), MAGIC_SPD*sin(theta)))
 {
 }

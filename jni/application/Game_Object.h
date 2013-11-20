@@ -14,7 +14,7 @@
 
 class Game_Object {
   public:
-  Game_Object(const Zeni::Point2f &position_, const Zeni::Vector2f &size_ = OBJECT_SIZE);
+    Game_Object(const Zeni::Point2f &position_, const Zeni::Vector2f &size_ = OBJECT_SIZE);
     
     virtual ~Game_Object() {}
     

@@ -4,21 +4,21 @@
 using namespace Zeni;
 using namespace std;
 
-Archer::Archer(const Zeni::Point2f &position_, const int &uid_)
-: Player(position_, uid_, 100.0f, 150.0f)
+Archer::Archer(const Zeni::Point2f &position_,
+               const int &uid_,
+               const Team &team_)
+: Player(position_, uid_, 100.0f, 150.0f, team_)
 {}
 
 void Archer::render() const {
-  if(!is_dead())
-	  Game_Object::render("downidle");
+  Player::render();
 }
 
 Weapon* Archer::range()
 {
   Weapon* projectile = nullptr;
   if (can_attack()) {
-    Point2f pos = calc_weapon_pos();
-    projectile = new Arrow(pos, get_facing());
+    projectile = new Arrow(calc_weapon_pos(), get_facing(), get_team());
     set_cannot_attack();
   }
   return projectile;

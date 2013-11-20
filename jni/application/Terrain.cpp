@@ -9,8 +9,9 @@
 #include "Terrain.h"
 
 using Zeni::Point2f;
+using Zeni::String;
 
-Terrain::Terrain(const Point2f &position_, const Zeni::String &texture_)
+Terrain::Terrain(const Point2f &position_, const String &texture_)
 : Game_Object(position_),
   texture(texture_)
 {}

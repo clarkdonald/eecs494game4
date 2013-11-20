@@ -25,6 +25,7 @@ Controls::Controls()
   move_x(0.0f),
   look_y(0.0f),
   look_x(0.0f),
+  deposit_crystal(false),
   attack(false)
 {}
 
@@ -93,4 +94,8 @@ pair<Point2i, Point2i> get_bottom_right_screen() {
   int y1 = (Zeni::get_Window().get_height() / 2) + 1; 
   int y2 = Zeni::get_Window().get_height();
   return make_pair(Point2i(x1,y1), Point2i(x2, y2));
+}
+
+bool same_team(const Team &lhs, const Team &rhs) {
+  return lhs == rhs;
 }
