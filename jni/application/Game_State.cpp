@@ -371,6 +371,11 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   // Render Player information
   player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 90.0f));
   player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg()); 
+
+  // Render the number of crystals
+  player_infos[player_wrapper->uid]->crystal_info.set_position(Vector2f(p_pos.x + 180.0f, p_pos.y - 90.0f));
+  player_infos[player_wrapper->uid]->crystal_info.render(player_wrapper->player->get_crystals_held());
+
   // rendering crystal bar when depositing crystal at NPC
   if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
     player_infos[player_wrapper->uid]->crystal_bar.set_position(p_pos - Vector2f(140.0f, 70.0f));

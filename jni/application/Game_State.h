@@ -11,6 +11,7 @@
 
 #include "Weapon.h"
 #include "Percent_Bar.h"
+#include "Object_Info.h"
 #include "Utility.h"
 #include <zenilib.h>
 #include <string>
@@ -39,6 +40,7 @@ struct Player_Info {
   Controls controls;
   Percent_Bar health_bar;
   Percent_Bar crystal_bar;
+  Object_Info crystal_info;
   Zeni::Point2f start_position;
   Spawn_Menu * spawn_menu;
   Team team;
