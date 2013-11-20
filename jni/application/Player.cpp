@@ -143,22 +143,22 @@ void Player::render() const {
 	switch(player_direction)
 	{
 		case UP:
-			str = "uprun";
+			str = "mage_uprun";
 			str += to_string(sprite_frame + 1).c_str();
 			Game_Object::render(str);
 			break;
 		case DOWN:
-			str = "downrun";
+			str = "mage_downrun";
 			str += to_string(sprite_frame + 1).c_str();
 			Game_Object::render(str);
 			break;
 		case LEFT:
-			str = "leftrun";
+			str = "mage_leftrun";
 			str += to_string(sprite_frame + 1).c_str();
 			Game_Object::render(str);
 			break;
 		case RIGHT:
-			str = "rightrun";
+			str = "mage_rightrun";
 			str += to_string(sprite_frame + 1).c_str();
 			Game_Object::render(str);
 			break;
