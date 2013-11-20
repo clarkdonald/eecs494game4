@@ -133,7 +133,7 @@ void Game_State::perform_logic() {
 			if(move_y >= -0.2)
 				player_infos[player_wrapper->uid]->up_axis_released = true;
 
-			if(input.deposit_crystal || input.attack)
+			if(input.A)
         player_infos[player_wrapper->uid]->spawn_menu->select_current_option();
       continue;
     }
@@ -259,11 +259,11 @@ void Game_State::perform_logic() {
       if (projectile != nullptr) projectiles.push_back(projectile);
     } else {
       player_wrapper->player->set_can_attack();
-    }
-    
+    }        
+
     // crystal depositing logic
     bool touching = false;
-    if (input.deposit_crystal && player_wrapper->player->has_crystal()) {
+    if (input.A && player_wrapper->player->has_crystal()) {
       for (auto npc : npcs) {
         if (same_team(npc->get_team(), player_wrapper->player->get_team()) &&
             player_wrapper->player->pseudo_touching(*npc))
@@ -350,6 +350,7 @@ void Game_State::perform_logic() {
   for (auto player_wrapper : player_wrappers) {
     if(!player_wrapper->player->is_dead()) continue;
     if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
+      player_infos[player_wrapper->uid]->spawn_menu->clear_menu();
       Player *dead = player_wrapper->player;
       crystals_in_play -= player_wrapper->player->get_crystals_held();
       player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()),
@@ -604,7 +605,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 18:
-			player_infos[0]->controls.deposit_crystal = (confidence == 1.0);
+			player_infos[0]->controls.A = (confidence == 1.0);
 			break;
 
     case 10:
@@ -638,7 +639,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 28:
-			player_infos[1]->controls.deposit_crystal = (confidence == 1.0);
+			player_infos[1]->controls.A = (confidence == 1.0);
 			break;
 
     case 20:
@@ -672,7 +673,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 38:
-			player_infos[2]->controls.deposit_crystal = (confidence == 1.0);
+			player_infos[2]->controls.A = (confidence == 1.0);
 			break;
 
     case 30:
@@ -706,7 +707,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 48:
-			player_infos[3]->controls.deposit_crystal = (confidence == 1.0);
+			player_infos[3]->controls.A = (confidence == 1.0);
 			break;
 
     case 40:

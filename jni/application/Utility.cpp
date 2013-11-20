@@ -25,7 +25,7 @@ Controls::Controls()
   move_x(0.0f),
   look_y(0.0f),
   look_x(0.0f),
-  deposit_crystal(false),
+  A(false),
   attack(false)
 {}
 

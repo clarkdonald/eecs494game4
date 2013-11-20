@@ -40,7 +40,7 @@ struct Controls {
   float move_x;
   float look_y;
   float look_x;
-  bool deposit_crystal;
+  bool A;
   bool attack;
 };
 
