@@ -10,7 +10,7 @@
 #define GAME_STATE_H
 
 #include "Weapon.h"
-#include "Health_Bar.h"
+#include "Percent_Bar.h"
 #include "Utility.h"
 #include <zenilib.h>
 #include <string>
@@ -20,21 +20,35 @@ class Terrain;
 class Atmosphere;
 class Environment;
 class Player;
+class Spawn_Menu;
 class Npc;
+class Crystal;
 
 struct Player_Wrapper {
   Player_Wrapper(Player *player_, const int &uid_);
   ~Player_Wrapper();
   Player* player;
-  int uid;
+  int uid;  
 };
 
 struct Player_Info {
-  Player_Info(const Zeni::Point2f &start_position_, const Team &team_);
+
+  Player_Info(const Zeni::Point2f &start_position_, const Team &team_, Spawn_Menu * spawn_menu_);
+  ~Player_Info();
+  
   Controls controls;
-  Health_Bar health_bar;
+  Percent_Bar health_bar;
+  Percent_Bar crystal_bar;
   Zeni::Point2f start_position;
+  Spawn_Menu * spawn_menu;
   Team team;
+
+	// code for main menu selection
+	bool up_axis_released;
+	bool down_axis_released;
+
+  Zeni::Chronometer<Zeni::Time> deposit_crystal_timer;
+
 };
 
 class Game_State {
@@ -53,16 +67,16 @@ class Game_State {
         
     bool is_gameover() const {return gameover;}
 
-                void execute_controller_code(const Zeni::Zeni_Input_ID &id,
+    void execute_controller_code(const Zeni::Zeni_Input_ID &id,
                                  const float &confidence,
                                  const int &action);
     
   private:  
     void clear();
 
-          void render_all();
+	  void render_all(Player_Wrapper * player_wrapper);
 
-    void render_spawn_menu();
+    void render_spawn_menu(Player_Wrapper * player_wrapper);
   
     void create_tree(const Zeni::Point2f &position);
   
@@ -74,12 +88,14 @@ class Game_State {
     //Zeni::Chronometer<Zeni::Time> shooting_timer;
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
+    std::list<Environment*> collidable_environments;
     std::list<Atmosphere*> atmospheres;
     std::list<Terrain*> grasss;
     std::list<Player_Wrapper*> player_wrappers;
     std::vector<Player_Info*> player_infos;
     std::list<Weapon*> projectiles;
     std::list<Npc*> npcs;
+    std::list<Crystal*> crystals;
     int total_num_crystals;
     int crystals_in_play;
     bool gameover;

@@ -17,9 +17,11 @@
 #include "Npc.h"
 #include "Npc_Factory.h"
 #include "Player.h"
-#include "Health_Bar.h"
+#include "Percent_Bar.h"
 #include "Player_Factory.h"
 #include "Map_Manager.h"
+#include "Crystal.h"
+#include "Spawn_Menu.h"
 #include <utility>
 #include <fstream>
 #include <map>
@@ -41,17 +43,21 @@ using std::cerr;
 using std::endl;
 
 Player_Wrapper::Player_Wrapper(Player *player_, const int &uid_)
-: player(player_), uid(uid_)
+: player(player_), uid(uid_) 
 {}
   
 Player_Wrapper::~Player_Wrapper() {
   if (player != nullptr) delete player;
 }
 
-Player_Info::Player_Info(const Zeni::Point2f &start_position_, const Team &team_)
-: start_position(start_position_),
-  team(team_)
+Player_Info::Player_Info(const Zeni::Point2f &start_position_, const Team &team_, Spawn_Menu * spawn_menu_)
+: start_position(start_position_), spawn_menu(spawn_menu_), team(team_), up_axis_released(false), down_axis_released(false)
 {}
+
+Player_Info::~Player_Info() {
+  if(spawn_menu != nullptr)
+    delete spawn_menu;
+}
 
 Game_State::Game_State(const std::string &file_)
 : total_num_crystals(0),
@@ -81,11 +87,17 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = environments.begin(); it != environments.end(); ++it)
     if (*it != nullptr) delete *it;
+  for (auto it = collidable_environments.begin(); it != collidable_environments.end(); ++it)
+    if (*it != nullptr) delete *it;
   for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
     if (*it != nullptr) delete *it;
   for (auto it = player_wrappers.begin(); it != player_wrappers.end(); ++it)
     if (*it != nullptr) delete *it;
   for (auto it = player_infos.begin(); it != player_infos.end(); ++it)
+    if (*it != nullptr) delete *it;
+  for (auto it = npcs.begin(); it != npcs.end(); ++it)
+    if (*it != nullptr) delete *it;
+  for (auto it = crystals.begin(); it != crystals.end(); ++it)
     if (*it != nullptr) delete *it;
   delete vbo_ptr_floor;
   delete vbo_ptr_lower;
@@ -102,10 +114,29 @@ void Game_State::perform_logic() {
   
   // iterate through each player, updating its state
   for (auto player_wrapper : player_wrappers) {
-    if (player_wrapper->player->is_dead()) continue;
-    
     // get controls for each player
     Controls input = player_infos[player_wrapper->uid]->controls;
+
+    if (player_wrapper->player->is_dead()) {
+      float move_y = input.move_y;            
+			if(move_y > 0.7f && player_infos[player_wrapper->uid]->down_axis_released) {
+				player_infos[player_wrapper->uid]->down_axis_released = false;
+        player_infos[player_wrapper->uid]->spawn_menu->move_down();
+			}
+      if(move_y < -0.7f && player_infos[player_wrapper->uid]->up_axis_released) {
+				player_infos[player_wrapper->uid]->up_axis_released = false;
+        player_infos[player_wrapper->uid]->spawn_menu->move_up();
+			}
+
+			if(move_y <= 0.2)
+				player_infos[player_wrapper->uid]->down_axis_released = true;
+			if(move_y >= -0.2)
+				player_infos[player_wrapper->uid]->up_axis_released = true;
+
+			if(input.deposit_crystal || input.attack)
+        player_infos[player_wrapper->uid]->spawn_menu->select_current_option();
+      continue;
+    }
     
     // check collision with terrain on movement for effects
     float move_x = input.move_x;
@@ -129,11 +160,11 @@ void Game_State::perform_logic() {
          delta_x > 0.0f))
     {
       // make an initial attempt at movement
-      player_wrapper->player->move_x(move_x, time_step);
+      player_wrapper->player->move_x(move_x, time_step, true);
       
-      for (auto environment : environments) {
+      for (auto environment : collidable_environments) {
         if (player_wrapper->player->touching(*environment)) {
-          player_wrapper->player->move_x(-move_x, time_step);
+          player_wrapper->player->move_x(-move_x, time_step, false);
           moved_back = true;
           break;
         }
@@ -141,7 +172,7 @@ void Game_State::perform_logic() {
       if (!moved_back) {
         for (auto npc : npcs) {
           if (player_wrapper->player->touching(*npc)) {
-            player_wrapper->player->move_x(-move_x, time_step);
+            player_wrapper->player->move_x(-move_x, time_step, false);
             moved_back = true;
             break;
           }
@@ -155,7 +186,7 @@ void Game_State::perform_logic() {
             continue;
           }
           if (player_wrapper->player->touching(*(player_check->player))) {
-            player_wrapper->player->move_x(-move_x, time_step);
+            player_wrapper->player->move_x(-move_x, time_step, false);
             break;
           }
         }
@@ -168,11 +199,11 @@ void Game_State::perform_logic() {
          delta_y > 0.0f))
     {
       // make an initial attempt at movement
-      player_wrapper->player->move_y(move_y, time_step);
+      player_wrapper->player->move_y(move_y, time_step, true);
       
-      for (auto environment : environments) {
+      for (auto environment : collidable_environments) {
         if (player_wrapper->player->touching(*environment)) {
-          player_wrapper->player->move_y(-move_y, time_step);
+          player_wrapper->player->move_y(-move_y, time_step, false);
           moved_back = true;
           break;
         }
@@ -180,7 +211,7 @@ void Game_State::perform_logic() {
       if (!moved_back) {
         for (auto npc : npcs) {
           if (player_wrapper->player->touching(*npc)) {
-            player_wrapper->player->move_y(-move_y, time_step);
+            player_wrapper->player->move_y(-move_y, time_step, false);
             moved_back = true;
             break;
           }
@@ -194,7 +225,7 @@ void Game_State::perform_logic() {
             continue;
           }
           if (player_wrapper->player->touching(*(player_check->player))) {
-            player_wrapper->player->move_y(-move_y, time_step);
+            player_wrapper->player->move_y(-move_y, time_step, false);
             break;
           }
         }
@@ -229,6 +260,39 @@ void Game_State::perform_logic() {
     } else {
       player_wrapper->player->set_can_attack();
     }
+    
+    // crystal depositing logic
+    if (input.deposit_crystal && player_wrapper->player->has_crystal()) {
+      for (auto npc : npcs) {
+        if (same_team(npc->get_team(), player_wrapper->player->get_team()) &&
+            player_wrapper->player->pseudo_touching(*npc))
+        {
+          if (!player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
+            player_infos[player_wrapper->uid]->deposit_crystal_timer.reset();
+            player_infos[player_wrapper->uid]->deposit_crystal_timer.start();
+          }
+          else {
+            if (player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() > DEPOSIT_TIME) {
+              player_wrapper->player->drop_crystal();
+              player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+            }
+          }
+        }
+      }
+    } else {
+      player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+    }
+    
+    // crystal pick up logic
+    for (auto crystal = crystals.begin(); crystal != crystals.end();) {
+      if (player_wrapper->player->touching(**crystal)) {
+        player_wrapper->player->pick_up_crystal();
+        delete *crystal;
+        crystal = crystals.erase(crystal);
+      } else {
+        ++crystal;
+      }
+    }
   }
   
   // iterate through each projectile, updating it
@@ -252,7 +316,7 @@ void Game_State::perform_logic() {
     }
 
     // do environment collision checks
-    for (auto environment : environments) {
+    for (auto environment : collidable_environments) {
       if ((*projectile)->touching(*environment)) {
         should_remove = true;
         break;
@@ -277,52 +341,71 @@ void Game_State::perform_logic() {
   
   // respawn dead players
   for (auto player_wrapper : player_wrappers) {
-    if (!player_wrapper->player->is_dead()) continue;
-    Player *dead = player_wrapper->player;
-    // TODO: logic to choose right player type
-    player_wrapper->player = create_player("Mage", player_infos[player_wrapper->uid]->start_position, player_wrapper->uid, player_infos[player_wrapper->uid]->team);
-    delete dead;
+    if(!player_wrapper->player->is_dead()) continue;        
+    if(player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
+      Player *dead = player_wrapper->player;
+      player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()), 
+                                             player_infos[player_wrapper->uid]->start_position, 
+                                             player_wrapper->uid,
+                                             player_wrapper->player->get_team());      
+      delete dead;
+    }     
   }
 }
 
-void Game_State::render_spawn_menu() {
-  Text_Button warrior(Point2f(200.0f, 250.0f), Point2f(600.0f, 310.0f), "system_36_800x600", "Warrior");
-  Text_Button archer(Point2f(200.0f, 330.0f), Point2f(600.0f, 390.0f), "system_36_800x600", "Archer");
-  Text_Button mage(Point2f(200.0f, 410.0f), Point2f(600.0f, 470.0f), "system_36_800x600", "Mage");
-  warrior.render();
-  archer.render();
-  mage.render();
+void Game_State::render_spawn_menu(Player_Wrapper * player_wrapper) {  
+  auto screen_coord = screen_coord_map[player_wrapper->uid]();
+  get_Video().set_2d_view(std::make_pair(Point2f(screen_coord.first),
+                                         Point2f(screen_coord.second)), 
+                          screen_coord, 
+                          false);
+  player_infos[player_wrapper->uid]->spawn_menu->render();  
 }
 
-void Game_State::render_all() {
+void Game_State::render_all(Player_Wrapper * player_wrapper) { 
+  auto p_pos = player_wrapper->player->get_position();
+  get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
+                                         p_pos + Vector2f(250.0f, 200.0f)), 
+                      screen_coord_map[player_wrapper->uid](), 
+                      false);
+  // Render Map and Movable objects
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
-  vbo_ptr_middle->render();
+  for (auto crystal : crystals) crystal->render();
   for (auto npc : npcs) npc->render();
   for (auto player_wrapper : player_wrappers) player_wrapper->player->render();
   for (auto projectile : projectiles) projectile->render();
+  vbo_ptr_middle->render();
   vbo_ptr_upper->render();
+
+  // Render Player information
+  player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 90.0f));
+  player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg()); 
+  // rendering crystal bar when depositing crystal at NPC
+  if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
+    player_infos[player_wrapper->uid]->crystal_bar.set_position(p_pos - Vector2f(140.0f, 70.0f));
+    player_infos[player_wrapper->uid]->crystal_bar.render(player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() / DEPOSIT_TIME);
+  }
 }
 
 void Game_State::render(){
   // If we're done with the level, don't render anything
   if (gameover) return;
- 
-  for (auto player_wrapper : player_wrappers) {
-    auto p_pos = player_wrapper->player->get_position();
-    get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
-        p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player_wrapper->uid](), false);
-    render_all();
-    player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 90.0f));
-    player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg());
-  }
+  for (auto player_wrapper : player_wrappers) {    
+    if(player_wrapper->player->is_dead()) {
+      render_spawn_menu(player_wrapper);
+    }
+    else {      
+      render_all(player_wrapper);
+    }
+  }  
 }
 
 void Game_State::create_tree(const Point2f &position) {
   if (position.y - UNIT_LENGTH < 0)
     error_handle("Cannot place tree in the specified location");
   
-  environments.push_back(create_environment("Tree", position, BOTTOM));
+  collidable_environments.push_back(create_environment("Tree", position, BOTTOM));
   environments.push_back(create_environment("Tree", position - Point2f(0, UNIT_LENGTH), TOP));
 }
 
@@ -334,16 +417,16 @@ void Game_State::create_house(const Point2f &position) {
     error_handle("Cannot place house in the specified location");
   }
   
-  environments.push_back(create_environment("House", position, DOOR));
-  environments.push_back(create_environment("House", position - Point2f(UNIT_LENGTH, 0), WINDOW_LEFT));
-  environments.push_back(create_environment("House", position + Point2f(UNIT_LENGTH, 0), WINDOW_RIGHT));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH), BLUE_ROOF_MIDDLE_EDGE));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_RIGHT_CORNER_1));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_LEFT_CORNER_1));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2),
+  collidable_environments.push_back(create_environment("House", position, DOOR));
+  collidable_environments.push_back(create_environment("House", position - Point2f(UNIT_LENGTH, 0), WINDOW_LEFT));
+  collidable_environments.push_back(create_environment("House", position + Point2f(UNIT_LENGTH, 0), WINDOW_RIGHT));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH), BLUE_ROOF_MIDDLE_EDGE));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_RIGHT_CORNER_1));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_LEFT_CORNER_1));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2),
       BLUE_ROOF_MIDDLE));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_LEFT_SIDE));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_RIGHT_SIDE));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_LEFT_SIDE));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_RIGHT_SIDE));
   environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*3),
       BLUE_ROOF_UP_MIDDLE));
   environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*3) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_UP_RIGHT_CORNER));
@@ -384,7 +467,8 @@ void Game_State::load_map(const std::string &file_) {
     Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
     team = (i < 2 ? WHITE : BLACK);
     player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i, team), i));
-    player_infos.push_back(new Player_Info(pos, team));
+    player_wrappers.back()->player->kill();
+    player_infos.push_back(new Player_Info(pos, team, new Spawn_Menu(screen_coord_map[i]())));
   }
   
   // Get starting location of npc
@@ -442,8 +526,14 @@ void Game_State::load_map(const std::string &file_) {
     vbo_ptr_lower->give_Quadrilateral(create_quad_ptr(terrain));
   for (auto environment : environments)
      vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
+  for (auto environment : collidable_environments)
+    vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
   for (auto atmosphere : atmospheres)
      vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
+  
+  // TEMP: spawn a couple crystals for now
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*8, UNIT_LENGTH*0)));
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*3, UNIT_LENGTH*13)));
   
   file.close();
 }
@@ -480,6 +570,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       player_infos[0]->controls.attack = confidence > 0.5f;
       break;
 
+		case 18:
+			player_infos[0]->controls.deposit_crystal = (confidence == 1.0);
+			break;
+
     case 10:
       break;
 
@@ -509,6 +603,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
     case 27:
 			player_infos[1]->controls.attack = confidence > 0.5f;
       break;
+
+		case 28:
+			player_infos[1]->controls.deposit_crystal = (confidence == 1.0);
+			break;
 
     case 20:
       break;
@@ -540,6 +638,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			player_infos[2]->controls.attack = confidence > 0.5f;
       break;
 
+		case 38:
+			player_infos[2]->controls.deposit_crystal = (confidence == 1.0);
+			break;
+
     case 30:
       break;
 
@@ -569,6 +671,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
     case 47:
 			player_infos[3]->controls.attack = confidence > 0.5f;
       break;
+
+		case 48:
+			player_infos[3]->controls.deposit_crystal = (confidence == 1.0);
+			break;
 
     case 40:
       break;

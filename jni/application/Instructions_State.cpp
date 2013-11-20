@@ -24,7 +24,7 @@ Instructions_State::Instructions_State()
      "Right Stick: Look around, aim\n"
      "Right Trigger: Attack\n"
      "Start Button: Pause\n"
-     "A Button: Pick up or hold down to give crystal to master\n"
+     "A Button: Hold down to deposit crystal to master\n"
      "P Key: Restart level\n"
      "ESC Key: Pause entire game",
      Color())

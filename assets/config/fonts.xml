@@ -18,6 +18,15 @@ For each entry in Fonts:
 Only TrueType fonts are supported.
 -->
 <Fonts>
+  <spawn_menu>
+    <filepath>fonts/GODOFWAR.TTF</filepath>
+    <height>36</height>
+    <virtual_screen>
+      <width>400</width>
+      <height>300</height>
+    </virtual_screen>
+  </spawn_menu>
+  
   <system_36_x600>
     <filepath>fonts/FORGOTTE.TTF</filepath>
     <height>36</height>
