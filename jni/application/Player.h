@@ -64,7 +64,7 @@ class Player : public Game_Object {
   protected:
     bool can_attack() const {return attackable;}
     Zeni::Point2f calc_weapon_pos();
-  
+
   private:
     float speed;
     float facing;
@@ -80,6 +80,7 @@ class Player : public Game_Object {
 		float sprite_distance_traveled;
 		int sprite_frame;
     Team team;
+
 };
 
 #endif /* PLAYER_H */

@@ -85,7 +85,6 @@ void Player::turn_to_face(const float &theta) {
 		player_direction = LEFT;
 	else
 		player_direction = UP;
-		
 }
 
 void Player::take_dmg(const float &dmg) {

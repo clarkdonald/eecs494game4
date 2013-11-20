@@ -38,9 +38,23 @@ class Map_Manager {
     
     const std::string & get_previous();
 
+    Zeni::Vertex_Buffer * get_vbo_ptr_grass();
+
+    Zeni::Vertex_Buffer * get_vbo_ptr_terrain();
+
+    Zeni::Vertex_Buffer * get_vbo_ptr_environment();
+
+    Zeni::Vertex_Buffer * get_vbo_ptr_atmosphere();
+    
   private:
     Map_Manager();
     ~Map_Manager();
+
+    // This is used for rendering the static objects
+    Zeni::Vertex_Buffer *vbo_ptr_grass;
+    Zeni::Vertex_Buffer *vbo_ptr_terrain;
+    Zeni::Vertex_Buffer *vbo_ptr_environment;
+    Zeni::Vertex_Buffer *vbo_ptr_atmosphere;    
     
     int index;
     std::vector<std::string> files;
