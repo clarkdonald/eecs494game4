@@ -262,11 +262,13 @@ void Game_State::perform_logic() {
     }
     
     // crystal depositing logic
+    bool touching = false;
     if (input.deposit_crystal && player_wrapper->player->has_crystal()) {
       for (auto npc : npcs) {
         if (same_team(npc->get_team(), player_wrapper->player->get_team()) &&
             player_wrapper->player->pseudo_touching(*npc))
         {
+          touching = true;
           if (!player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
             player_infos[player_wrapper->uid]->deposit_crystal_timer.reset();
             player_infos[player_wrapper->uid]->deposit_crystal_timer.start();
@@ -278,12 +280,13 @@ void Game_State::perform_logic() {
             }
           }
         }
-        else {
-          player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
-        }
+      }
+      if (!touching && player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
+        player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
       }
     } else {
-      player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+      if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running())
+        player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
     }
     
     // crystal pick up logic
@@ -536,7 +539,7 @@ void Game_State::load_map(const std::string &file_) {
   
   // TEMP: spawn a couple crystals for now
   crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8)));
-  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*7, UNIT_LENGTH*11)));
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*11, UNIT_LENGTH*9)));
   
   file.close();
 }

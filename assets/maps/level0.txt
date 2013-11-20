@@ -15,9 +15,9 @@
 # map
 .............c..WWWW
 ..c............cWWWW
-.......c..t.....WWWW
-...h.......ttt..WWWW
-..b.b......ctt.cWWWW
+.......c..t.....WWtt
+...h.......ttt..WWtt
+..b.b......ctt.cWWtt
 c......tt......tWWWW
 WWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWW
