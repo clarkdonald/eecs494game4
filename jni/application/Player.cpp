@@ -33,43 +33,47 @@ Player::Player(const Point2f &position_,
 
 Player::~Player() {}
 
-void Player::move_x(const float &mag, const float &timestep) {
+void Player::move_x(const float &mag, const float &timestep, bool first_time) {
 	Point2f pos = get_position();
 	pos.x += speed * timestep * mag;
 	set_position(pos);
 
-	sprite_distance_traveled += speed * timestep * abs(mag);
+	if(first_time){
+		sprite_distance_traveled += speed * timestep * abs(mag);
 
-	if(mag >= 0.5f)
-		player_direction = RIGHT;
-	else if(mag <= -.5f)
-		player_direction = LEFT;
+		if(mag >= 0.5f)
+			player_direction = RIGHT;
+		else if(mag <= -.5f)
+			player_direction = LEFT;
 
-	if(sprite_distance_traveled >= 20.0f) {
-			sprite_distance_traveled = 0;
-			sprite_frame++;
-			if(sprite_frame == 4)
-				sprite_frame = 0;
+		if(sprite_distance_traveled >= 20.0f) {
+				sprite_distance_traveled = 0;
+				sprite_frame++;
+				if(sprite_frame == 4)
+					sprite_frame = 0;
+		}
 	}
 }
 
-void Player::move_y(const float &mag, const float &timestep) {
+void Player::move_y(const float &mag, const float &timestep, bool first_time) {
 	Point2f pos = get_position();
 	pos.y += speed * timestep * mag;
 	set_position(pos);
 
-	sprite_distance_traveled += speed * timestep * abs(mag);
+	if(first_time) {
+		sprite_distance_traveled += speed * timestep * abs(mag);
 	
-	if(mag >= 0.5f)
-		player_direction = DOWN;
-	else if(mag <= -.5f)
-		player_direction = UP;
+		if(mag >= 0.5f)
+			player_direction = DOWN;
+		else if(mag <= -.5f)
+			player_direction = UP;
 
-	if(sprite_distance_traveled >= 20.0f) {
-			sprite_distance_traveled = 0;
-			sprite_frame++;
-			if(sprite_frame == 4)
-				sprite_frame = 0;
+		if(sprite_distance_traveled >= 20.0f) {
+				sprite_distance_traveled = 0;
+				sprite_frame++;
+				if(sprite_frame == 4)
+					sprite_frame = 0;
+		}
 	}
 }
 
@@ -96,6 +100,10 @@ void Player::take_dmg(const float &dmg) {
 
 void Player::die() {
 	while (n_crystals != 0) --n_crystals;
+}
+
+void Player::kill() {
+  hp = 0.0f;
 }
 
 float Player::get_hp_pctg() const {
@@ -130,7 +138,7 @@ Point2f Player::calc_weapon_pos() {
 }
 
 void Player::render() const {
-	
+	if(is_dead()) return;
 	String str;
 	switch(player_direction)
 	{

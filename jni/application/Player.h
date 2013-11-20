@@ -25,9 +25,9 @@ class Player : public Game_Object {
 
     virtual void render() const = 0;
   
-    void move_y(const float &, const float &);
+    void move_y(const float &, const float &, bool);
   
-    void move_x(const float &, const float &);
+    void move_x(const float &, const float &, bool);
   
 	  void turn_to_face(const float &);
 
@@ -48,6 +48,8 @@ class Player : public Game_Object {
     void deposit_crystal();
   
     const Team & get_team() const {return team;}
+
+    void kill();
 
     float get_hp_pctg() const;
     
