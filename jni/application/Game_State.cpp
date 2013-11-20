@@ -239,7 +239,7 @@ void Game_State::perform_logic() {
     
     // attack logic for player
     if (input.attack) {
-      // Warrior melee sword attack
+      // warrior melee sword attack
       Weapon* melee = player_wrapper->player->melee();
       if (melee != nullptr) {
         for (auto player_check : player_wrappers) {
@@ -254,7 +254,7 @@ void Game_State::perform_logic() {
       }
       delete melee;
 
-      // Archer/Mage ranged attack
+      // archer/mage ranged attack
       Weapon* projectile = player_wrapper->player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
     } else {
@@ -349,9 +349,9 @@ void Game_State::perform_logic() {
   // respawn dead players
   for (auto player_wrapper : player_wrappers) {
     if(!player_wrapper->player->is_dead()) continue;
-    crystals_in_play += player_wrapper->player->get_crystals_held();
     if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
       Player *dead = player_wrapper->player;
+      crystals_in_play -= player_wrapper->player->get_crystals_held();
       player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()),
                                              player_infos[player_wrapper->uid]->start_position, 
                                              player_wrapper->uid,
