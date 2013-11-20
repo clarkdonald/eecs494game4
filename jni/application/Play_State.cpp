@@ -92,8 +92,8 @@ void Play_State::initialize_xbox_controller()
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_RIGHTY, 0 /* y-rotation */), 15);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERLEFT, 0 /* z-axis */), 16);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERRIGHT, 0 /* z-axis */), 17);
-	set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_BUTTON_A, 0 /* A */), 18);
-	set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_BUTTON_B, 0 /* B */), 19);
+	set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_A, 0 /* A */), 18);
+	set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_B, 0 /* B */), 19);
 
 
 	//initialize player 2
@@ -105,8 +105,8 @@ void Play_State::initialize_xbox_controller()
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_RIGHTY, 1 /* y-rotation */), 25);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERLEFT, 1 /* z-axis */), 26);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERRIGHT, 1 /* z-axis */), 27);
-	set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_BUTTON_A, 1 /* A */), 28);
-	set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_BUTTON_B, 1 /* B */), 29);
+	set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_A, 1 /* A */), 28);
+	set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_B, 1 /* B */), 29);
 
 	//initialize player 3
 	set_action(Zeni_Input_ID(SDL_KEYDOWN, SDLK_ESCAPE, 2), 31);
@@ -117,8 +117,8 @@ void Play_State::initialize_xbox_controller()
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_RIGHTY, 2 /* y-rotation */), 35);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERLEFT, 2 /* z-axis */), 36);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERRIGHT, 2 /* z-axis */), 37);
-	set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_BUTTON_A, 2 /* A */), 38);
-	set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_BUTTON_B, 2 /* B */), 39);
+	set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_A, 2 /* A */), 38);
+	set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_B, 2 /* B */), 39);
 
 	//initialize player 4
 	set_action(Zeni_Input_ID(SDL_KEYDOWN, SDLK_ESCAPE, 3), 41);
@@ -129,8 +129,8 @@ void Play_State::initialize_xbox_controller()
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_RIGHTY, 3 /* y-rotation */), 45);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERLEFT, 3 /* z-axis */), 46);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERRIGHT, 3 /* z-axis */), 47);
-	set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_BUTTON_A, 3 /* A */), 48);
-	set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_BUTTON_B, 3 /* B */), 49);
+	set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_A, 3 /* A */), 48);
+	set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_B, 3 /* B */), 49);
 }
 
 void Play_State::on_event(const Zeni_Input_ID &id, const float &confidence, const int &action)

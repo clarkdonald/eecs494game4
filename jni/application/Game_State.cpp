@@ -561,6 +561,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 18:
+			player_infos[0]->controls.deposit_crystal = (confidence == 1.0);
 			break;
 
     case 10:
@@ -594,6 +595,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 28:
+			player_infos[1]->controls.deposit_crystal = (confidence == 1.0);
 			break;
 
     case 20:
@@ -627,6 +629,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 38:
+			player_infos[2]->controls.deposit_crystal = (confidence == 1.0);
 			break;
 
     case 30:
@@ -660,6 +663,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 48:
+			player_infos[3]->controls.deposit_crystal = (confidence == 1.0);
 			break;
 
     case 40:
