@@ -360,7 +360,7 @@ void Game_State::perform_logic() {
     }
   }
 
-  if (crystals_in_play < total_num_crystals) {
+  while (crystals_in_play < total_num_crystals) {
     bool found = true;
     int index;
     do {
@@ -374,7 +374,7 @@ void Game_State::perform_logic() {
       }
     } while (!found);
     crystals.push_back(new Crystal(crystal_locations[index]));
-    crystals_in_play++;
+    ++crystals_in_play;
   }
 }
 
