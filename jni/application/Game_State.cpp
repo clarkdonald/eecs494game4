@@ -51,7 +51,7 @@ Player_Wrapper::~Player_Wrapper() {
 }
 
 Player_Info::Player_Info(const Zeni::Point2f &start_position_, const Team &team_, Spawn_Menu * spawn_menu_)
-: start_position(start_position_), spawn_menu(spawn_menu_), team(team_)
+: start_position(start_position_), spawn_menu(spawn_menu_), team(team_), up_axis_released(false), down_axis_released(false)
 {}
 
 Player_Info::~Player_Info() {
@@ -119,11 +119,21 @@ void Game_State::perform_logic() {
 
     if (player_wrapper->player->is_dead()) {
       float move_y = input.move_y;            
-      if(move_y > 0.7f) 
+			if(move_y > 0.7f && player_infos[player_wrapper->uid]->down_axis_released) {
+				player_infos[player_wrapper->uid]->down_axis_released = false;
         player_infos[player_wrapper->uid]->spawn_menu->move_down();
-      if(move_y < -0.7f)
+			}
+      if(move_y < -0.7f && player_infos[player_wrapper->uid]->up_axis_released) {
+				player_infos[player_wrapper->uid]->up_axis_released = false;
         player_infos[player_wrapper->uid]->spawn_menu->move_up();
-      if(input.attack)
+			}
+
+			if(move_y <= 0.2)
+				player_infos[player_wrapper->uid]->down_axis_released = true;
+			if(move_y >= -0.2)
+				player_infos[player_wrapper->uid]->up_axis_released = true;
+
+			if(input.deposit_crystal || input.attack)
         player_infos[player_wrapper->uid]->spawn_menu->select_current_option();
       continue;
     }
@@ -252,11 +262,13 @@ void Game_State::perform_logic() {
     }
     
     // crystal depositing logic
+    bool touching = false;
     if (input.deposit_crystal && player_wrapper->player->has_crystal()) {
       for (auto npc : npcs) {
         if (same_team(npc->get_team(), player_wrapper->player->get_team()) &&
             player_wrapper->player->pseudo_touching(*npc))
         {
+          touching = true;
           if (!player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
             player_infos[player_wrapper->uid]->deposit_crystal_timer.reset();
             player_infos[player_wrapper->uid]->deposit_crystal_timer.start();
@@ -264,13 +276,18 @@ void Game_State::perform_logic() {
           else {
             if (player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() > DEPOSIT_TIME) {
               player_wrapper->player->drop_crystal();
+              --crystals_in_play;
               player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
             }
           }
         }
       }
+      if (!touching && player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
+        player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+      }
     } else {
-      player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+      if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running())
+        player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
     }
     
     // crystal pick up logic
@@ -331,15 +348,21 @@ void Game_State::perform_logic() {
   
   // respawn dead players
   for (auto player_wrapper : player_wrappers) {
-    if(!player_wrapper->player->is_dead()) continue;        
-    if(player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
+    if(!player_wrapper->player->is_dead()) continue;
+    crystals_in_play += player_wrapper->player->get_crystals_held();
+    if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
       Player *dead = player_wrapper->player;
-      player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()), 
+      player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()),
                                              player_infos[player_wrapper->uid]->start_position, 
                                              player_wrapper->uid,
                                              player_wrapper->player->get_team());      
       delete dead;
-    }     
+    }
+  }
+
+  if (crystals_in_play < total_num_crystals) {
+    crystals.push_back(new Crystal(crystal_locations[rand()%crystal_locations.size()]));
+    crystals_in_play++;
   }
 }
 
@@ -527,8 +550,11 @@ void Game_State::load_map(const std::string &file_) {
      vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
   
   // TEMP: spawn a couple crystals for now
-  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*8, UNIT_LENGTH*0)));
-  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*3, UNIT_LENGTH*13)));
+  crystal_locations.push_back(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8));
+  crystal_locations.push_back(Point2f(UNIT_LENGTH*11, UNIT_LENGTH*9));
+  crystal_locations.push_back(Point2f(UNIT_LENGTH*13, UNIT_LENGTH*8));
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8)));
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*11, UNIT_LENGTH*9)));
   
   file.close();
 }
@@ -566,6 +592,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 18:
+			player_infos[0]->controls.deposit_crystal = (confidence == 1.0);
 			break;
 
     case 10:
@@ -599,6 +626,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 28:
+			player_infos[1]->controls.deposit_crystal = (confidence == 1.0);
 			break;
 
     case 20:
@@ -632,6 +660,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 38:
+			player_infos[2]->controls.deposit_crystal = (confidence == 1.0);
 			break;
 
     case 30:
@@ -665,6 +694,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
 		case 48:
+			player_infos[3]->controls.deposit_crystal = (confidence == 1.0);
 			break;
 
     case 40:

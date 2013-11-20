@@ -49,10 +49,8 @@ void Spawn_Menu::clear_menu() {
 }
 
 Spawn_Menu::~Spawn_Menu() {
-  for(auto button : buttons) 
-    delete button;  
-  for(auto button : highlighted_buttons) 
-    delete button;  
+  for (auto button : buttons) delete button;
+  for (auto button : highlighted_buttons) delete button;
 }
 
 void Spawn_Menu::render() {

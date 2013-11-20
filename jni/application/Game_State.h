@@ -44,6 +44,11 @@ struct Player_Info {
   Zeni::Point2f start_position;
   Spawn_Menu * spawn_menu;
   Team team;
+
+	// code for main menu selection
+	bool up_axis_released;
+	bool down_axis_released;
+
   Zeni::Chronometer<Zeni::Time> deposit_crystal_timer;
 
 };
@@ -93,6 +98,7 @@ class Game_State {
     std::list<Weapon*> projectiles;
     std::list<Npc*> npcs;
     std::list<Crystal*> crystals;
+    std::vector<Zeni::Point2f> crystal_locations;
     int total_num_crystals;
     int crystals_in_play;
     bool gameover;
