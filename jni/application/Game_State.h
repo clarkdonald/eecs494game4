@@ -10,7 +10,7 @@
 #define GAME_STATE_H
 
 #include "Weapon.h"
-#include "Health_Bar.h"
+#include "Percent_Bar.h"
 #include "Utility.h"
 #include <zenilib.h>
 #include <string>
@@ -32,9 +32,11 @@ struct Player_Wrapper {
 struct Player_Info {
   Player_Info(const Zeni::Point2f &start_position_, const Team &team_);
   Controls controls;
-  Health_Bar health_bar;
+  Percent_Bar health_bar;
+  Percent_Bar crystal_bar;
   Zeni::Point2f start_position;
   Team team;
+  Zeni::Chronometer<Zeni::Time> deposit_crystal_timer;
 };
 
 class Game_State {

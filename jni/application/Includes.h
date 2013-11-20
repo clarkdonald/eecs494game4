@@ -16,7 +16,7 @@
 #include "Player_Includes.h"
 #include "Weapon_Includes.h"
 #include "Crystal.h"
-#include "Health_Bar.h"
+#include "Percent_Bar.h"
 #include "Game_State.h"
 #include "Play_State.h"
 #include "Instructions_State.h"

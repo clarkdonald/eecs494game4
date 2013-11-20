@@ -53,8 +53,7 @@ void Player::take_dmg(const float &dmg) {
 }
 
 void Player::die() {
-	while (n_crystals != 0) drop_crystal();
-	// TODO: start spawn menu?
+	while (n_crystals != 0) --n_crystals;
 }
 
 float Player::get_hp_pctg() const {

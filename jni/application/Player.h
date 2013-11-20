@@ -43,11 +43,17 @@ class Player : public Game_Object {
   
 	  void die();
   
+    bool is_depositting_crystal() const;
+  
+    void deposit_crystal();
+  
     const Team & get_team() const {return team;}
 
     float get_hp_pctg() const;
     
     const unsigned int & get_crystals_held() const {return n_crystals;}
+  
+    bool has_crystal() const {return n_crystals > 0;}
   
     const float & get_facing() const {return facing;}
 
@@ -74,6 +80,7 @@ class Player : public Game_Object {
     int uid;
     bool attackable;
     Team team;
+    Chrono
 };
 
 #endif /* PLAYER_H */

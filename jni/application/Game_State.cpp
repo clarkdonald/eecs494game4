@@ -17,7 +17,7 @@
 #include "Npc.h"
 #include "Npc_Factory.h"
 #include "Player.h"
-#include "Health_Bar.h"
+#include "Percent_Bar.h"
 #include "Player_Factory.h"
 #include "Map_Manager.h"
 #include <utility>
@@ -229,6 +229,28 @@ void Game_State::perform_logic() {
     } else {
       player_wrapper->player->set_can_attack();
     }
+    
+    // crystal depositting logic
+    if (input.deposit_crystal && player_wrapper->player->has_crystal()) {
+      for (auto npc : npcs) {
+        if (same_team(npc->get_team(), player_wrapper->player->get_team()) &&
+            player_wrapper->player->pseudo_touching(*npc))
+        {
+          if (!player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
+            player_infos[player_wrapper->uid]->deposit_crystal_timer.reset();
+            player_infos[player_wrapper->uid]->deposit_crystal_timer.start();
+          }
+          else {
+            if (player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() > DEPOSIT_TIME) {
+              player_wrapper->player->drop_crystal();
+              player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+            }
+          }
+        }
+      }
+    } else {
+      player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+    }
   }
   
   // iterate through each projectile, updating it
@@ -313,8 +335,14 @@ void Game_State::render(){
     get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
         p_pos + Vector2f(250.0f, 200.0f)), screen_coord_map[player_wrapper->uid](), false);
     render_all();
+    // rendering health bar
     player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 90.0f));
     player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg());
+    // rendering crystal bar when depositing crystal at NPC
+    if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
+      player_infos[player_wrapper->uid]->crystal_bar.set_position(p_pos - Vector2f(140.0f, 70.0f));
+      player_infos[player_wrapper->uid]->crystal_bar.render(player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() / DEPOSIT_TIME);
+    }
   }
 }
 

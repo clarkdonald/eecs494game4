@@ -20,6 +20,9 @@ class Atmosphere;
 /** Game Information **/
 const int NUM_PLAYERS = 4;
 
+/** Required crystal deposit duration time **/
+const float DEPOSIT_TIME = 5.0f;
+
 /** Size of units in the game **/
 const float UNIT_LENGTH = 32.0f;
 const Zeni::Vector2f OBJECT_SIZE = Zeni::Vector2f(UNIT_LENGTH, UNIT_LENGTH);
@@ -37,6 +40,7 @@ struct Controls {
   float move_x;
   float look_y;
   float look_x;
+  bool deposit_crystal;
   bool attack;
 };
 
