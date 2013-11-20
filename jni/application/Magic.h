@@ -7,7 +7,7 @@
 
 class Magic : public Weapon {
   public:
-    Magic(const Zeni::Point2f&, const float&);
+    Magic(const Zeni::Point2f&, const float&, const Team&);
 
     void render() const override;
   

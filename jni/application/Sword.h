@@ -5,7 +5,7 @@
 
 class Sword : public Weapon {
   public:
-    Sword(const Zeni::Point2f&, const float&);
+    Sword(const Zeni::Point2f&, const float&, const Team &);
 
     void render() const override;
   

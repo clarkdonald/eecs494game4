@@ -3,8 +3,10 @@
 using namespace Zeni;
 using namespace std;
 
-Arrow::Arrow(const Zeni::Point2f &position_, const float &theta)
-: Weapon(position_, 25.0f),
+Arrow::Arrow(const Zeni::Point2f &position_,
+             const float &theta,
+             const Team& team_)
+: Weapon(position_, 25.0f, team_, SMALL_SIZE),
   move_vec(Vector2f(ARROW_SPD*cos(theta), ARROW_SPD*sin(theta)))
 {}
 

@@ -12,9 +12,10 @@
 #include "Atmosphere_Factory.h"
 #include "Environment.h"
 #include "Environment_Factory.h"
-#include "Tree.h"
 #include "Terrain.h"
 #include "Terrain_Factory.h"
+#include "Npc.h"
+#include "Npc_Factory.h"
 #include "Player.h"
 #include "Health_Bar.h"
 #include "Player_Factory.h"
@@ -47,12 +48,15 @@ Player_Wrapper::~Player_Wrapper() {
   if (player != nullptr) delete player;
 }
 
-Player_Info::Player_Info(const Zeni::Point2f &start_position_)
-: start_position(start_position_)
+Player_Info::Player_Info(const Zeni::Point2f &start_position_, const Team &team_)
+: start_position(start_position_),
+  team(team_)
 {}
 
 Game_State::Game_State(const std::string &file_)
-: gameover(false),
+: total_num_crystals(0),
+  crystals_in_play(0),
+  gameover(false),
   vbo_ptr_floor(new Vertex_Buffer),
   vbo_ptr_lower(new Vertex_Buffer),
   vbo_ptr_middle(new Vertex_Buffer),
@@ -103,7 +107,7 @@ void Game_State::perform_logic() {
     // get controls for each player
     Controls input = player_infos[player_wrapper->uid]->controls;
     
-    // check collision with terrain on movement
+    // check collision with terrain on movement for effects
     float move_x = input.move_x;
     float move_y = input.move_y;
     for (auto terrain : terrains) {
@@ -114,7 +118,9 @@ void Game_State::perform_logic() {
       }
     }
     
-    // check collision with environment on movement
+    // check collision with environment/npc/player on movement
+    // first check boundary collision, then env, then npc, then oppo player
+    bool moved_back = false;
     float delta_x = player_wrapper->player->get_position().x + move_x;
     float delta_y = player_wrapper->player->get_position().y + move_y;
     if ((move_x > 0.0f &&
@@ -122,24 +128,75 @@ void Game_State::perform_logic() {
         (move_x < 0.0f &&
          delta_x > 0.0f))
     {
+      // make an initial attempt at movement
       player_wrapper->player->move_x(move_x, time_step);
+      
       for (auto environment : environments) {
         if (player_wrapper->player->touching(*environment)) {
           player_wrapper->player->move_x(-move_x, time_step);
+          moved_back = true;
           break;
         }
       }
+      if (!moved_back) {
+        for (auto npc : npcs) {
+          if (player_wrapper->player->touching(*npc)) {
+            player_wrapper->player->move_x(-move_x, time_step);
+            moved_back = true;
+            break;
+          }
+        }
+      }
+      if (!moved_back) {
+        for (auto player_check : player_wrappers) {
+          if (player_check->player->is_dead() ||
+              same_team(player_wrapper->player->get_team(), player_check->player->get_team()))
+          {
+            continue;
+          }
+          if (player_wrapper->player->touching(*(player_check->player))) {
+            player_wrapper->player->move_x(-move_x, time_step);
+            break;
+          }
+        }
+      }
     }
+    moved_back = false;
     if ((move_y > 0.0f &&
          delta_y < (dimension.height*UNIT_LENGTH - (UNIT_LENGTH - 1.0f))) ||
         (move_y < 0.0f &&
          delta_y > 0.0f))
     {
+      // make an initial attempt at movement
       player_wrapper->player->move_y(move_y, time_step);
+      
       for (auto environment : environments) {
         if (player_wrapper->player->touching(*environment)) {
           player_wrapper->player->move_y(-move_y, time_step);
+          moved_back = true;
           break;
+        }
+      }
+      if (!moved_back) {
+        for (auto npc : npcs) {
+          if (player_wrapper->player->touching(*npc)) {
+            player_wrapper->player->move_y(-move_y, time_step);
+            moved_back = true;
+            break;
+          }
+        }
+      }
+      if (!moved_back) {
+        for (auto player_check : player_wrappers) {
+          if (player_check->player->is_dead() ||
+              same_team(player_wrapper->player->get_team(), player_check->player->get_team()))
+          {
+            continue;
+          }
+          if (player_wrapper->player->touching(*(player_check->player))) {
+            player_wrapper->player->move_y(-move_y, time_step);
+            break;
+          }
         }
       }
     }
@@ -155,8 +212,8 @@ void Game_State::perform_logic() {
       Weapon* melee = player_wrapper->player->melee();
       if (melee != nullptr) {
         for (auto player_check : player_wrappers) {
-          if (player_check->player == player_wrapper->player ||
-              player_check->player->is_dead())
+          if (player_check->player->is_dead() ||
+              same_team(player_wrapper->player->get_team(), player_check->player->get_team()))
           {
             continue;
           }
@@ -182,7 +239,11 @@ void Game_State::perform_logic() {
 
     // do player collision checks 
     for (auto player_wrapper : player_wrappers) {
-      if (player_wrapper->player->is_dead()) continue;
+      if (player_wrapper->player->is_dead() ||
+          same_team(player_wrapper->player->get_team(), (*projectile)->get_team()))
+      {
+        continue;
+      }
       if ((*projectile)->touching(*(player_wrapper->player))) {
         player_wrapper->player->take_dmg((*projectile)->get_damage());
         should_remove = true;
@@ -219,7 +280,7 @@ void Game_State::perform_logic() {
     if (!player_wrapper->player->is_dead()) continue;
     Player *dead = player_wrapper->player;
     // TODO: logic to choose right player type
-    player_wrapper->player = create_player("Mage", player_infos[player_wrapper->uid]->start_position, player_wrapper->uid);
+    player_wrapper->player = create_player("Mage", player_infos[player_wrapper->uid]->start_position, player_wrapper->uid, player_infos[player_wrapper->uid]->team);
     delete dead;
   }
 }
@@ -237,6 +298,7 @@ void Game_State::render_all() {
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
   vbo_ptr_middle->render();
+  for (auto npc : npcs) npc->render();
   for (auto player_wrapper : player_wrappers) player_wrapper->player->render();
   for (auto projectile : projectiles) projectile->render();
   vbo_ptr_upper->render();
@@ -301,23 +363,47 @@ void Game_State::load_map(const std::string &file_) {
   if (!(file >> dimension.height)) error_handle("Could not input height");
   if (!(file >> dimension.width)) error_handle("Could not input width");
   
+  // Set up number of crystals based on dimensions
+  crystals_in_play = total_num_crystals = ((dimension.width * dimension.height / 1000) + 2);
+  
   // Get starting location of players
   string line;
+  Team team;
   int start_y, start_x;
   for (int i = 0; i < NUM_PLAYERS; ++i) {
     getline(file,line); // waste new line
     getline(file,line); // waste comment
     if (!(file >> start_y))
-      error_handle("Could not input starting y");
+      error_handle("Could not input starting y for player");
     if (start_y < 0 || start_y >= dimension.height)
-      error_handle("Invalid start y");
+      error_handle("Invalid start y for player");
     if (!(file >> start_x))
-      error_handle("Could not input starting x");
+      error_handle("Could not input starting x for player");
     if (start_x < 0 || start_x >= dimension.width)
-      error_handle("Invalid start x");
+      error_handle("Invalid start x for player");
     Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
-    player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i), i));
-    player_infos.push_back(new Player_Info(pos));
+    team = (i < 2 ? WHITE : BLACK);
+    player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i, team), i));
+    player_infos.push_back(new Player_Info(pos, team));
+  }
+  
+  // Get starting location of npc
+  String npc_type;
+  for (int i = 0; i < NUM_PLAYERS; i += 2) {
+    getline(file,line); // waste new line
+    getline(file,line); // waste comment
+    if (!(file >> start_y))
+      error_handle("Could not input starting y for npc");
+    if (start_y < 0 || start_y >= dimension.height)
+      error_handle("Invalid start y for npc");
+    if (!(file >> start_x))
+      error_handle("Could not input starting x for npc");
+    if (start_x < 0 || start_x >= dimension.width)
+      error_handle("Invalid start x for npc");
+    Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
+    team = (i < 2 ? WHITE : BLACK);
+    npc_type = (team == WHITE ? "Blonde_Kid" : "Girl");
+    npcs.push_back(create_npc(npc_type, pos, team));
   }
 
   // Get map information

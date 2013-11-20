@@ -9,6 +9,7 @@
 #ifndef ATMOSPHERE_INCLUDES_H
 #define ATMOSPHERE_INCLUDES_H
 
+#include "Atmosphere_Factory.h"
 #include "Atmosphere.h"
 #include "Cloud.h"
 

@@ -12,11 +12,11 @@
   </crystal>
   <!-------------- NPC ------------->
   <blondekiddownidle>
-    <filepath>textures/NPC/blondekiddownidle.png</filepath>
+    <filepath>textures/NPC/blondekid/blondekiddownidle.png</filepath>
     <tile>0</tile>
   </blondekiddownidle>
   <girldownidle>
-    <filepath>textures/NPC/girldownidle.png</filepath>
+    <filepath>textures/NPC/girl/girldownidle.png</filepath>
     <tile>0</tile>
   </girldownidle>
   <!-------------- Player ------------->
@@ -115,7 +115,7 @@
     <tile>0</tile>
   </arrow>
   <magic>
-    <filepath>textures/Projectiles/magic.png</filepath>
+    <filepath>textures/Projectiles/magic1.png</filepath>
     <tile>0</tile>
   </magic>
   <bow>

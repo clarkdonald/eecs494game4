@@ -14,7 +14,8 @@ using namespace std;
 Player::Player(const Point2f &position_,
                const int &uid_,
                const float &speed_,
-               const float &max_hp_)
+               const float &max_hp_,
+               const Team &team_)
 : Game_Object(position_),
   speed(speed_),
   facing(Global::pi_over_two),
@@ -22,7 +23,8 @@ Player::Player(const Point2f &position_,
   hp(max_hp_),
   n_crystals(0),
   uid(uid_),
-  attackable(true)
+  attackable(true),
+  team(team_)
 {}
 
 Player::~Player() {}
@@ -72,13 +74,16 @@ void Player::pick_up_crystal() {
 }
 
 void Player::drop_crystal() {
-	if (n_crystals != 0) n_crystals--;
-	//TODO: add crystal to some global render queue?
+	if (n_crystals != 0) --n_crystals;
 }
 
 Point2f Player::calc_weapon_pos() {
-    Point2f pos = get_position();
+    Point2f pos = get_center();
     Vector2f size = get_size();
-    pos += Vector2f(size.magnitude() * 0.9f * cos(facing), size.magnitude() * 0.9f * sin(facing));
+    // Offset for how far away from player to shoot
+    pos += Vector2f(size.magnitude() * 0.2f * cos(facing),
+                    size.magnitude() * 0.2f * sin(facing));
+    // Offset for centering the weapon wrt player's center
+    pos -= (SMALL_SIZE / 2);
     return pos;
 }

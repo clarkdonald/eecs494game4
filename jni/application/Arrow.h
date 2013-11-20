@@ -7,7 +7,7 @@
 
 class Arrow : public Weapon {
   public:
-    Arrow(const Zeni::Point2f&, const float&);
+    Arrow(const Zeni::Point2f&, const float&, const Team&);
 
     void render() const override;
   
