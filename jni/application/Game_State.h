@@ -42,6 +42,11 @@ struct Player_Info {
   Zeni::Point2f start_position;
   Spawn_Menu * spawn_menu;
   Team team;
+
+	// code for main menu selection
+	bool up_axis_released;
+	bool down_axis_released;
+
   Zeni::Chronometer<Zeni::Time> deposit_crystal_timer;
 
 };
