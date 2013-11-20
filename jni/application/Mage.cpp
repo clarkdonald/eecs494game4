@@ -4,8 +4,10 @@
 using namespace Zeni;
 using namespace std;
 
-Mage::Mage(const Zeni::Point2f &position_, const int &uid_)
-: Player(position_, uid_, 80.0f, 100.0f)
+Mage::Mage(const Zeni::Point2f &position_,
+           const int &uid_,
+           const Team &team_)
+: Player(position_, uid_, 80.0f, 100.0f, team_)
 {}
 
 void Mage::render() const {
@@ -15,9 +17,8 @@ void Mage::render() const {
 
 Weapon* Mage::range() {
   Weapon* projectile = nullptr;
-  if(can_attack()) {
-    Point2f pos = calc_weapon_pos();
-    projectile = new Magic(pos, get_facing());
+  if (can_attack()) {
+    projectile = new Magic(calc_weapon_pos(), get_facing(), get_team());
     set_cannot_attack();
   }
   return projectile;

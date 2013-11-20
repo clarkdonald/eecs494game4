@@ -9,6 +9,7 @@
 #ifndef TERRAIN_INCLUDES_H
 #define TERRAIN_INCLUDES_H
 
+#include "Terrain_Factory.h"
 #include "Terrain.h"
 #include "Water.h"
 #include "Stone_Road.h"

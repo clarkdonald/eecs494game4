@@ -5,7 +5,9 @@
 
 class Archer : public Player {
   public:
-    Archer(const Zeni::Point2f &position_, const int &uid_);
+    Archer(const Zeni::Point2f &position_,
+           const int &uid_,
+           const Team &team_);
 
     void render() const override;
 

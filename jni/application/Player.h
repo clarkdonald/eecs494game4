@@ -10,6 +10,7 @@
 #define PLAYER_H
 
 #include "Game_Object.h"
+#include "Utility.h"
 #include "Weapon.h"
 
 class Player : public Game_Object {
@@ -17,7 +18,8 @@ class Player : public Game_Object {
 	  Player(const Zeni::Point2f &position_,
            const int &uid_,
            const float &speed_,
-           const float &max_hp_);
+           const float &max_hp_,
+           const Team &team_);
   
     virtual ~Player() = 0;
 
@@ -40,6 +42,8 @@ class Player : public Game_Object {
     bool is_dead() const {return hp <= 0.0f;}
   
 	  void die();
+  
+    const Team & get_team() const {return team;}
 
     float get_hp_pctg() const;
     
@@ -75,6 +79,7 @@ class Player : public Game_Object {
 		Player_Direction player_direction;
 		float sprite_distance_traveled;
 		int sprite_frame;
+    Team team;
 };
 
 #endif /* PLAYER_H */

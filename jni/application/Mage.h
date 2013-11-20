@@ -5,7 +5,9 @@
 
 class Mage : public Player {
   public:
-    Mage(const Zeni::Point2f &position_, const int &uid_);
+    Mage(const Zeni::Point2f &position_,
+         const int &uid_,
+         const Team &team_);
 
     void render() const override;
 
