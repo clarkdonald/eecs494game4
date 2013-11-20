@@ -119,7 +119,72 @@
     <filepath>textures/Character/upidle.png</filepath>
     <tile>0</tile>
   </uprun4>
-  
+
+  <!-------------- Mage Sprites ------------->
+  <mage_downrun2>
+    <filepath>textures/Character/mage_downidle.png</filepath>
+    <tile>0</tile>
+  </mage_downrun2>
+  <mage_downrun1>
+    <filepath>textures/Character/mage_downrun1.png</filepath>
+    <tile>0</tile>
+  </mage_downrun1>
+  <mage_downrun3>
+    <filepath>textures/Character/mage_downrun2.png</filepath>
+    <tile>0</tile>
+  </mage_downrun3>
+  <mage_downrun4>
+    <filepath>textures/Character/mage_downidle.png</filepath>
+    <tile>0</tile>
+  </mage_downrun4>
+  <mage_leftrun2>
+    <filepath>textures/Character/mage_leftidle.png</filepath>
+    <tile>0</tile>
+  </mage_leftrun2>
+  <mage_leftrun1>
+    <filepath>textures/Character/mage_leftrun1.png</filepath>
+    <tile>0</tile>
+  </mage_leftrun1>
+  <mage_leftrun3>
+    <filepath>textures/Character/mage_leftrun2.png</filepath>
+    <tile>0</tile>
+  </mage_leftrun3>
+  <mage_leftrun4>
+    <filepath>textures/Character/mage_leftidle.png</filepath>
+    <tile>0</tile>
+  </mage_leftrun4>
+  <mage_rightrun2>
+    <filepath>textures/Character/mage_rightidle.png</filepath>
+    <tile>0</tile>
+  </mage_rightrun2>
+  <mage_rightrun1>
+    <filepath>textures/Character/mage_rightrun1.png</filepath>
+    <tile>0</tile>
+  </mage_rightrun1>
+  <mage_rightrun3>
+    <filepath>textures/Character/mage_rightrun2.png</filepath>
+    <tile>0</tile>
+  </mage_rightrun3>
+  <mage_rightrun4>
+    <filepath>textures/Character/mage_rightidle.png</filepath>
+    <tile>0</tile>
+  </mage_rightrun4>
+  <mage_uprun2>
+    <filepath>textures/Character/mage_upidle.png</filepath>
+    <tile>0</tile>
+  </mage_uprun2>
+  <mage_uprun1>
+    <filepath>textures/Character/mage_uprun1.png</filepath>
+    <tile>0</tile>
+  </mage_uprun1>
+  <mage_uprun3>
+    <filepath>textures/Character/mage_uprun2.png</filepath>
+    <tile>0</tile>
+  </mage_uprun3>
+  <mage_uprun4>
+    <filepath>textures/Character/mage_upidle.png</filepath>
+    <tile>0</tile>
+  </mage_uprun4>
   <!-------------- Player Info ------------->
   <health_bar>
     <filepath>textures/GUI/health_bar.png</filepath>
