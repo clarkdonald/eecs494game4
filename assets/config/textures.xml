@@ -10,6 +10,7 @@
     <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
   </crystal>
+ 
   <!-------------- NPC ------------->
   <blondekiddownidle>
     <filepath>textures/NPC/blondekid/blondekiddownidle.png</filepath>
@@ -19,7 +20,9 @@
     <filepath>textures/NPC/girl/girldownidle.png</filepath>
     <tile>0</tile>
   </girldownidle>
+  
   <!-------------- Player ------------->
+
   <attackdown>
     <filepath>textures/Character/attackdown.png</filepath>
     <tile>0</tile>
@@ -36,70 +39,87 @@
     <filepath>textures/Character/attackup.png</filepath>
     <tile>0</tile>
   </attackup>
-  <downidle>
+  <downrun2>
     <filepath>textures/Character/downidle.png</filepath>
     <tile>0</tile>
-  </downidle>
+  </downrun2>
   <downrun1>
     <filepath>textures/Character/downrun1.png</filepath>
     <tile>0</tile>
   </downrun1>
-  <downrun2>
+  <downrun3>
     <filepath>textures/Character/downrun2.png</filepath>
     <tile>0</tile>
-  </downrun2>
+  </downrun3>
+  <downrun4>
+    <filepath>textures/Character/downidle.png</filepath>
+    <tile>0</tile>
+  </downrun4>
   <downsubmerged>
     <filepath>textures/Character/downsubmerged.png</filepath>
     <tile>0</tile>
   </downsubmerged>
-  <leftidle>
+  <leftrun2>
     <filepath>textures/Character/leftidle.png</filepath>
     <tile>0</tile>
-  </leftidle>
+  </leftrun2>
   <leftrun1>
     <filepath>textures/Character/leftrun1.png</filepath>
     <tile>0</tile>
   </leftrun1>
-  <leftrun2>
+  <leftrun3>
     <filepath>textures/Character/leftrun2.png</filepath>
     <tile>0</tile>
-  </leftrun2>
+  </leftrun3>
+  <leftrun4>
+    <filepath>textures/Character/leftidle.png</filepath>
+    <tile>0</tile>
+  </leftrun4>
   <leftsubmerged>
     <filepath>textures/Character/leftsubmerged.png</filepath>
     <tile>0</tile>
   </leftsubmerged>
-  <rightidle>
+  <rightrun2>
     <filepath>textures/Character/rightidle.png</filepath>
     <tile>0</tile>
-  </rightidle>
+  </rightrun2>
   <rightrun1>
     <filepath>textures/Character/rightrun1.png</filepath>
     <tile>0</tile>
   </rightrun1>
-  <rightrun2>
+  <rightrun3>
     <filepath>textures/Character/rightrun2.png</filepath>
     <tile>0</tile>
-  </rightrun2>
+  </rightrun3>
+  <rightrun4>
+    <filepath>textures/Character/rightidle.png</filepath>
+    <tile>0</tile>
+  </rightrun4>
   <rightsubmerged>
     <filepath>textures/Character/rightsubmerged.png</filepath>
     <tile>0</tile>
   </rightsubmerged>
-  <upidle>
-    <filepath>textures/Character/upidle.png</filepath>
-    <tile>0</tile>
-  </upidle>
-  <uprun1>
-    <filepath>textures/Character/uprun1.png</filepath>
-    <tile>0</tile>
-  </uprun1>
-  <uprun2>
-    <filepath>textures/Character/uprun2.png</filepath>
-    <tile>0</tile>
-  </uprun2>
   <upsubmerged>
     <filepath>textures/Character/upsubmerged.png</filepath>
     <tile>0</tile>
   </upsubmerged>
+  <uprun2>
+    <filepath>textures/Character/upidle.png</filepath>
+    <tile>0</tile>
+  </uprun2>
+  <uprun1>
+    <filepath>textures/Character/uprun1.png</filepath>
+    <tile>0</tile>
+  </uprun1>
+  <uprun3>
+    <filepath>textures/Character/uprun2.png</filepath>
+    <tile>0</tile>
+  </uprun3>
+  <uprun4>
+    <filepath>textures/Character/upidle.png</filepath>
+    <tile>0</tile>
+  </uprun4>
+  
   <!-------------- Player Info ------------->
   <health_bar>
     <filepath>textures/GUI/health_bar.png</filepath>

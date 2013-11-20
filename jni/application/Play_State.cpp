@@ -93,6 +93,7 @@ void Play_State::initialize_xbox_controller()
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERLEFT, 0 /* z-axis */), 16);
   set_action(Zeni_Input_ID(SDL_CONTROLLERAXISMOTION, SDL_CONTROLLER_AXIS_TRIGGERRIGHT, 0 /* z-axis */), 17);
 
+
 	//initialize player 2
 	set_action(Zeni_Input_ID(SDL_KEYDOWN, SDLK_ESCAPE, 1), 21);
   set_action(Zeni_Input_ID(SDL_CONTROLLERBUTTONDOWN, SDL_CONTROLLER_BUTTON_BACK, 1), 21);

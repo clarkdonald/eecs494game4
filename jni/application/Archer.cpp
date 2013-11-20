@@ -11,7 +11,7 @@ Archer::Archer(const Zeni::Point2f &position_,
 {}
 
 void Archer::render() const {
-	Game_Object::render("downidle");
+  Player::render();
 }
 
 Weapon* Archer::range()

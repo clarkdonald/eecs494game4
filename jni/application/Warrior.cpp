@@ -11,7 +11,7 @@ Warrior::Warrior(const Zeni::Point2f &position_,
 {}
 
 void Warrior::render() const {
-	Game_Object::render("downidle");
+	Player::render();
 }
 
 Weapon* Warrior::melee() {
