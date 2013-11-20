@@ -268,6 +268,9 @@ void Game_State::perform_logic() {
             }
           }
         }
+        else {
+          player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+        }
       }
     } else {
       player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
@@ -334,7 +337,7 @@ void Game_State::perform_logic() {
     if(!player_wrapper->player->is_dead()) continue;        
     if(player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
       Player *dead = player_wrapper->player;
-      player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()), 
+      player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()),
                                              player_infos[player_wrapper->uid]->start_position, 
                                              player_wrapper->uid,
                                              player_wrapper->player->get_team());      
@@ -522,8 +525,8 @@ void Game_State::load_map(const std::string &file_) {
      vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
   
   // TEMP: spawn a couple crystals for now
-  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*8, UNIT_LENGTH*0)));
-  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*3, UNIT_LENGTH*13)));
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8)));
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*7, UNIT_LENGTH*11)));
   
   file.close();
 }

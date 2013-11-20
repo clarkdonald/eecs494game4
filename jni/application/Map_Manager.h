@@ -14,7 +14,7 @@
 #include <map>
 #include <string>
 
-const int NUM_FILES = 2;
+const int NUM_FILES = 3;
 
 class Map_Manager {
   public:
