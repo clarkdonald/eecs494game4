@@ -20,6 +20,7 @@
 #include "Percent_Bar.h"
 #include "Player_Factory.h"
 #include "Map_Manager.h"
+#include "Crystal.h"
 #include <utility>
 #include <fstream>
 #include <map>
@@ -81,11 +82,17 @@ Game_State::~Game_State() {
     if (*it != nullptr) delete *it;
   for (auto it = environments.begin(); it != environments.end(); ++it)
     if (*it != nullptr) delete *it;
+  for (auto it = collidable_environments.begin(); it != collidable_environments.end(); ++it)
+    if (*it != nullptr) delete *it;
   for (auto it = projectiles.begin(); it != projectiles.end(); ++it)
     if (*it != nullptr) delete *it;
   for (auto it = player_wrappers.begin(); it != player_wrappers.end(); ++it)
     if (*it != nullptr) delete *it;
   for (auto it = player_infos.begin(); it != player_infos.end(); ++it)
+    if (*it != nullptr) delete *it;
+  for (auto it = npcs.begin(); it != npcs.end(); ++it)
+    if (*it != nullptr) delete *it;
+  for (auto it = crystals.begin(); it != crystals.end(); ++it)
     if (*it != nullptr) delete *it;
   delete vbo_ptr_floor;
   delete vbo_ptr_lower;
@@ -131,7 +138,7 @@ void Game_State::perform_logic() {
       // make an initial attempt at movement
       player_wrapper->player->move_x(move_x, time_step);
       
-      for (auto environment : environments) {
+      for (auto environment : collidable_environments) {
         if (player_wrapper->player->touching(*environment)) {
           player_wrapper->player->move_x(-move_x, time_step);
           moved_back = true;
@@ -170,7 +177,7 @@ void Game_State::perform_logic() {
       // make an initial attempt at movement
       player_wrapper->player->move_y(move_y, time_step);
       
-      for (auto environment : environments) {
+      for (auto environment : collidable_environments) {
         if (player_wrapper->player->touching(*environment)) {
           player_wrapper->player->move_y(-move_y, time_step);
           moved_back = true;
@@ -230,7 +237,7 @@ void Game_State::perform_logic() {
       player_wrapper->player->set_can_attack();
     }
     
-    // crystal depositting logic
+    // crystal depositing logic
     if (input.deposit_crystal && player_wrapper->player->has_crystal()) {
       for (auto npc : npcs) {
         if (same_team(npc->get_team(), player_wrapper->player->get_team()) &&
@@ -250,6 +257,17 @@ void Game_State::perform_logic() {
       }
     } else {
       player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
+    }
+    
+    // crystal pick up logic
+    for (auto crystal = crystals.begin(); crystal != crystals.end();) {
+      if (player_wrapper->player->touching(**crystal)) {
+        player_wrapper->player->pick_up_crystal();
+        delete *crystal;
+        crystal = crystals.erase(crystal);
+      } else {
+        ++crystal;
+      }
     }
   }
   
@@ -274,7 +292,7 @@ void Game_State::perform_logic() {
     }
 
     // do environment collision checks
-    for (auto environment : environments) {
+    for (auto environment : collidable_environments) {
       if ((*projectile)->touching(*environment)) {
         should_remove = true;
         break;
@@ -319,10 +337,11 @@ void Game_State::render_spawn_menu() {
 void Game_State::render_all() {
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
-  vbo_ptr_middle->render();
+  for (auto crystal : crystals) crystal->render();
   for (auto npc : npcs) npc->render();
   for (auto player_wrapper : player_wrappers) player_wrapper->player->render();
   for (auto projectile : projectiles) projectile->render();
+  vbo_ptr_middle->render();
   vbo_ptr_upper->render();
 }
 
@@ -350,7 +369,7 @@ void Game_State::create_tree(const Point2f &position) {
   if (position.y - UNIT_LENGTH < 0)
     error_handle("Cannot place tree in the specified location");
   
-  environments.push_back(create_environment("Tree", position, BOTTOM));
+  collidable_environments.push_back(create_environment("Tree", position, BOTTOM));
   environments.push_back(create_environment("Tree", position - Point2f(0, UNIT_LENGTH), TOP));
 }
 
@@ -362,16 +381,16 @@ void Game_State::create_house(const Point2f &position) {
     error_handle("Cannot place house in the specified location");
   }
   
-  environments.push_back(create_environment("House", position, DOOR));
-  environments.push_back(create_environment("House", position - Point2f(UNIT_LENGTH, 0), WINDOW_LEFT));
-  environments.push_back(create_environment("House", position + Point2f(UNIT_LENGTH, 0), WINDOW_RIGHT));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH), BLUE_ROOF_MIDDLE_EDGE));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_RIGHT_CORNER_1));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_LEFT_CORNER_1));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2),
+  collidable_environments.push_back(create_environment("House", position, DOOR));
+  collidable_environments.push_back(create_environment("House", position - Point2f(UNIT_LENGTH, 0), WINDOW_LEFT));
+  collidable_environments.push_back(create_environment("House", position + Point2f(UNIT_LENGTH, 0), WINDOW_RIGHT));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH), BLUE_ROOF_MIDDLE_EDGE));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_RIGHT_CORNER_1));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_DOWN_LEFT_CORNER_1));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2),
       BLUE_ROOF_MIDDLE));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_LEFT_SIDE));
-  environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_RIGHT_SIDE));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) - Point2f(UNIT_LENGTH, 0), BLUE_ROOF_LEFT_SIDE));
+  collidable_environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*2) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_RIGHT_SIDE));
   environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*3),
       BLUE_ROOF_UP_MIDDLE));
   environments.push_back(create_environment("House", position - Point2f(0, UNIT_LENGTH*3) + Point2f(UNIT_LENGTH, 0), BLUE_ROOF_UP_RIGHT_CORNER));
@@ -470,8 +489,14 @@ void Game_State::load_map(const std::string &file_) {
     vbo_ptr_lower->give_Quadrilateral(create_quad_ptr(terrain));
   for (auto environment : environments)
      vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
+  for (auto environment : collidable_environments)
+    vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
   for (auto atmosphere : atmospheres)
      vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
+  
+  // TEMP: spawn a couple crystals for now
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*8, UNIT_LENGTH*0)));
+  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*3, UNIT_LENGTH*13)));
   
   file.close();
 }

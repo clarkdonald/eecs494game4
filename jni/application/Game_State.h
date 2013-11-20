@@ -21,6 +21,7 @@ class Atmosphere;
 class Environment;
 class Player;
 class Npc;
+class Crystal;
 
 struct Player_Wrapper {
   Player_Wrapper(Player *player_, const int &uid_);
@@ -55,14 +56,14 @@ class Game_State {
         
     bool is_gameover() const {return gameover;}
 
-                void execute_controller_code(const Zeni::Zeni_Input_ID &id,
+    void execute_controller_code(const Zeni::Zeni_Input_ID &id,
                                  const float &confidence,
                                  const int &action);
     
   private:  
     void clear();
 
-          void render_all();
+    void render_all();
 
     void render_spawn_menu();
   
@@ -76,12 +77,14 @@ class Game_State {
     //Zeni::Chronometer<Zeni::Time> shooting_timer;
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
+    std::list<Environment*> collidable_environments;
     std::list<Atmosphere*> atmospheres;
     std::list<Terrain*> grasss;
     std::list<Player_Wrapper*> player_wrappers;
     std::vector<Player_Info*> player_infos;
     std::list<Weapon*> projectiles;
     std::list<Npc*> npcs;
+    std::list<Crystal*> crystals;
     int total_num_crystals;
     int crystals_in_play;
     bool gameover;
