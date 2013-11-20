@@ -8,6 +8,10 @@
 49 49
 # player 3
 49 44
+# npc team 1
+9 3
+# npc team 2
+45 42
 # map
 ..............WWWWWWWWc.......c.........c......c..
 ..........c...WWWWWWWWtttttttttttttttttttttttttttt
@@ -36,8 +40,8 @@ c..ct...t...t...t...t...t...t...t...t...t.......t.
 .....c........c.....c..b.....b..bb........c......t
 t.t.t.t.tct.t.t..c......tct.t.t.t.tct.t.t.........
 c..tct.t.t.tct.........t.t.tct.t.tct.tct...ttttttt
-t...t.tct.t.t..c......c.t.t.t.t.ct...t.tc....ttttt
-dddtct.t.t.t.tdddddddddt.t.t.trt.tdddtctdddddttttt
+t...t.tct.t.t..c......c.t.t.t.t.ct...tctc....ttttt
+dddtct.t.t.t.tdddddddddt.t.t.trtdddddtttdddddttttt
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
@@ -57,5 +61,5 @@ tttttttttttttt.....tttt..t.....r..........h.......
 dddddddddddddt............r...........h..bsb..h...
 dddddddddddddt..b.......t............bsb..s..bsb..
 ddddddddddddd....b...t.r.....r........s...s...s...
-dhddhddhddhdd............r............s...s...s...
-ddddddddddddd.b.bb.....t..............s...s...s...
+dhddhddhddhdd..t.........r............s...s...s...
+ddddddddddddd.....t....t..............s...s...s...

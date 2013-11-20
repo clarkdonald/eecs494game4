@@ -4,8 +4,10 @@
 using namespace Zeni;
 using namespace std;
 
-Warrior::Warrior(const Zeni::Point2f &position_, const int &uid_)
-: Player(position_, uid_, 60.0f, 200.0f)
+Warrior::Warrior(const Zeni::Point2f &position_,
+                 const int &uid_,
+                 const Team &team_)
+: Player(position_, uid_, 60.0f, 200.0f, team_)
 {}
 
 void Warrior::render() const {
@@ -14,9 +16,8 @@ void Warrior::render() const {
 
 Weapon* Warrior::melee() {
   Weapon* sword = nullptr;
-  if(can_attack()) {
-    Point2f pos = calc_weapon_pos();
-    sword = new Sword(pos, get_facing());
+  if (can_attack()) {
+    sword = new Sword(calc_weapon_pos(), get_facing(), get_team());
     set_cannot_attack();
   }
   return sword;

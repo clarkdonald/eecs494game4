@@ -5,7 +5,9 @@
 
 class Warrior : public Player {
   public:
-    Warrior(const Zeni::Point2f &position_, const int &uid_);
+    Warrior(const Zeni::Point2f &position_,
+            const int &uid_,
+            const Team &team_);
 
     void render() const override;
 

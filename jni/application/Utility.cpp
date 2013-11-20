@@ -94,3 +94,7 @@ pair<Point2i, Point2i> get_bottom_right_screen() {
   int y2 = Zeni::get_Window().get_height();
   return make_pair(Point2i(x1,y1), Point2i(x2, y2));
 }
+
+bool same_team(const Team &lhs, const Team &rhs) {
+  return lhs == rhs;
+}
