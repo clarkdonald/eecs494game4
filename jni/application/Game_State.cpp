@@ -51,7 +51,7 @@ Player_Wrapper::~Player_Wrapper() {
 }
 
 Player_Info::Player_Info(const Zeni::Point2f &start_position_, const Team &team_, Spawn_Menu * spawn_menu_)
-: start_position(start_position_), spawn_menu(spawn_menu_), team(team_)
+: start_position(start_position_), spawn_menu(spawn_menu_), team(team_), up_axis_released(false), down_axis_released(false)
 {}
 
 Player_Info::~Player_Info() {
@@ -119,11 +119,21 @@ void Game_State::perform_logic() {
 
     if (player_wrapper->player->is_dead()) {
       float move_y = input.move_y;            
-      if(move_y > 0.7f) 
+			if(move_y > 0.7f && player_infos[player_wrapper->uid]->down_axis_released) {
+				player_infos[player_wrapper->uid]->down_axis_released = false;
         player_infos[player_wrapper->uid]->spawn_menu->move_down();
-      if(move_y < -0.7f)
+			}
+      if(move_y < -0.7f && player_infos[player_wrapper->uid]->up_axis_released) {
+				player_infos[player_wrapper->uid]->up_axis_released = false;
         player_infos[player_wrapper->uid]->spawn_menu->move_up();
-      if(input.attack)
+			}
+
+			if(move_y <= 0.2)
+				player_infos[player_wrapper->uid]->down_axis_released = true;
+			if(move_y >= -0.2)
+				player_infos[player_wrapper->uid]->up_axis_released = true;
+
+			if(input.deposit_crystal || input.attack)
         player_infos[player_wrapper->uid]->spawn_menu->select_current_option();
       continue;
     }
