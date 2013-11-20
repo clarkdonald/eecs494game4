@@ -48,7 +48,7 @@ void Player::move_x(const float &mag, const float &timestep) {
 	if(sprite_distance_traveled >= 20.0f) {
 			sprite_distance_traveled = 0;
 			sprite_frame++;
-			if(sprite_frame == 2)
+			if(sprite_frame == 4)
 				sprite_frame = 0;
 	}
 }
@@ -68,7 +68,7 @@ void Player::move_y(const float &mag, const float &timestep) {
 	if(sprite_distance_traveled >= 20.0f) {
 			sprite_distance_traveled = 0;
 			sprite_frame++;
-			if(sprite_frame == 2)
+			if(sprite_frame == 4)
 				sprite_frame = 0;
 	}
 }
