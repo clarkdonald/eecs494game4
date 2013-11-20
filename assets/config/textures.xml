@@ -15,24 +15,6 @@
     <filepath>textures/Character/downidle.png</filepath>
     <tile>0</tile>
   </downidle>
-  <!-- Player Status -->
-  <health_bar>
-    <filepath>textures/GUI/health_bar.png</filepath>
-    <tile>0</tile>
-  </health_bar>
-  <health>
-    <filepath>textures/GUI/health.png</filepath>
-    <tile>0</tile>
-  </health>
-  <!-------------- Weapons ------------->
-  <arrow>
-    <filepath>textures/Projectiles/arrow1.png</filepath>
-    <tile>0</tile>
-  </arrow>
-  <magic>
-    <filepath>textures/Projectiles/magic.png</filepath>
-    <tile>0</tile>
-  </magic>
   <attackdown>
     <filepath>textures/Character/attackdown.png</filepath>
     <tile>0</tile>
@@ -92,7 +74,35 @@
   <uprun2>
     <filepath>textures/Character/uprun2.png</filepath>
     <tile>0</tile>
-  </uprun2> 
+  </uprun2>
+  
+  <!-- Player Animation-->
+  <sprite_downrun>
+    <is_sprite>1</is_sprite>
+    <token>downrun1</token>
+    <token>downrun2</token>
+  </sprite_downrun>
+  
+  
+  <!-- Player Status -->
+  <health_bar>
+    <filepath>textures/GUI/health_bar.png</filepath>
+    <tile>0</tile>
+  </health_bar>
+  <health>
+    <filepath>textures/GUI/health.png</filepath>
+    <tile>0</tile>
+  </health>
+  <!-------------- Weapons ------------->
+  <arrow>
+    <filepath>textures/Projectiles/arrow1.png</filepath>
+    <tile>0</tile>
+  </arrow>
+  <magic>
+    <filepath>textures/Projectiles/magic.png</filepath>
+    <tile>0</tile>
+  </magic>
+  
   <!-------------- Terrain ------------->
   <water>
     <filepath>textures/Terrain/water.png</filepath>
