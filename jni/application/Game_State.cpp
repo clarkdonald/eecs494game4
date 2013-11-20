@@ -361,7 +361,19 @@ void Game_State::perform_logic() {
   }
 
   if (crystals_in_play < total_num_crystals) {
-    crystals.push_back(new Crystal(crystal_locations[rand()%crystal_locations.size()]));
+    bool found = true;
+    int index;
+    do {
+      index = rand()%crystal_locations.size();
+      for (auto crystal : crystals) {
+        if (crystal->get_position().x == crystal_locations[index].x &&
+            crystal->get_position().y == crystal_locations[index].y) {
+          found = false;
+          break;
+        }
+      }
+    } while (!found);
+    crystals.push_back(new Crystal(crystal_locations[index]));
     crystals_in_play++;
   }
 }
