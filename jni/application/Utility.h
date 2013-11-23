@@ -20,6 +20,10 @@ class Atmosphere;
 /** Game Information **/
 const int NUM_PLAYERS = 4;
 
+/** Game Point System **/
+const int DEPOSIT_CRYSTAL_POINTS = 100;
+const int KILL_PLAYER_POINTS = 10;
+
 /** Required crystal deposit duration time **/
 const float DEPOSIT_TIME = 5.0f;
 

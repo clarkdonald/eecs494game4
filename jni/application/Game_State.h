@@ -15,6 +15,9 @@
 #include "Utility.h"
 #include <zenilib.h>
 #include <string>
+#include <map>
+#include <list>
+#include <vector>
 
 class Control;
 class Terrain;
@@ -33,10 +36,8 @@ struct Player_Wrapper {
 };
 
 struct Player_Info {
-
   Player_Info(const Zeni::Point2f &start_position_, const Team &team_, Spawn_Menu * spawn_menu_);
   ~Player_Info();
-  
   Controls controls;
   Percent_Bar health_bar;
   Percent_Bar crystal_bar;
@@ -99,6 +100,7 @@ class Game_State {
     std::list<Npc*> npcs;
     std::list<Crystal*> crystals;
     std::vector<Zeni::Point2f> crystal_locations;
+    std::map<Team, unsigned int> scores;
     int total_num_crystals;
     int crystals_in_play;
     bool gameover;

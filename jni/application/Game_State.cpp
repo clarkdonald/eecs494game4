@@ -41,6 +41,7 @@ using std::map;
 using std::vector;
 using std::cerr;
 using std::endl;
+using std::to_string;
 
 Player_Wrapper::Player_Wrapper(Player *player_, const int &uid_)
 : player(player_), uid(uid_) 
@@ -257,7 +258,8 @@ void Game_State::perform_logic() {
       // archer/mage ranged attack
       Weapon* projectile = player_wrapper->player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
-    } else {
+    }
+    else {
       player_wrapper->player->set_can_attack();
     }        
 
@@ -276,6 +278,7 @@ void Game_State::perform_logic() {
           else {
             if (player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() > DEPOSIT_TIME) {
               player_wrapper->player->drop_crystal();
+              scores[player_wrapper->player->get_team()] += DEPOSIT_CRYSTAL_POINTS;
               --crystals_in_play;
               player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
             }
@@ -317,6 +320,9 @@ void Game_State::perform_logic() {
       }
       if ((*projectile)->touching(*(player_wrapper->player))) {
         player_wrapper->player->take_dmg((*projectile)->get_damage());
+        if (player_wrapper->player->is_dead()) {
+          scores[(*projectile)->get_team()] += KILL_PLAYER_POINTS;
+        }
         should_remove = true;
         break;
       }
@@ -394,6 +400,7 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
                                          p_pos + Vector2f(250.0f, 200.0f)), 
                       screen_coord_map[player_wrapper->uid](), 
                       false);
+  
   // Render Map and Movable objects
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
@@ -404,9 +411,15 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   vbo_ptr_middle->render();
   vbo_ptr_upper->render();
 
-  // Render Player information
-  player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 90.0f));
-  player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg()); 
+  // Render Player health
+  player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 70.0f));
+  player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg());
+  
+  // Render Player Score
+  get_Fonts()["system_24"].render_text(String("Score: " + to_string(
+                                       scores[player_wrapper->player->get_team()])),
+                                       Point2f(p_pos - Vector2f(140.0f, 90.0f)),
+                                       get_Colors()["white"]);
 
   // Render the number of crystals
   player_infos[player_wrapper->uid]->crystal_info.set_position(Vector2f(p_pos.x + 180.0f, p_pos.y - 90.0f));
@@ -414,7 +427,7 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
 
   // rendering crystal bar when depositing crystal at NPC
   if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
-    player_infos[player_wrapper->uid]->crystal_bar.set_position(p_pos - Vector2f(140.0f, 70.0f));
+    player_infos[player_wrapper->uid]->crystal_bar.set_position(p_pos - Vector2f(140.0f, 50.0f));
     player_infos[player_wrapper->uid]->crystal_bar.render(player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() / DEPOSIT_TIME);
   }
 }
@@ -422,8 +435,9 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
 void Game_State::render(){
   // If we're done with the level, don't render anything
   if (gameover) return;
+  
   for (auto player_wrapper : player_wrappers) {    
-    if(player_wrapper->player->is_dead()) {
+    if (player_wrapper->player->is_dead()) {
       render_spawn_menu(player_wrapper);
     }
     else {      
@@ -497,6 +511,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Invalid start x for player");
     Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
     team = (i < 2 ? WHITE : BLACK);
+    scores[team] = 0;
     player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i, team), i));
     player_wrappers.back()->player->kill();
     player_infos.push_back(new Player_Info(pos, team, new Spawn_Menu(screen_coord_map[i]())));
