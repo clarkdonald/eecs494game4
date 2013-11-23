@@ -17,3 +17,7 @@ Atmosphere::Atmosphere(const Point2f &position_,  const String &texture_)
 {}
 
 Atmosphere::~Atmosphere() {}
+
+void Atmosphere::update(const float &value) {
+  // do nothing as default
+}

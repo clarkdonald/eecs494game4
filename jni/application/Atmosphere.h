@@ -21,6 +21,8 @@ class Atmosphere : public Game_Object {
     virtual ~Atmosphere() = 0;
   
     const Zeni::String get_texture() const {return texture;}
+  
+    virtual void update(const float &);
 
   private:
     Zeni::String texture;

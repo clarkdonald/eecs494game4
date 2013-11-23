@@ -309,6 +309,18 @@ void Game_State::perform_logic() {
     }
   }
   
+  // iterate through each cloud, updating it
+  for (auto atmosphere : atmospheres) {
+    atmosphere->update(time_step);
+    if (atmosphere->get_position().x + atmosphere->get_size().x >=
+        (dimension.width*UNIT_LENGTH - (UNIT_LENGTH - 1.0f)))
+    {
+      Point2f pos = atmosphere->get_position();
+      pos.x = 0.0f;
+      atmosphere->set_position(pos);
+    }
+  }
+  
   // iterate through each projectile, updating it
   for (auto projectile = projectiles.begin(); projectile != projectiles.end();) {
     (*projectile)->update(time_step);
@@ -415,7 +427,8 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   for (auto player_wrapper : player_wrappers) player_wrapper->player->render();
   for (auto projectile : projectiles) projectile->render();
   vbo_ptr_middle->render();
-  vbo_ptr_upper->render();
+  for (auto atmosphere : atmospheres) atmosphere->render();
+  //vbo_ptr_upper->render();
 
   // Render Player health
   player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 70.0f));
@@ -581,8 +594,8 @@ void Game_State::load_map(const std::string &file_) {
      vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
   for (auto environment : collidable_environments)
     vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
-  for (auto atmosphere : atmospheres)
-     vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
+//  for (auto atmosphere : atmospheres)
+//     vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
   
   // TEMP: spawn a couple crystals for now
   random_device rd;
