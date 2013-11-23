@@ -18,6 +18,7 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <random>
 
 class Control;
 class Terrain;
@@ -101,6 +102,8 @@ class Game_State {
     std::list<Crystal*> crystals;
     std::vector<Zeni::Point2f> crystal_locations;
     std::map<Team, unsigned int> scores;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dis;
     int total_num_crystals;
     int crystals_in_play;
     bool gameover;

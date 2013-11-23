@@ -42,10 +42,14 @@ using std::vector;
 using std::cerr;
 using std::endl;
 using std::to_string;
+using std::random_device;
+using std::mt19937;
+using std::uniform_int_distribution;
 
 Player_Wrapper::Player_Wrapper(Player *player_, const int &uid_)
 : player(player_), uid(uid_) 
-{}
+{
+}
   
 Player_Wrapper::~Player_Wrapper() {
   if (player != nullptr) delete player;
@@ -357,9 +361,10 @@ void Game_State::perform_logic() {
     if(!player_wrapper->player->is_dead()) continue;
     if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
       player_infos[player_wrapper->uid]->spawn_menu->clear_menu();
-      Player *dead = player_wrapper->player;
       crystals_in_play -= player_wrapper->player->get_crystals_held();
-      player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->get_selected_option()),
+      Player *dead = player_wrapper->player;
+      player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->
+                                             get_selected_option()),
                                              player_infos[player_wrapper->uid]->start_position, 
                                              player_wrapper->uid,
                                              player_wrapper->player->get_team());      
@@ -367,11 +372,12 @@ void Game_State::perform_logic() {
     }
   }
 
+  // respawn crystals
   while (crystals_in_play < total_num_crystals) {
     bool found = true;
     int index;
     do {
-      index = rand()%crystal_locations.size();
+      index = dis(gen);
       for (auto crystal : crystals) {
         if (crystal->get_position().x == crystal_locations[index].x &&
             crystal->get_position().y == crystal_locations[index].y) {
@@ -579,6 +585,9 @@ void Game_State::load_map(const std::string &file_) {
      vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
   
   // TEMP: spawn a couple crystals for now
+  random_device rd;
+  gen = mt19937(rd());
+  dis = uniform_int_distribution<>(0, 2);
   crystal_locations.push_back(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8));
   crystal_locations.push_back(Point2f(UNIT_LENGTH*11, UNIT_LENGTH*9));
   crystal_locations.push_back(Point2f(UNIT_LENGTH*13, UNIT_LENGTH*8));
