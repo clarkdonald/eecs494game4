@@ -416,7 +416,8 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg());
   
   // Render Player Score
-  get_Fonts()["system_24"].render_text(String("Score: " + to_string(
+  string color = (player_wrapper->player->get_team() == WHITE ? "White" : "Black");
+  get_Fonts()["system_24"].render_text(String(color + " Score: " + to_string(
                                        scores[player_wrapper->player->get_team()])),
                                        Point2f(p_pos - Vector2f(140.0f, 90.0f)),
                                        get_Colors()["white"]);
