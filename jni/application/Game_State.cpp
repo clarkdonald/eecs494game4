@@ -396,6 +396,9 @@ void Game_State::perform_logic() {
           found = false;
           break;
         }
+        else {
+          found = true;
+        }
       }
     } while (!found);
     crystals.push_back(new Crystal(crystal_locations[index]));
