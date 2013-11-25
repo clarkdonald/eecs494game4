@@ -33,7 +33,8 @@ Player::Player(const Point2f &position_,
   team(team_),
 	sprite_prefix(sprite_prefix_),
 	submerged(false),
-	attack_limit(attack_limit_)
+	attack_limit(attack_limit_),
+  weapon(nullptr)
 
 {time_since_attack.start();}
 
@@ -43,6 +44,13 @@ void Player::move_x(const float &mag, const float &timestep, bool first_time) {
 	Point2f pos = get_position();
 	pos.x += speed * timestep * mag;
 	set_position(pos);
+
+  if(weapon != nullptr)
+  {
+    Point2f wep_pos = weapon->get_position();
+    wep_pos.x += speed * timestep * mag;
+    weapon->set_position(wep_pos);
+  }
 
 	// code to anmimate movement
 	if(first_time){
@@ -66,7 +74,13 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
 	Point2f pos = get_position();
 	pos.y += speed * timestep * mag;
 	set_position(pos);
-
+  
+  if(weapon != nullptr)
+  {
+    Point2f wep_pos = weapon->get_position();
+    wep_pos.y += speed * timestep * mag;
+    weapon->set_position(wep_pos);
+  }
 	// code to animate movement
 	if(first_time) {
 		sprite_distance_traveled += speed * timestep * abs(mag);

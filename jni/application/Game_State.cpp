@@ -332,6 +332,7 @@ void Game_State::perform_logic() {
   for (auto melee = melees.begin(); melee != melees.end();) {
     if((*melee)->animation_over())
     {
+      (*melee)->remove_from_owner();
       delete *melee;
       melee = melees.erase(melee);
     }

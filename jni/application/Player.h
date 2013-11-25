@@ -73,8 +73,10 @@ class Player : public Game_Object {
   
     const int & get_uid() const {return uid;}
   
+    void remove_weapon() {weapon = nullptr;}
   protected:
 		virtual bool can_attack() const {return time_since_attack.seconds() > attack_limit;}
+    Weapon* weapon;
     Zeni::Point2f calc_weapon_pos();
     Zeni::Point2f calc_sword_pos();
 
@@ -94,7 +96,6 @@ class Player : public Game_Object {
 		int sprite_frame;
 		Zeni::String sprite_prefix;
     Team team;
-
 		Zeni::Chronometer<Zeni::Time> time_since_attack;
 };
 

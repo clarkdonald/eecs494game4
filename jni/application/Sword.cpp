@@ -35,3 +35,8 @@ void Sword::render() const {
               false, // whether or not to horizontally flip the texture
               Color()); // what Color to "paint" the texture  
 }
+
+void Sword::remove_from_owner()
+{
+  owner->remove_weapon();
+}

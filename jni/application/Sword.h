@@ -13,6 +13,7 @@ class Sword : public Weapon {
     void render() const override;
     bool animation_over() override;
 
+    void remove_from_owner() override;
   private:
     Player* owner;
     float dir;
