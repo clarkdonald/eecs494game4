@@ -194,6 +194,10 @@
     <filepath>textures/GUI/health.png</filepath>
     <tile>0</tile>
   </health>
+  <aiming>
+    <filepath>textures/Character/aiming_circle.png</filepath>
+    <tile>0</tile>    
+  </aiming>
   <!-------------- Weapons ------------->
   <arrow>
     <filepath>textures/Projectiles/arrow4.png</filepath>
