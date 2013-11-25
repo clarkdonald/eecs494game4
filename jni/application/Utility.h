@@ -21,7 +21,7 @@ class Atmosphere;
 const int NUM_PLAYERS = 4;
 
 /** Game Point System **/
-const int DEPOSIT_CRYSTAL_POINTS = 100;
+const int DEPOSIT_CRYSTAL_POINTS = 1;
 const int KILL_PLAYER_POINTS = 10;
 
 /** Required crystal deposit duration time **/
@@ -50,8 +50,8 @@ struct Controls {
 
 /** Team identifier **/
 enum Team {
-  WHITE,
-  BLACK
+  RED,
+  BLUE
 };
 
 /** Parts of the Tree object for rendering **/

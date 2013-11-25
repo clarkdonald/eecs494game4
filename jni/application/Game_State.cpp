@@ -148,7 +148,7 @@ void Game_State::perform_logic() {
     float move_y = input.move_y;
 		bool is_submerged = false;
     for (auto terrain : terrains) {
-      if (terrain->slow_player_down() && player_wrapper->player->touching(*terrain)) {
+      if (terrain->slow_player_down() && player_wrapper->player->touching_feet(*terrain)) {
         move_x *= 0.5f;
         move_y *= 0.5f;
 				is_submerged = true;
@@ -421,7 +421,7 @@ void Game_State::render_spawn_menu(Player_Wrapper * player_wrapper) {
 
 void Game_State::render_all(Player_Wrapper * player_wrapper) { 
   auto p_pos = player_wrapper->player->get_position();
-  get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(150.0f, 100.0f),
+  get_Video().set_2d_view(std::make_pair(p_pos - Vector2f(250.0f, 200.0f),
                                          p_pos + Vector2f(250.0f, 200.0f)), 
                       screen_coord_map[player_wrapper->uid](), 
                       false);
@@ -438,23 +438,26 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   //vbo_ptr_upper->render();
 
   // Render Player health
-  player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(140.0f, 70.0f));
-  player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg());
-  
-  // Render Player Score
-  string color = (player_wrapper->player->get_team() == WHITE ? "White" : "Black");
-  get_Fonts()["system_24"].render_text(String(color + " Score: " + to_string(
-                                       scores[player_wrapper->player->get_team()])),
-                                       Point2f(p_pos - Vector2f(140.0f, 90.0f)),
-                                       get_Colors()["white"]);
+  player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(240.0f, 190.0f));
+  player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg());    
+
+  // Render Player Score       
+  get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+                                        scores[RED])),
+                                        p_pos - Vector2f(240.0f,-150.0f),
+                                        get_Colors()["red"]);
+  get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+                                        scores[BLUE])),
+                                        p_pos - Vector2f(240.0f,-175.0f),
+                                        get_Colors()["blue"]);
 
   // Render the number of crystals
-  player_infos[player_wrapper->uid]->crystal_info.set_position(Vector2f(p_pos.x + 180.0f, p_pos.y - 90.0f));
+  player_infos[player_wrapper->uid]->crystal_info.set_position(p_pos + Vector2f(190.0f,-190.0f));
   player_infos[player_wrapper->uid]->crystal_info.render(player_wrapper->player->get_crystals_held());
 
   // rendering crystal bar when depositing crystal at NPC
   if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
-    player_infos[player_wrapper->uid]->crystal_bar.set_position(p_pos - Vector2f(140.0f, 50.0f));
+    player_infos[player_wrapper->uid]->crystal_bar.set_position(p_pos - Vector2f(240.0f, 170.0f));
     player_infos[player_wrapper->uid]->crystal_bar.render(player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() / DEPOSIT_TIME);
   }
 }
@@ -468,9 +471,10 @@ void Game_State::render(){
       render_spawn_menu(player_wrapper);
     }
     else {      
-      render_all(player_wrapper);
+      render_all(player_wrapper);      
     }
   }  
+  //get_Video().set_2d(make_pair(Point2f(0.0f,0.0f), Point2f(get_Window().get_width(), get_Window().get_height())));  
 }
 
 void Game_State::create_tree(const Point2f &position) {
@@ -537,7 +541,7 @@ void Game_State::load_map(const std::string &file_) {
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for player");
     Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
-    team = (i < 2 ? WHITE : BLACK);
+    team = (i < 2 ? RED : BLUE);
     scores[team] = 0;
     player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i, team), i));
     player_wrappers.back()->player->kill();
@@ -558,8 +562,8 @@ void Game_State::load_map(const std::string &file_) {
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for npc");
     Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
-    team = (i < 2 ? WHITE : BLACK);
-    npc_type = (team == WHITE ? "Blonde_Kid" : "Girl");
+    team = (i < 2 ? RED : BLUE);
+    npc_type = (team == RED ? "Blonde_Kid" : "Girl");
     npcs.push_back(create_npc(npc_type, pos, team));
   }
 
