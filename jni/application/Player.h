@@ -60,6 +60,8 @@ class Player : public Game_Object {
   
     const float & get_facing() const {return facing;}
 
+		void set_submerged(bool value) {submerged = value;}
+
     void set_can_attack();
   
     void set_cannot_attack();
@@ -82,6 +84,7 @@ class Player : public Game_Object {
     unsigned int n_crystals;
     int uid;
     bool attackable;
+		bool submerged;
 		enum Player_Direction {LEFT, RIGHT, UP, DOWN};
 		Player_Direction player_direction;
 		float sprite_distance_traveled;
