@@ -31,7 +31,9 @@ Player::Player(const Point2f &position_,
 	sprite_frame(0),
   team(team_),
 	sprite_prefix(sprite_prefix_),
-	submerged(false)
+	submerged(false),  
+  dodge_time(0.0f),
+  dodging(false)
 {}
 
 Player::~Player() {}
@@ -80,6 +82,18 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
 					sprite_frame = 0;
 		}
 	}
+}
+
+void Player::dodge() {
+  dodge_time = 0.0f;  
+  dodging = true;
+}
+
+void Player::stop_dodge(const float &timestep) {
+  dodge_time += timestep;
+  if(dodge_time > 0.1f) {
+    dodging = false;    
+  }
 }
 
 bool Player::touching_feet(const Game_Object &rhs) const {

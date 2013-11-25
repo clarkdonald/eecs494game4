@@ -145,7 +145,7 @@ void Game_State::perform_logic() {
     
     // check collision with terrain on movement for effects
     float move_x = input.move_x;
-    float move_y = input.move_y;
+    float move_y = input.move_y;    
 		bool is_submerged = false;
     for (auto terrain : terrains) {
       if (terrain->slow_player_down() && player_wrapper->player->touching_feet(*terrain)) {
@@ -157,6 +157,17 @@ void Game_State::perform_logic() {
     }
 
 		player_wrapper->player->set_submerged(is_submerged);
+
+    // dodge logic for player
+    if(input.A) {      
+      if(!player_wrapper->player->is_dodging())
+        player_wrapper->player->dodge();
+    }
+    if(player_wrapper->player->is_dodging()) {      
+      move_x *= 8.0f;
+      move_y *= 8.0f;
+      player_wrapper->player->stop_dodge(time_step);
+    }
     
     // check collision with environment/npc/player on movement
     // first check boundary collision, then env, then npc, then oppo player
@@ -244,12 +255,7 @@ void Game_State::perform_logic() {
     // directional logic for player
 	  Vector2f direction_vector(input.look_x, input.look_y);
     if (direction_vector.magnitude() > 0.4f) // deadzone for right stick; magnitude : [0,1]
-	    player_wrapper->player->turn_to_face(direction_vector.theta());
-    
-    // dodge logic for player
-    if(input.RB) {
-
-    }
+	    player_wrapper->player->turn_to_face(direction_vector.theta());        
 
     // attack logic for player
     if (input.attack && !is_submerged) {

@@ -30,6 +30,12 @@ class Player : public Game_Object {
   
     void move_x(const float &, const float &, bool);
 
+    void dodge();
+
+    void stop_dodge(const float &timestep);
+
+    bool is_dodging() {return dodging;};
+
     bool touching_feet(const Game_Object &rhs) const;
   
 	  void turn_to_face(const float &);
@@ -87,7 +93,9 @@ class Player : public Game_Object {
     unsigned int n_crystals;
     int uid;
     bool attackable;
-		bool submerged;
+		bool submerged;    
+    float dodge_time;
+    bool dodging;
 		enum Player_Direction {LEFT, RIGHT, UP, DOWN};
 		Player_Direction player_direction;
 		float sprite_distance_traveled;
