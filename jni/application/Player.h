@@ -20,7 +20,8 @@ class Player : public Game_Object {
            const float &speed_,
            const float &max_hp_,
            const Team &team_,
-					 const Zeni::String& sprite_prefix_);
+					 const Zeni::String& sprite_prefix_,
+					 const float& attack_limit_);
   
     virtual ~Player() = 0;
 
@@ -64,9 +65,7 @@ class Player : public Game_Object {
 
 		void set_submerged(bool value) {submerged = value;}
 
-    void set_can_attack();
-  
-    void set_cannot_attack();
+		void start_attack_timer();
 
     void pick_up_crystal();
   
@@ -75,7 +74,7 @@ class Player : public Game_Object {
     const int & get_uid() const {return uid;}
   
   protected:
-    bool can_attack() const {return attackable;}
+		virtual bool can_attack() const {return time_since_attack.seconds() > attack_limit;}
     Zeni::Point2f calc_weapon_pos();
     Zeni::Point2f calc_sword_pos();
 
@@ -84,6 +83,7 @@ class Player : public Game_Object {
     float facing;
     float max_hp;
     float hp;
+		float attack_limit;
     unsigned int n_crystals;
     int uid;
     bool attackable;
@@ -94,6 +94,8 @@ class Player : public Game_Object {
 		int sprite_frame;
 		Zeni::String sprite_prefix;
     Team team;
+
+		Zeni::Chronometer<Zeni::Time> time_since_attack;
 };
 
 #endif /* PLAYER_H */

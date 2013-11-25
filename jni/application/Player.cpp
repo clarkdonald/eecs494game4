@@ -17,7 +17,8 @@ Player::Player(const Point2f &position_,
                const float &speed_,
                const float &max_hp_,
                const Team &team_,
-							 const String& sprite_prefix_)
+							 const String& sprite_prefix_,
+							 const float& attack_limit_)
 : Game_Object(position_),
   speed(speed_),
   facing(Global::pi_over_two),
@@ -31,8 +32,10 @@ Player::Player(const Point2f &position_,
 	sprite_frame(0),
   team(team_),
 	sprite_prefix(sprite_prefix_),
-	submerged(false)
-{}
+	submerged(false),
+	attack_limit(attack_limit_)
+
+{time_since_attack.start();}
 
 Player::~Player() {}
 
@@ -130,12 +133,9 @@ float Player::get_hp_pctg() const {
   return hp/max_hp;
 }
 
-void Player::set_can_attack() {
-  attackable = true;
-}
-
-void Player::set_cannot_attack() {
-  attackable = false;
+void Player::start_attack_timer()
+{
+	time_since_attack.reset();
 }
 
 void Player::pick_up_crystal() {

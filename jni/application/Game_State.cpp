@@ -273,9 +273,6 @@ void Game_State::perform_logic() {
       Weapon* projectile = player_wrapper->player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
-    else {
-      player_wrapper->player->set_can_attack();
-    }        
 
     // crystal depositing logic
     bool touching = false;
