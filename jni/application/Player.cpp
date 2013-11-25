@@ -184,11 +184,11 @@ void Player::render() const {
 
 	switch(team)
 	{
-		case WHITE:
-			str = "blue_";
-			break;
-		case BLACK:
+		case RED:
 			str = "red_";
+			break;
+		case BLUE:
+			str = "blue_";
 			break;
 	}
 
