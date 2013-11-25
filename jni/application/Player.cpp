@@ -79,6 +79,21 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
 	}
 }
 
+bool Player::touching_feet(const Game_Object &rhs) const {
+  float distance = UNIT_LENGTH / 2.0f;
+  float centerX = get_position().x + (get_size().x / 2.0f);
+  float bottomY = get_position().y + (get_size().y);
+  float rhsCenterX = rhs.get_position().x + (rhs.get_size().x / 2.0f);
+  float rhsCenterY = rhs.get_position().y + (rhs.get_size().y / 2.0f);
+  
+  if ((abs(centerX - rhsCenterX) < distance) &&
+      (abs(bottomY - rhsCenterY) < distance))
+  {
+    return true;
+  }
+  return false;
+}
+
 void Player::turn_to_face(const float &theta) {
 	facing = theta;
 

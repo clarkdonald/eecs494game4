@@ -26,11 +26,12 @@ Only TrueType fonts are supported.
       <height>300</height>
     </virtual_screen>
   </spawn_menu>
-
-  <system_24>
-    <filepath>fonts/FORGOTTE.TTF</filepath>
-    <height>24</height>
-  </system_24>  
+  
+  <godofwar_20>
+    <filepath>fonts/GODOFWAR.TTF</filepath>
+    <height>20</height>
+  </godofwar_20>  
+  
   <system_36_x600>
     <filepath>fonts/FORGOTTE.TTF</filepath>
     <height>36</height>

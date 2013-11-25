@@ -29,6 +29,8 @@ class Player : public Game_Object {
     void move_y(const float &, const float &, bool);
   
     void move_x(const float &, const float &, bool);
+
+    bool touching_feet(const Game_Object &rhs) const;
   
 	  void turn_to_face(const float &);
 
