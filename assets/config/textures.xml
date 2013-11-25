@@ -270,70 +270,136 @@
     </mage_blue_uprun4>
   <!-------------- Archer Sprites ------------->
   <!-- RED -->
-  <archer_downrun2>
-    <filepath>textures/Character/archer_downidle.png</filepath>
+  <archer_red_downrun2>
+    <filepath>textures/Character/archer_red_downidle.png</filepath>
     <tile>0</tile>
-  </archer_downrun2>
-  <archer_downrun1>
-    <filepath>textures/Character/archer_downrun1.png</filepath>
+  </archer_red_downrun2>
+  <archer_red_downrun1>
+    <filepath>textures/Character/archer_red_downrun1.png</filepath>
     <tile>0</tile>
-  </archer_downrun1>
-  <archer_downrun3>
-    <filepath>textures/Character/archer_downrun2.png</filepath>
+  </archer_red_downrun1>
+  <archer_red_downrun3>
+    <filepath>textures/Character/archer_red_downrun2.png</filepath>
     <tile>0</tile>
-  </archer_downrun3>
-  <archer_downrun4>
-    <filepath>textures/Character/archer_downidle.png</filepath>
+  </archer_red_downrun3>
+  <archer_red_downrun4>
+    <filepath>textures/Character/archer_red_downidle.png</filepath>
     <tile>0</tile>
-  </archer_downrun4>
-  <archer_leftrun2>
-    <filepath>textures/Character/archer_leftidle.png</filepath>
+  </archer_red_downrun4>
+  <archer_red_leftrun2>
+    <filepath>textures/Character/archer_red_leftidle.png</filepath>
     <tile>0</tile>
-  </archer_leftrun2>
-  <archer_leftrun1>
-    <filepath>textures/Character/archer_leftrun1.png</filepath>
+  </archer_red_leftrun2>
+  <archer_red_leftrun1>
+    <filepath>textures/Character/archer_red_leftrun1.png</filepath>
     <tile>0</tile>
-  </archer_leftrun1>
-  <archer_leftrun3>
-    <filepath>textures/Character/archer_leftrun2.png</filepath>
+  </archer_red_leftrun1>
+  <archer_red_leftrun3>
+    <filepath>textures/Character/archer_red_leftrun2.png</filepath>
     <tile>0</tile>
-  </archer_leftrun3>
-  <archer_leftrun4>
-    <filepath>textures/Character/archer_leftidle.png</filepath>
+  </archer_red_leftrun3>
+  <archer_red_leftrun4>
+    <filepath>textures/Character/archer_red_leftidle.png</filepath>
     <tile>0</tile>
-  </archer_leftrun4>
-  <archer_rightrun2>
-    <filepath>textures/Character/archer_rightidle.png</filepath>
+  </archer_red_leftrun4>
+  <archer_red_rightrun2>
+    <filepath>textures/Character/archer_red_rightidle.png</filepath>
     <tile>0</tile>
-  </archer_rightrun2>
-  <archer_rightrun1>
-    <filepath>textures/Character/archer_rightrun1.png</filepath>
+  </archer_red_rightrun2>
+  <archer_red_rightrun1>
+    <filepath>textures/Character/archer_red_rightrun1.png</filepath>
     <tile>0</tile>
-  </archer_rightrun1>
-  <archer_rightrun3>
-    <filepath>textures/Character/archer_rightrun2.png</filepath>
+  </archer_red_rightrun1>
+  <archer_red_rightrun3>
+    <filepath>textures/Character/archer_red_rightrun2.png</filepath>
     <tile>0</tile>
-  </archer_rightrun3>
-  <archer_rightrun4>
-    <filepath>textures/Character/archer_rightidle.png</filepath>
+  </archer_red_rightrun3>
+  <archer_red_rightrun4>
+    <filepath>textures/Character/archer_red_rightidle.png</filepath>
     <tile>0</tile>
-  </archer_rightrun4>
-  <archer_uprun2>
-    <filepath>textures/Character/archer_upidle.png</filepath>
+  </archer_red_rightrun4>
+    <archer_red_uprun2>
+    <filepath>textures/Character/archer_red_upidle.png</filepath>
     <tile>0</tile>
-  </archer_uprun2>
-  <archer_uprun1>
-    <filepath>textures/Character/archer_uprun1.png</filepath>
+  </archer_red_uprun2>
+    <archer_red_uprun1>
+    <filepath>textures/Character/archer_red_uprun1.png</filepath>
     <tile>0</tile>
-  </archer_uprun1>
-  <archer_uprun3>
-    <filepath>textures/Character/archer_uprun2.png</filepath>
+  </archer_red_uprun1>
+    <archer_red_uprun3>
+    <filepath>textures/Character/archer_red_uprun2.png</filepath>
     <tile>0</tile>
-  </archer_uprun3>
-  <archer_uprun4>
-    <filepath>textures/Character/archer_upidle.png</filepath>
+  </archer_red_uprun3>
+    <archer_red_uprun4>
+    <filepath>textures/Character/archer_red_upidle.png</filepath>
     <tile>0</tile>
-  </archer_uprun4>
+  </archer_red_uprun4>
+
+  <!-- BLUE -->
+  <archer_blue_downrun2>
+    <filepath>textures/Character/archer_blue_downidle.png</filepath>
+    <tile>0</tile>
+  </archer_blue_downrun2>
+  <archer_blue_downrun1>
+    <filepath>textures/Character/archer_blue_downrun1.png</filepath>
+    <tile>0</tile>
+  </archer_blue_downrun1>
+  <archer_blue_downrun3>
+    <filepath>textures/Character/archer_blue_downrun2.png</filepath>
+    <tile>0</tile>
+  </archer_blue_downrun3>
+  <archer_blue_downrun4>
+    <filepath>textures/Character/archer_blue_downidle.png</filepath>
+    <tile>0</tile>
+  </archer_blue_downrun4>
+  <archer_blue_leftrun2>
+    <filepath>textures/Character/archer_blue_leftidle.png</filepath>
+    <tile>0</tile>
+  </archer_blue_leftrun2>
+  <archer_blue_leftrun1>
+    <filepath>textures/Character/archer_blue_leftrun1.png</filepath>
+    <tile>0</tile>
+  </archer_blue_leftrun1>
+  <archer_blue_leftrun3>
+    <filepath>textures/Character/archer_blue_leftrun2.png</filepath>
+    <tile>0</tile>
+  </archer_blue_leftrun3>
+  <archer_blue_leftrun4>
+    <filepath>textures/Character/archer_blue_leftidle.png</filepath>
+    <tile>0</tile>
+  </archer_blue_leftrun4>
+  <archer_blue_rightrun2>
+    <filepath>textures/Character/archer_blue_rightidle.png</filepath>
+    <tile>0</tile>
+  </archer_blue_rightrun2>
+  <archer_blue_rightrun1>
+    <filepath>textures/Character/archer_blue_rightrun1.png</filepath>
+    <tile>0</tile>
+  </archer_blue_rightrun1>
+  <archer_blue_rightrun3>
+    <filepath>textures/Character/archer_blue_rightrun2.png</filepath>
+    <tile>0</tile>
+  </archer_blue_rightrun3>
+  <archer_blue_rightrun4>
+    <filepath>textures/Character/archer_blue_rightidle.png</filepath>
+    <tile>0</tile>
+  </archer_blue_rightrun4>
+  <archer_blue_uprun2>
+    <filepath>textures/Character/archer_blue_upidle.png</filepath>
+    <tile>0</tile>
+  </archer_blue_uprun2>
+  <archer_blue_uprun1>
+    <filepath>textures/Character/archer_blue_uprun1.png</filepath>
+    <tile>0</tile>
+  </archer_blue_uprun1>
+  <archer_blue_uprun3>
+    <filepath>textures/Character/archer_blue_uprun2.png</filepath>
+    <tile>0</tile>
+  </archer_blue_uprun3>
+  <archer_blue_uprun4>
+    <filepath>textures/Character/archer_blue_upidle.png</filepath>
+    <tile>0</tile>
+  </archer_blue_uprun4>
   
     <!-------------- Player Info ------------->
     <health_bar>
@@ -555,4 +621,9 @@
 
 
 
-  </Textures>
+  
+
+
+
+
+</Textures>
