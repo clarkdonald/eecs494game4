@@ -157,6 +157,16 @@ Point2f Player::calc_weapon_pos() {
     return pos;
 }
 
+Point2f Player::calc_sword_pos() {
+    Point2f pos = get_center();
+    Vector2f size = get_size();
+    // Offset for how far away from player to shoot
+    pos += Vector2f(size.magnitude() * 0.6f * cos(facing),
+                    size.magnitude() * 0.6f * sin(facing));
+    // Offset for centering the weapon wrt player's center
+    pos -= (OBJECT_SIZE / 2);
+    return pos;
+}
 void Player::render() const {
 	if(is_dead()) return;
 

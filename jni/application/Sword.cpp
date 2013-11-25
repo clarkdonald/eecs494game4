@@ -12,7 +12,8 @@ Sword::Sword(const Zeni::Point2f &position_,
 }
 
 void Sword::render() const {
+  Vector2f face_vec = Vector2f(cos(dir), sin(dir));
   Game_Object::render("sword",
                       Color(),
-                      dir + Global::pi_over_two); // TODO: find sword.png and get a corrected angle
+                      face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() - Global::pi_over_two); // TODO: find sword.png and get a corrected angle
 }

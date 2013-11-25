@@ -17,7 +17,7 @@ void Warrior::render() const {
 Weapon* Warrior::melee() {
   Weapon* sword = nullptr;
   if (can_attack()) {
-    sword = new Sword(calc_weapon_pos(), get_facing(), get_team());
+    sword = new Sword(calc_sword_pos(), get_facing(), get_team());
     set_cannot_attack();
   }
   return sword;

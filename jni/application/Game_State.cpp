@@ -260,8 +260,9 @@ void Game_State::perform_logic() {
           if (melee->touching(*(player_check->player)))
             player_check->player->take_dmg(melee->get_damage());
         }
+        melees.push_back(melee);
       }
-      delete melee;
+      //delete melee;
 
       // archer/mage ranged attack
       Weapon* projectile = player_wrapper->player->range();
@@ -435,6 +436,13 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   for (auto projectile : projectiles) projectile->render();
   vbo_ptr_middle->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
+  for (auto melee : melees)
+  {
+    melee->render();
+    delete melee;
+  }
+
+  melees.clear();
   //vbo_ptr_upper->render();
 
   // Render Player health
