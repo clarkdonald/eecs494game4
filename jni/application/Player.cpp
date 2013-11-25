@@ -160,7 +160,7 @@ Point2f Player::calc_weapon_pos() {
 void Player::render() const {
 	if(is_dead()) return;
 
-  // render aiming reticle
+	// render aiming reticle
   Vector2f face_vec = Vector2f(cos(facing), sin(facing));
 
   Point2f pos = get_position();
@@ -181,6 +181,7 @@ void Player::render() const {
   }
 
   // render player
+
 	String str;
 
 	switch(team)
@@ -242,5 +243,4 @@ void Player::render() const {
 				break;
 		}
 	}
-
 }
