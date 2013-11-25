@@ -201,7 +201,7 @@ void Player::render() const {
 	}
 	else
 	{
-		str = sprite_prefix + str;
+		str = sprite_prefix;
 		switch(player_direction)
 		{
 			case UP:
