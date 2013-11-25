@@ -32,7 +32,7 @@ Play_State::Play_State()
   Sound &sr = get_Sound();
   sr.set_BGM("music/evanescence");
   sr.set_BGM_looping(true);
-  sr.play_BGM();
+  //sr.play_BGM();
 }
 
 Play_State::~Play_State() {

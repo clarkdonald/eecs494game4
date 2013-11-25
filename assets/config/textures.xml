@@ -400,73 +400,140 @@
     <filepath>textures/Character/archer_blue_upidle.png</filepath>
     <tile>0</tile>
   </archer_blue_uprun4>
-
+  
   <!-------------- Warrior Sprites ------------->
   <!-- RED -->
-  <warrior_downrun2>
-    <filepath>textures/Character/warrior_downidle.png</filepath>
+  <warrior_red_downrun2>
+    <filepath>textures/Character/warrior_red_downidle.png</filepath>
     <tile>0</tile>
-  </warrior_downrun2>
-  <warrior_downrun1>
-    <filepath>textures/Character/warrior_downrun1.png</filepath>
+  </warrior_red_downrun2>
+  <warrior_red_downrun1>
+    <filepath>textures/Character/warrior_red_downrun1.png</filepath>
     <tile>0</tile>
-  </warrior_downrun1>
-  <warrior_downrun3>
-    <filepath>textures/Character/warrior_downrun2.png</filepath>
+  </warrior_red_downrun1>
+  <warrior_red_downrun3>
+    <filepath>textures/Character/warrior_red_downrun2.png</filepath>
     <tile>0</tile>
-  </warrior_downrun3>
-  <warrior_downrun4>
-    <filepath>textures/Character/warrior_downidle.png</filepath>
+  </warrior_red_downrun3>
+  <warrior_red_downrun4>
+    <filepath>textures/Character/warrior_red_downidle.png</filepath>
     <tile>0</tile>
-  </warrior_downrun4>
-  <warrior_leftrun2>
-    <filepath>textures/Character/warrior_leftidle.png</filepath>
+  </warrior_red_downrun4>
+  <warrior_red_leftrun2>
+    <filepath>textures/Character/warrior_red_leftidle.png</filepath>
     <tile>0</tile>
-  </warrior_leftrun2>
-  <warrior_leftrun1>
-    <filepath>textures/Character/warrior_leftrun1.png</filepath>
+  </warrior_red_leftrun2>
+  <warrior_red_leftrun1>
+    <filepath>textures/Character/warrior_red_leftrun1.png</filepath>
     <tile>0</tile>
-  </warrior_leftrun1>
-  <warrior_leftrun3>
-    <filepath>textures/Character/warrior_leftrun2.png</filepath>
+  </warrior_red_leftrun1>
+  <warrior_red_leftrun3>
+    <filepath>textures/Character/warrior_red_leftrun2.png</filepath>
     <tile>0</tile>
-  </warrior_leftrun3>
-  <warrior_leftrun4>
-    <filepath>textures/Character/warrior_leftidle.png</filepath>
+  </warrior_red_leftrun3>
+  <warrior_red_leftrun4>
+    <filepath>textures/Character/warrior_red_leftidle.png</filepath>
     <tile>0</tile>
-  </warrior_leftrun4>
-  <warrior_rightrun2>
-    <filepath>textures/Character/warrior_rightidle.png</filepath>
+  </warrior_red_leftrun4>
+  <warrior_red_rightrun2>
+    <filepath>textures/Character/warrior_red_rightidle.png</filepath>
     <tile>0</tile>
-  </warrior_rightrun2>
-    <warrior_rightrun1>
-    <filepath>textures/Character/warrior_rightrun1.png</filepath>
+  </warrior_red_rightrun2>
+  <warrior_red_rightrun1>
+    <filepath>textures/Character/warrior_red_rightrun1.png</filepath>
     <tile>0</tile>
-  </warrior_rightrun1>
-  <warrior_rightrun3>
-    <filepath>textures/Character/warrior_rightrun2.png</filepath>
+  </warrior_red_rightrun1>
+  <warrior_red_rightrun3>
+    <filepath>textures/Character/warrior_red_rightrun2.png</filepath>
     <tile>0</tile>
-  </warrior_rightrun3>
-  <warrior_rightrun4>
-    <filepath>textures/Character/warrior_rightidle.png</filepath>
+  </warrior_red_rightrun3>
+  <warrior_red_rightrun4>
+    <filepath>textures/Character/warrior_red_rightidle.png</filepath>
     <tile>0</tile>
-  </warrior_rightrun4>
-  <warrior_uprun2>
-    <filepath>textures/Character/warrior_upidle.png</filepath>
+  </warrior_red_rightrun4>
+  <warrior_red_uprun2>
+    <filepath>textures/Character/warrior_red_upidle.png</filepath>
     <tile>0</tile>
-  </warrior_uprun2>
-  <warrior_uprun1>
-    <filepath>textures/Character/warrior_uprun1.png</filepath>
+    </warrior_red_uprun2>
+    <warrior_red_uprun1>
+      <filepath>textures/Character/warrior_red_uprun1.png</filepath>
+      <tile>0</tile>
+    </warrior_red_uprun1>
+    <warrior_red_uprun3>
+      <filepath>textures/Character/warrior_red_uprun2.png</filepath>
+      <tile>0</tile>
+    </warrior_red_uprun3>
+    <warrior_red_uprun4>
+      <filepath>textures/Character/warrior_red_upidle.png</filepath>
+      <tile>0</tile>
+    </warrior_red_uprun4>
+
+  
+  <!-- BLUE -->
+  <warrior_blue_downrun2>
+    <filepath>textures/Character/warrior_blue_downidle.png</filepath>
     <tile>0</tile>
-  </warrior_uprun1>
-  <warrior_uprun3>
-    <filepath>textures/Character/warrior_uprun2.png</filepath>
+  </warrior_blue_downrun2>
+  <warrior_blue_downrun1>
+    <filepath>textures/Character/warrior_blue_downrun1.png</filepath>
     <tile>0</tile>
-  </warrior_uprun3>
-  <warrior_uprun4>
-    <filepath>textures/Character/warrior_upidle.png</filepath>
+  </warrior_blue_downrun1>
+  <warrior_blue_downrun3>
+    <filepath>textures/Character/warrior_blue_downrun2.png</filepath>
     <tile>0</tile>
-  </warrior_uprun4>
+  </warrior_blue_downrun3>
+  <warrior_blue_downrun4>
+    <filepath>textures/Character/warrior_blue_downidle.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_downrun4>
+  <warrior_blue_leftrun2>
+    <filepath>textures/Character/warrior_blue_leftidle.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_leftrun2>
+  <warrior_blue_leftrun1>
+    <filepath>textures/Character/warrior_blue_leftrun1.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_leftrun1>
+  <warrior_blue_leftrun3>
+    <filepath>textures/Character/warrior_blue_leftrun2.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_leftrun3>
+  <warrior_blue_leftrun4>
+    <filepath>textures/Character/warrior_blue_leftidle.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_leftrun4>
+  <warrior_blue_rightrun2>
+    <filepath>textures/Character/warrior_blue_rightidle.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_rightrun2>
+  <warrior_blue_rightrun1>
+    <filepath>textures/Character/warrior_blue_rightrun1.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_rightrun1>
+  <warrior_blue_rightrun3>
+    <filepath>textures/Character/warrior_blue_rightrun2.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_rightrun3>
+  <warrior_blue_rightrun4>
+    <filepath>textures/Character/warrior_blue_rightidle.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_rightrun4>
+  <warrior_blue_uprun2>
+    <filepath>textures/Character/warrior_blue_upidle.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_uprun2>
+  <warrior_blue_uprun1>
+    <filepath>textures/Character/warrior_blue_uprun1.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_uprun1>
+    <warrior_blue_uprun3>
+    <filepath>textures/Character/warrior_blue_uprun2.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_uprun3>
+  <warrior_blue_uprun4>
+    <filepath>textures/Character/warrior_blue_upidle.png</filepath>
+    <tile>0</tile>
+  </warrior_blue_uprun4>
     <!-------------- Player Info ------------->
     <health_bar>
       <filepath>textures/GUI/health_bar.png</filepath>
@@ -688,6 +755,16 @@
 
 
   
+
+
+
+
+
+
+
+
+
+
 
 
 

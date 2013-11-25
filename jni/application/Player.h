@@ -77,6 +77,7 @@ class Player : public Game_Object {
   protected:
     bool can_attack() const {return attackable;}
     Zeni::Point2f calc_weapon_pos();
+    Zeni::Point2f calc_sword_pos();
 
   private:
     float speed;

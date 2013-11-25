@@ -98,6 +98,7 @@ class Game_State {
     std::list<Player_Wrapper*> player_wrappers;
     std::vector<Player_Info*> player_infos;
     std::list<Weapon*> projectiles;
+    std::list<Weapon*> melees;
     std::list<Npc*> npcs;
     std::list<Crystal*> crystals;
     std::vector<Zeni::Point2f> crystal_locations;
