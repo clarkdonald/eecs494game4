@@ -46,6 +46,7 @@ struct Controls {
   float look_x;
   bool A;
   bool attack;
+  bool RB;
 };
 
 /** Team identifier **/
