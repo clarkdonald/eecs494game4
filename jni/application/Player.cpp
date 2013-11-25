@@ -82,6 +82,21 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
 	}
 }
 
+bool Player::touching_feet(const Game_Object &rhs) const {
+  float distance = UNIT_LENGTH / 2.0f;
+  float centerX = get_position().x + (get_size().x / 2.0f);
+  float bottomY = get_position().y + (get_size().y);
+  float rhsCenterX = rhs.get_position().x + (rhs.get_size().x / 2.0f);
+  float rhsCenterY = rhs.get_position().y + (rhs.get_size().y / 2.0f);
+  
+  if ((abs(centerX - rhsCenterX) < distance) &&
+      (abs(bottomY - rhsCenterY) < distance))
+  {
+    return true;
+  }
+  return false;
+}
+
 void Player::turn_to_face(const float &theta) {
 	facing = theta;
 
@@ -144,6 +159,25 @@ Point2f Player::calc_weapon_pos() {
 
 void Player::render() const {
 	if(is_dead()) return;
+
+	// render aiming reticle
+  Vector2f face_vec = Vector2f(cos(facing), sin(facing));
+
+  Point2f pos = get_position();
+  Point2f size = get_size();
+
+  pos += 0.4f * get_size().get_j();
+
+  // couldn't use Game_Object::render() because need to render the reticle at a different location
+  render_image("aiming", // which texture to use
+              pos, // upper-left corner
+              pos + size, // lower-right corner
+              face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two, // rotation in radians
+              1.0f, // scaling factor
+              pos + 0.5f * size, // point to rotate & scale about
+              false, // whether or not to horizontally flip the texture
+              Color()); // what Color to "paint" the texture  
+
 	String str;
 
 	switch(team)
