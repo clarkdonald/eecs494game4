@@ -30,7 +30,8 @@ Player::Player(const Point2f &position_,
 	sprite_distance_traveled(0.0f),
 	sprite_frame(0),
   team(team_),
-	sprite_prefix(sprite_prefix_)
+	sprite_prefix(sprite_prefix_),
+	submerged(false)
 {}
 
 Player::~Player() {}
@@ -40,12 +41,13 @@ void Player::move_x(const float &mag, const float &timestep, bool first_time) {
 	pos.x += speed * timestep * mag;
 	set_position(pos);
 
+	// code to anmimate movement
 	if(first_time){
 		sprite_distance_traveled += speed * timestep * abs(mag);
 
-		if(mag >= 0.5f)
+		if(mag >= 0.3f)
 			player_direction = RIGHT;
-		else if(mag <= -.5f)
+		else if(mag <= -.3f)
 			player_direction = LEFT;
 
 		if(sprite_distance_traveled >= 20.0f) {
@@ -62,12 +64,13 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
 	pos.y += speed * timestep * mag;
 	set_position(pos);
 
+	// code to animate movement
 	if(first_time) {
 		sprite_distance_traveled += speed * timestep * abs(mag);
 	
-		if(mag >= 0.5f)
+		if(mag >= 0.3f)
 			player_direction = DOWN;
-		else if(mag <= -.5f)
+		else if(mag <= -.3f)
 			player_direction = UP;
 
 		if(sprite_distance_traveled >= 20.0f) {
@@ -116,7 +119,7 @@ void Player::take_dmg(const float &dmg) {
 }
 
 void Player::die() {
-	while (n_crystals != 0) --n_crystals;
+	while (n_crystals != 0) --n_crystals; 
 }
 
 void Player::kill() {
@@ -156,28 +159,87 @@ Point2f Player::calc_weapon_pos() {
 
 void Player::render() const {
 	if(is_dead()) return;
+
+  // render aiming reticle
+  Vector2f face_vec = Vector2f(cos(facing), sin(facing));
+
+  Point2f pos = get_position();
+  Point2f size = get_size();
+
+  pos += 0.4f * get_size().get_j();
+
+  // couldn't use Game_Object::render() because need to render the reticle at a different location
+  render_image("aiming", // which texture to use
+              pos, // upper-left corner
+              pos + size, // lower-right corner
+              face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two, // rotation in radians
+              1.0f, // scaling factor
+              pos + 0.5f * size, // point to rotate & scale about
+              false, // whether or not to horizontally flip the texture
+              Color()); // what Color to "paint" the texture  
+
+
+  // render player
 	String str;
-	switch(player_direction)
+
+	switch(team)
 	{
-		case UP:
-			str = sprite_prefix + "uprun";
-			str += to_string(sprite_frame + 1).c_str();
-			Game_Object::render(str);
+		case WHITE:
+			str = "blue_";
 			break;
-		case DOWN:
-			str = sprite_prefix + "downrun";
-			str += to_string(sprite_frame + 1).c_str();
-			Game_Object::render(str);
-			break;
-		case LEFT:
-			str = sprite_prefix + "leftrun";
-			str += to_string(sprite_frame + 1).c_str();
-			Game_Object::render(str);
-			break;
-		case RIGHT:
-			str = sprite_prefix + "rightrun";
-			str += to_string(sprite_frame + 1).c_str();
-			Game_Object::render(str);
+		case BLACK:
+			str = "red_";
 			break;
 	}
+
+	if(submerged)
+	{
+		switch(player_direction)
+		{
+			case UP:
+				str += "upsubmerged";
+				Game_Object::render(str);
+				break;
+			case DOWN:
+				str += "downsubmerged";
+				Game_Object::render(str);
+				break;
+			case LEFT:
+				str += "leftsubmerged";
+				Game_Object::render(str);
+				break;
+			case RIGHT:
+				str += "rightsubmerged";
+				Game_Object::render(str);
+				break;
+		}
+	}
+	else
+	{
+		str = sprite_prefix + str;
+		switch(player_direction)
+		{
+			case UP:
+				str += "uprun";
+				str += to_string(sprite_frame + 1).c_str();
+				Game_Object::render(str);
+				break;
+			case DOWN:
+				str += "downrun";
+				str += to_string(sprite_frame + 1).c_str();
+				Game_Object::render(str);
+				break;
+			case LEFT:
+				str += "leftrun";
+				str += to_string(sprite_frame + 1).c_str();
+				Game_Object::render(str);
+				break;
+			case RIGHT:
+				str += "rightrun";
+				str += to_string(sprite_frame + 1).c_str();
+				Game_Object::render(str);
+				break;
+		}
+	}
+
 }

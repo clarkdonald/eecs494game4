@@ -146,13 +146,17 @@ void Game_State::perform_logic() {
     // check collision with terrain on movement for effects
     float move_x = input.move_x;
     float move_y = input.move_y;
+		bool is_submerged = false;
     for (auto terrain : terrains) {
       if (terrain->slow_player_down() && player_wrapper->player->touching_feet(*terrain)) {
         move_x *= 0.5f;
         move_y *= 0.5f;
+				is_submerged = true;
         break;
       }
     }
+
+		player_wrapper->player->set_submerged(is_submerged);
     
     // check collision with environment/npc/player on movement
     // first check boundary collision, then env, then npc, then oppo player
