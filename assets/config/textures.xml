@@ -400,7 +400,73 @@
     <filepath>textures/Character/archer_blue_upidle.png</filepath>
     <tile>0</tile>
   </archer_blue_uprun4>
-  
+
+  <!-------------- Warrior Sprites ------------->
+  <!-- RED -->
+  <warrior_downrun2>
+    <filepath>textures/Character/warrior_downidle.png</filepath>
+    <tile>0</tile>
+  </warrior_downrun2>
+  <warrior_downrun1>
+    <filepath>textures/Character/warrior_downrun1.png</filepath>
+    <tile>0</tile>
+  </warrior_downrun1>
+  <warrior_downrun3>
+    <filepath>textures/Character/warrior_downrun2.png</filepath>
+    <tile>0</tile>
+  </warrior_downrun3>
+  <warrior_downrun4>
+    <filepath>textures/Character/warrior_downidle.png</filepath>
+    <tile>0</tile>
+  </warrior_downrun4>
+  <warrior_leftrun2>
+    <filepath>textures/Character/warrior_leftidle.png</filepath>
+    <tile>0</tile>
+  </warrior_leftrun2>
+  <warrior_leftrun1>
+    <filepath>textures/Character/warrior_leftrun1.png</filepath>
+    <tile>0</tile>
+  </warrior_leftrun1>
+  <warrior_leftrun3>
+    <filepath>textures/Character/warrior_leftrun2.png</filepath>
+    <tile>0</tile>
+  </warrior_leftrun3>
+  <warrior_leftrun4>
+    <filepath>textures/Character/warrior_leftidle.png</filepath>
+    <tile>0</tile>
+  </warrior_leftrun4>
+  <warrior_rightrun2>
+    <filepath>textures/Character/warrior_rightidle.png</filepath>
+    <tile>0</tile>
+  </warrior_rightrun2>
+    <warrior_rightrun1>
+    <filepath>textures/Character/warrior_rightrun1.png</filepath>
+    <tile>0</tile>
+  </warrior_rightrun1>
+  <warrior_rightrun3>
+    <filepath>textures/Character/warrior_rightrun2.png</filepath>
+    <tile>0</tile>
+  </warrior_rightrun3>
+  <warrior_rightrun4>
+    <filepath>textures/Character/warrior_rightidle.png</filepath>
+    <tile>0</tile>
+  </warrior_rightrun4>
+  <warrior_uprun2>
+    <filepath>textures/Character/warrior_upidle.png</filepath>
+    <tile>0</tile>
+  </warrior_uprun2>
+  <warrior_uprun1>
+    <filepath>textures/Character/warrior_uprun1.png</filepath>
+    <tile>0</tile>
+  </warrior_uprun1>
+  <warrior_uprun3>
+    <filepath>textures/Character/warrior_uprun2.png</filepath>
+    <tile>0</tile>
+  </warrior_uprun3>
+  <warrior_uprun4>
+    <filepath>textures/Character/warrior_upidle.png</filepath>
+    <tile>0</tile>
+  </warrior_uprun4>
     <!-------------- Player Info ------------->
     <health_bar>
       <filepath>textures/GUI/health_bar.png</filepath>
