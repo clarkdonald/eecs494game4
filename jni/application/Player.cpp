@@ -160,7 +160,7 @@ Point2f Player::calc_weapon_pos() {
 void Player::render() const {
 	if(is_dead()) return;
 
-  // render aiming reticle
+	// render aiming reticle
   Vector2f face_vec = Vector2f(cos(facing), sin(facing));
 
   Point2f pos = get_position();
@@ -168,24 +168,26 @@ void Player::render() const {
 
   pos += 0.4f * get_size().get_j();
 
-  // couldn't use Game_Object::render() because need to render the reticle at a different location
-  render_image("aiming", // which texture to use
-              pos, // upper-left corner
-              pos + size, // lower-right corner
-              face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two, // rotation in radians
-              1.0f, // scaling factor
-              pos + 0.5f * size, // point to rotate & scale about
-              false, // whether or not to horizontally flip the texture
-              Color()); // what Color to "paint" the texture  
-
+  if(!submerged)  {
+    // couldn't use Game_Object::render() because need to render the reticle at a different location
+    render_image("aiming", // which texture to use
+                pos, // upper-left corner
+                pos + size, // lower-right corner
+                face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two, // rotation in radians
+                1.0f, // scaling factor
+                pos + 0.5f * size, // point to rotate & scale about
+                false, // whether or not to horizontally flip the texture
+                Color()); // what Color to "paint" the texture  
+  }
 
   // render player
+
 	String str;
 
 	switch(team)
 	{
 		case RED:
-			str = "";
+			str = "red_";
 			break;
 		case BLUE:
 			str = "blue_";
@@ -241,5 +243,4 @@ void Player::render() const {
 				break;
 		}
 	}
-
 }

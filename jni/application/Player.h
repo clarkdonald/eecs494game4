@@ -46,7 +46,7 @@ class Player : public Game_Object {
   
 	  void die();
   
-    bool is_depositting_crystal() const;
+    bool is_depositting_crystal() const;    
   
     void deposit_crystal();
   

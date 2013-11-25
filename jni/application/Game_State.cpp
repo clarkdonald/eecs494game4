@@ -247,7 +247,7 @@ void Game_State::perform_logic() {
 	    player_wrapper->player->turn_to_face(direction_vector.theta());
     
     // attack logic for player
-    if (input.attack) {
+    if (input.attack && !is_submerged) {
       // warrior melee sword attack
       Weapon* melee = player_wrapper->player->melee();
       if (melee != nullptr) {
