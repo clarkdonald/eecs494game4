@@ -265,9 +265,9 @@ void Game_State::perform_logic() {
           if (melee->touching(*(player_check->player)))
             player_check->player->take_dmg(melee->get_damage());
         }
+        melee->animation_timer.start();
         melees.push_back(melee);
       }
-      //delete melee;
 
       // archer/mage ranged attack
       Weapon* projectile = player_wrapper->player->range();
@@ -331,6 +331,17 @@ void Game_State::perform_logic() {
     }
   }
   
+  // iterate through each melee weapon, updating it
+  for (auto melee = melees.begin(); melee != melees.end();) {
+    if((*melee)->animation_over())
+    {
+      delete *melee;
+      melee = melees.erase(melee);
+    }
+    else
+      melee++;
+  }
+
   // iterate through each projectile, updating it
   for (auto projectile = projectiles.begin(); projectile != projectiles.end();) {
     (*projectile)->update(time_step);
@@ -441,13 +452,8 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   for (auto projectile : projectiles) projectile->render();
   vbo_ptr_middle->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
-  for (auto melee : melees)
-  {
-    melee->render();
-    delete melee;
-  }
+  for (auto melee : melees) melee->render();
 
-  melees.clear();
   //vbo_ptr_upper->render();
 
   // Render Player health
