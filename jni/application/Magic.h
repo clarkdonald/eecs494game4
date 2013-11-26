@@ -3,7 +3,7 @@
 
 #include "Weapon.h"
 
-#define MAGIC_SPD 200.0f
+#define MAGIC_SPD 350.0f
 
 class Magic : public Weapon {
   public:
