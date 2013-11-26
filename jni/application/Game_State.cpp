@@ -159,14 +159,15 @@ void Game_State::perform_logic() {
 		player_wrapper->player->set_submerged(is_submerged);
 
     // dodge logic for player
-    if(input.A) {      
+    //player_wrapper->player->stop_dodge(time_step);
+    player_wrapper->player->update_dodge_timer(time_step);
+    if(input.RB) {      
       if(!player_wrapper->player->is_dodging())
         player_wrapper->player->dodge();
     }
     if(player_wrapper->player->is_dodging()) {      
       move_x *= 8.0f;
-      move_y *= 8.0f;
-      player_wrapper->player->stop_dodge(time_step);
+      move_y *= 8.0f;      
     }
     
     // check collision with environment/npc/player on movement
@@ -271,17 +272,14 @@ void Game_State::perform_logic() {
           if (melee->touching(*(player_check->player)))
             player_check->player->take_dmg(melee->get_damage());
         }
+        melee->animation_timer.start();
         melees.push_back(melee);
       }
-      //delete melee;
 
       // archer/mage ranged attack
       Weapon* projectile = player_wrapper->player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
-    else {
-      player_wrapper->player->set_can_attack();
-    }        
 
     // crystal depositing logic
     bool touching = false;
@@ -337,6 +335,18 @@ void Game_State::perform_logic() {
     }
   }
   
+  // iterate through each melee weapon, updating it
+  for (auto melee = melees.begin(); melee != melees.end();) {
+    if((*melee)->animation_over())
+    {
+      (*melee)->remove_from_owner();
+      delete *melee;
+      melee = melees.erase(melee);
+    }
+    else
+      melee++;
+  }
+
   // iterate through each projectile, updating it
   for (auto projectile = projectiles.begin(); projectile != projectiles.end();) {
     (*projectile)->update(time_step);
@@ -447,13 +457,8 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   for (auto projectile : projectiles) projectile->render();
   vbo_ptr_middle->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
-  for (auto melee : melees)
-  {
-    melee->render();
-    delete melee;
-  }
+  for (auto melee : melees) melee->render();
 
-  melees.clear();
   //vbo_ptr_upper->render();
 
   // Render Player health
@@ -646,140 +651,192 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 {
 	switch (action) {
 		/* player 1 */
-    case 11:
+    case 101:
       break;
 
-    case 12:
+    case 102:
 			player_infos[0]->controls.move_x = confidence;
       break;
 
-    case 13:
+    case 103:
 			player_infos[0]->controls.move_y = confidence;
       break;
 
-    case 14:
+    case 104:
 			player_infos[0]->controls.look_x = confidence;
       break;
 
-    case 15:
+    case 105:
 			player_infos[0]->controls.look_y = confidence;
       break;
 
-    case 16:
+    case 106:
       break;
 
-    case 17:
+    case 107:
       player_infos[0]->controls.attack = confidence > 0.5f;
       break;
 
-		case 18:
+		case 108:
 			player_infos[0]->controls.A = (confidence == 1.0);
 			break;
 
-    case 10:
+    case 109:
       break;
+
+		case 110:
+			break;
+
+		case 111:
+			break;
+
+		case 112:
+			break;
+
+		case 113:
+			player_infos[0]->controls.RB = (confidence == 1.0);
+			break;
 
 		/* player 2 */
-		case 21:
+		case 201:
       break;
 
-    case 22:
+    case 202:
 			player_infos[1]->controls.move_x = confidence;
       break;
 
-    case 23:
+    case 203:
 			player_infos[1]->controls.move_y = confidence;
       break;
 
-    case 24:
+    case 204:
 			player_infos[1]->controls.look_x = confidence;
       break;
 
-    case 25:
+    case 205:
 			player_infos[1]->controls.look_y = confidence;
       break;
 
-    case 26:
+    case 206:
       break;
 
-    case 27:
+    case 207:
 			player_infos[1]->controls.attack = confidence > 0.5f;
       break;
 
-		case 28:
+		case 208:
 			player_infos[1]->controls.A = (confidence == 1.0);
 			break;
 
-    case 20:
+    case 209:
       break;
+
+		case 210:
+			break;
+
+		case 211:
+			break;
+
+		case 212:
+			break;
+
+		case 213:
+			player_infos[1]->controls.RB = (confidence == 1.0);
+			break;
 
 		/* player 3 */
-		case 31:
+		case 301:
       break;
 
-    case 32:
+    case 302:
 			player_infos[2]->controls.move_x = confidence;
       break;
 
-    case 33:
+    case 303:
 			player_infos[2]->controls.move_y = confidence;
       break;
 
-    case 34:
+    case 304:
 			player_infos[2]->controls.look_x = confidence;
       break;
 
-    case 35:
+    case 305:
 			player_infos[2]->controls.look_y = confidence;
       break;
 
-    case 36:
+    case 306:
       break;
 
-    case 37:
+    case 307:
 			player_infos[2]->controls.attack = confidence > 0.5f;
       break;
 
-		case 38:
+		case 308:
 			player_infos[2]->controls.A = (confidence == 1.0);
 			break;
 
-    case 30:
+    case 309:
       break;
+
+		case 310:
+			break;
+
+		case 311:
+			break;
+
+		case 312:
+			break;
+
+		case 313:
+			player_infos[2]->controls.RB = (confidence == 1.0);
+			break;
 
 		/* player 4 */
-		case 41:
+		case 401:
       break;
 
-    case 42:
+    case 402:
 			player_infos[3]->controls.move_x = confidence;
       break;
 
-    case 43:
+    case 403:
 			player_infos[3]->controls.move_y = confidence;
       break;
 
-    case 44:
+    case 404:
 			player_infos[3]->controls.look_x = confidence;
       break;
 
-    case 45:
+    case 405:
 			player_infos[3]->controls.look_y = confidence;
       break;
 
-    case 46:
+    case 406:
       break;
 
-    case 47:
+    case 407:
 			player_infos[3]->controls.attack = confidence > 0.5f;
       break;
 
-		case 48:
+		case 408:
 			player_infos[3]->controls.A = (confidence == 1.0);
 			break;
 
-    case 40:
+    case 409:
       break;
+
+		case 410:
+			break;
+
+		case 411:
+			break;
+
+		case 412:
+			break;
+
+		case 413:
+			player_infos[3]->controls.RB = (confidence == 1.0);
+			break;
 
     default:
       break;

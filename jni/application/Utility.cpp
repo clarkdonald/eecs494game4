@@ -26,7 +26,8 @@ Controls::Controls()
   look_y(0.0f),
   look_x(0.0f),
   A(false),
-  attack(false)
+  attack(false),
+  RB(false)
 {}
 
 Dimension::Dimension()

@@ -2,6 +2,7 @@
 #define ARCHER_H
 
 #include "Player.h"
+#include <zenilib.h>
 
 class Archer : public Player {
   public:
@@ -14,6 +15,11 @@ class Archer : public Player {
     Weapon* range() override;
   
     void spc_skill() override;
+
+		void set_can_attack();
+		void set_cannot_attack();
+private:
+	Zeni::Chronometer<Zeni::Time> time_since_attack;
 };
 
 #endif /* ARCHER_H */

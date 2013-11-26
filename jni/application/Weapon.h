@@ -21,6 +21,12 @@ class Weapon : public Game_Object {
 
     const float & get_damage() const {return damage;}
 
+    virtual bool animation_over() {return false;}
+    
+    virtual void remove_from_owner() {}
+
+    Zeni::Chronometer<Zeni::Time> animation_timer;
+
   private:
 	  float damage;
     Team team;

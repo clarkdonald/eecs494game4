@@ -17,7 +17,8 @@ Player::Player(const Point2f &position_,
                const float &speed_,
                const float &max_hp_,
                const Team &team_,
-							 const String& sprite_prefix_)
+							 const String& sprite_prefix_,
+							 const float& attack_limit_)
 : Game_Object(position_),
   speed(speed_),
   facing(Global::pi_over_two),
@@ -33,8 +34,11 @@ Player::Player(const Point2f &position_,
 	sprite_prefix(sprite_prefix_),
 	submerged(false),  
   dodge_time(0.0f),
-  dodging(false)
-{}
+  dodging(false),	
+	attack_limit(attack_limit_),
+  weapon(nullptr)
+
+{time_since_attack.start();}
 
 Player::~Player() {}
 
@@ -42,6 +46,13 @@ void Player::move_x(const float &mag, const float &timestep, bool first_time) {
 	Point2f pos = get_position();
 	pos.x += speed * timestep * mag;
 	set_position(pos);
+
+  if(weapon != nullptr)
+  {
+    Point2f wep_pos = weapon->get_position();
+    wep_pos.x += speed * timestep * mag;
+    weapon->set_position(wep_pos);
+  }
 
 	// code to anmimate movement
 	if(first_time){
@@ -65,7 +76,13 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
 	Point2f pos = get_position();
 	pos.y += speed * timestep * mag;
 	set_position(pos);
-
+  
+  if(weapon != nullptr)
+  {
+    Point2f wep_pos = weapon->get_position();
+    wep_pos.y += speed * timestep * mag;
+    weapon->set_position(wep_pos);
+  }
 	// code to animate movement
 	if(first_time) {
 		sprite_distance_traveled += speed * timestep * abs(mag);
@@ -85,11 +102,13 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
 }
 
 void Player::dodge() {
-  dodge_time = 0.0f;  
-  dodging = true;
+  if(dodge_time > 3.0f) {
+    dodge_time = 0.0f;  
+    dodging = true;
+  }
 }
 
-void Player::stop_dodge(const float &timestep) {
+void Player::update_dodge_timer(const float &timestep) { 
   dodge_time += timestep;
   if(dodge_time > 0.1f) {
     dodging = false;    
@@ -144,12 +163,9 @@ float Player::get_hp_pctg() const {
   return hp/max_hp;
 }
 
-void Player::set_can_attack() {
-  attackable = true;
-}
-
-void Player::set_cannot_attack() {
-  attackable = false;
+void Player::start_attack_timer()
+{
+	time_since_attack.reset();
 }
 
 void Player::pick_up_crystal() {
@@ -175,10 +191,10 @@ Point2f Player::calc_sword_pos() {
     Point2f pos = get_center();
     Vector2f size = get_size();
     // Offset for how far away from player to shoot
-    pos += Vector2f(size.magnitude() * 0.6f * cos(facing),
-                    size.magnitude() * 0.6f * sin(facing));
-    // Offset for centering the weapon wrt player's center
-    pos -= (OBJECT_SIZE / 2);
+    pos += Vector2f(size.magnitude() * 0.3f * cos(facing),
+                    size.magnitude() * 0.3f * sin(facing));
+    // Offset for centering the sword's HANDLE wrt player's center
+    pos -= (OBJECT_SIZE.get_i() / 2);
     return pos;
 }
 void Player::render() const {
