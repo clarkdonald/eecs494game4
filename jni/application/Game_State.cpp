@@ -365,6 +365,7 @@ void Game_State::perform_logic() {
         should_remove = true;
         break;
       }
+      player_wrapper->player->update_blink_timer(time_step);
     }
 
     // do environment collision checks
