@@ -48,10 +48,10 @@ class Player : public Game_Object {
 	  virtual void spc_skill() = 0; // special class-specific attack
 
 	  void take_dmg(const float &);
+
+    void update_blink_timer(const float &timestep);
   
-    bool is_dead() const {return hp <= 0.0f;}
-  
-	  void die();
+    bool is_dead() const {return hp <= 0.0f;}	  
   
     bool is_depositting_crystal() const;    
   
@@ -98,6 +98,11 @@ class Player : public Game_Object {
 		bool submerged;    
     float dodge_time;
     bool dodging;
+
+    float blink_timer;
+    bool blink;
+    bool hit;
+
 		enum Player_Direction {LEFT, RIGHT, UP, DOWN};
 		Player_Direction player_direction;
 		float sprite_distance_traveled;

@@ -35,6 +35,9 @@ Player::Player(const Point2f &position_,
 	submerged(false),  
   dodge_time(0.0f),
   dodging(false),	
+  hit(false),
+  blink(false),
+  blink_timer(0.0f),
 	attack_limit(attack_limit_),
   weapon(nullptr)
 
@@ -144,19 +147,38 @@ void Player::turn_to_face(const float &theta) {
 		player_direction = UP;
 }
 
-void Player::take_dmg(const float &dmg) {
-  if ((hp -= dmg) < 0.0f) {
+void Player::take_dmg(const float &dmg) {  
+  if (!hit && (hp -= dmg) < 0.0f) {
     hp = 0.0f;
-    die();
+    n_crystals = 0;
+  }
+  else {
+    hit = true;
+    blink = true;
+    blink_timer = 0.0f;
   }
 }
 
-void Player::die() {
-	while (n_crystals != 0) --n_crystals; 
+void Player::update_blink_timer(const float &timestep) { 
+  if(hit) {
+    blink_timer += timestep;
+    if(blink_timer < 0.05f) 
+      blink = true;    
+    else if(blink_timer <  0.1f) 
+      blink = false;
+    else if(blink_timer < 0.15f)
+      blink = true;
+    else {
+      hit = false;
+      blink = false;
+      blink_timer = 0.0f;
+    }
+  }  
 }
 
 void Player::kill() {
   hp = 0.0f;
+  n_crystals = 0;
 }
 
 float Player::get_hp_pctg() const {
@@ -199,6 +221,8 @@ Point2f Player::calc_sword_pos() {
 }
 void Player::render() const {
 	if(is_dead()) return;
+  
+  if(blink) return;
 
 	// render aiming reticle
   Vector2f face_vec = Vector2f(cos(facing), sin(facing));
