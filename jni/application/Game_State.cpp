@@ -146,7 +146,11 @@ void Game_State::perform_logic() {
     float move_x = input.move_x;
     float move_y = input.move_y;    
 		bool is_submerged = false;
-    for (auto terrain : terrains) {
+    
+		if(abs(move_x) < .3) move_x = 0;
+		if(abs(move_y) < .3) move_y = 0;
+		
+		for (auto terrain : terrains) {
       if (terrain->slow_player_down() && player_wrapper->player->touching_feet(*terrain)) {
         move_x *= 0.5f;
         move_y *= 0.5f;
