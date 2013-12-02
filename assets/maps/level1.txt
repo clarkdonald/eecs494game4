@@ -1,26 +1,42 @@
-15
-15
+# dimension (y,x)
+20 20
 # player 0
 0 0
 # player 1
-14 0
+0 1
 # player 2
-0 14
+19 19
 # player 3
-14 14
+19 18
+# npc team 1
+4 3
+# npc team 2
+17 16
+# crystal metadata
+2
+3
+# crystal positions
+8 6
+9 11
+8 13
 # map
-.s...........ww
-.s...t.t.t...ww
-.s..t.t.t.t....
-.s....b........
-.s......h.b....
-.s..h...s...h..
-.s.....rs..b...
-.s......s..tttt
-.s......dddd...
-.s..h......dcb.
-.s.....rt..d...
-.s.r.r.....d...
-.s.....t.t.dc..
-dsddddddddddddd
-dsddddddddddddd
+.............c..WWWW
+..c............cWWWW
+.......c..t.....WWtt
+...h.......ttt..WWtt
+..b.b......ctt.cWWtt
+c......tt......tWWWW
+WWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWW
+r..c...rctttt.c...t.
+c.....r..c......tc..
+WWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWW
+..tt...tc..tt..t....
+c....t..t...........
+tttt........r.......
+ttttt..t.....rc.....
+tcttt.....t.....h...
+ttttt.c.....t..b.b..
+cttct..t..t.........
+ttttt.......c.......

@@ -20,25 +20,26 @@ Player::Player(const Point2f &position_,
 							 const String& sprite_prefix_,
 							 const float& attack_limit_)
 : Game_Object(position_),
+  weapon(nullptr),
   speed(speed_),
   facing(Global::pi_over_two),
   max_hp(max_hp_),
   hp(max_hp_),
+  attack_limit(attack_limit_),
   n_crystals(0),
   uid(uid_),
   attackable(true),
+  submerged(false),
+  dodge_time(0.0f),
+  dodging(false),
   player_direction(DOWN),
 	sprite_distance_traveled(0.0f),
-	sprite_frame(0),
-  team(team_),
-	sprite_prefix(sprite_prefix_),
-	submerged(false),  
-  dodge_time(0.0f),
-  dodging(false),	
-	attack_limit(attack_limit_),
-  weapon(nullptr)
-
-{time_since_attack.start();}
+  sprite_frame(0),
+  sprite_prefix(sprite_prefix_),
+  team(team_)
+{
+  time_since_attack.start();
+}
 
 Player::~Player() {}
 

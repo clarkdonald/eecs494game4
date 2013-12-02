@@ -26,12 +26,14 @@
 #include <fstream>
 #include <map>
 #include <vector>
+#include <random>
 #include <sstream>
 
 using namespace Zeni;
 using namespace Zeni::Collision;
 using std::stringstream;
 using std::make_pair;
+using std::cout;
 using std::string;
 using std::getline;
 using std::ifstream;
@@ -45,6 +47,7 @@ using std::to_string;
 using std::random_device;
 using std::mt19937;
 using std::uniform_int_distribution;
+using std::istringstream;
 
 Player_Wrapper::Player_Wrapper(Player *player_, const int &uid_)
 : player(player_), uid(uid_) 
@@ -65,13 +68,10 @@ Player_Info::~Player_Info() {
 }
 
 Game_State::Game_State(const std::string &file_)
-: total_num_crystals(0),
-  crystals_in_play(0),
-  gameover(false),
+: gameover(false),
   vbo_ptr_floor(new Vertex_Buffer),
   vbo_ptr_lower(new Vertex_Buffer),
-  vbo_ptr_middle(new Vertex_Buffer),
-  vbo_ptr_upper(new Vertex_Buffer)
+  vbo_ptr_middle(new Vertex_Buffer)
 {
   // set up function pointers for split screen methods
   screen_coord_map.push_back(&get_top_left_screen);
@@ -107,7 +107,6 @@ Game_State::~Game_State() {
   delete vbo_ptr_floor;
   delete vbo_ptr_lower;
   delete vbo_ptr_middle;
-  delete vbo_ptr_upper;
 }
 
 void Game_State::perform_logic() {
@@ -323,12 +322,10 @@ void Game_State::perform_logic() {
     }
   }
   
-  // iterate through each cloud, updating it
+  // cloud movement logic
   for (auto atmosphere : atmospheres) {
     atmosphere->update(time_step);
-    if (atmosphere->get_position().x + atmosphere->get_size().x >=
-        (dimension.width*UNIT_LENGTH - (UNIT_LENGTH - 1.0f)))
-    {
+    if (atmosphere->get_position().x + atmosphere->get_size().x >= dimension.width*UNIT_LENGTH) {
       Point2f pos = atmosphere->get_position();
       pos.x = 0.0f;
       atmosphere->set_position(pos);
@@ -411,11 +408,21 @@ void Game_State::perform_logic() {
   }
 
   // respawn crystals
+  if (crystals_in_play < total_num_crystals) respawn_crystal();
+}
+
+void Game_State::respawn_crystal() {
+  // Set up random number generation
+  random_device rd;
+  mt19937 gen = mt19937(rd());
+  uniform_int_distribution<> dis = uniform_int_distribution<>(0, crystal_locations.size()-1);
+  
   while (crystals_in_play < total_num_crystals) {
     bool found = true;
     int index;
     do {
       index = dis(gen);
+      cout << index << endl;
       for (auto crystal : crystals) {
         if (crystal->get_position().x == crystal_locations[index].x &&
             crystal->get_position().y == crystal_locations[index].y) {
@@ -459,21 +466,19 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   for (auto atmosphere : atmospheres) atmosphere->render();
   for (auto melee : melees) melee->render();
 
-  //vbo_ptr_upper->render();
-
   // Render Player health
   player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(240.0f, 190.0f));
   player_infos[player_wrapper->uid]->health_bar.render(player_wrapper->player->get_hp_pctg());    
 
-  // Render Player Score       
-  get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
-                                        scores[RED])),
-                                        p_pos - Vector2f(240.0f,-150.0f),
-                                        get_Colors()["red"]);
+  // Render Player Score
   get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
                                         scores[BLUE])),
-                                        p_pos - Vector2f(240.0f,-175.0f),
+                                        p_pos - Vector2f(240.0f,-150.0f),
                                         get_Colors()["blue"]);
+  get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+                                         scores[RED])),
+                                         p_pos - Vector2f(240.0f,-175.0f),
+                                         get_Colors()["red"]);
 
   // Render the number of crystals
   player_infos[player_wrapper->uid]->crystal_info.set_position(p_pos + Vector2f(190.0f,-190.0f));
@@ -491,14 +496,9 @@ void Game_State::render(){
   if (gameover) return;
   
   for (auto player_wrapper : player_wrappers) {    
-    if (player_wrapper->player->is_dead()) {
-      render_spawn_menu(player_wrapper);
-    }
-    else {      
-      render_all(player_wrapper);      
-    }
-  }  
-  //get_Video().set_2d(make_pair(Point2f(0.0f,0.0f), Point2f(get_Window().get_width(), get_Window().get_height())));  
+    if (player_wrapper->player->is_dead()) render_spawn_menu(player_wrapper);
+    else render_all(player_wrapper);
+  }
 }
 
 void Game_State::create_tree(const Point2f &position) {
@@ -543,56 +543,108 @@ void Game_State::load_map(const std::string &file_) {
   }
   
   // Get dimensions of map
-  if (!(file >> dimension.height)) error_handle("Could not input height");
-  if (!(file >> dimension.width)) error_handle("Could not input width");
+  string line;
+  getline(file,line);
+  istringstream sstream(line);
+  if (line.find('#') != std::string::npos) {
+    getline(file,line);
+    istringstream temp(line);
+    sstream.swap(temp);
+  }
+  if (!(sstream >> dimension.height)) error_handle("Could not input height");
+  if (!(sstream >> dimension.width)) error_handle("Could not input width");
   
-  // Set up number of crystals based on dimensions
-  crystals_in_play = total_num_crystals = ((dimension.width * dimension.height / 1000) + 2);
+  // logging
+  cout << "Map dimension (y,x): (" << dimension.height << ',' << dimension.width << ')' << endl;
   
   // Get starting location of players
-  string line;
   Team team;
   int start_y, start_x;
-  for (int i = 0; i < NUM_PLAYERS; ++i) {
-    getline(file,line); // waste new line
-    getline(file,line); // waste comment
-    if (!(file >> start_y))
+  for (int i = 0; i < NUM_PLAYERS && getline(file,line); ++i) {
+    if (line.find('#') != std::string::npos) {--i; continue;}
+    istringstream sstream(line);
+    if (!(sstream >> start_y))
       error_handle("Could not input starting y for player");
     if (start_y < 0 || start_y >= dimension.height)
       error_handle("Invalid start y for player");
-    if (!(file >> start_x))
+    if (!(sstream >> start_x))
       error_handle("Could not input starting x for player");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for player");
     Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
-    team = (i % 2 ? RED : BLUE);
+    team = (i < 2 ? BLUE : RED);
     scores[team] = 0;
     player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i, team), i));
     player_wrappers.back()->player->kill();
     player_infos.push_back(new Player_Info(pos, team, new Spawn_Menu(screen_coord_map[i]())));
+    
+    // logging
+    cout << "Player " << i << " Location (y,x): (" << start_y << ',' << start_x << ')' << endl;
   }
   
   // Get starting location of npc
   String npc_type;
-  for (int i = 0; i < NUM_PLAYERS; i += 2) {
-    getline(file,line); // waste new line
-    getline(file,line); // waste comment
-    if (!(file >> start_y))
+  for (int i = 0; i < NUM_PLAYERS && getline(file,line); i+=2) {
+    if (line.find('#') != std::string::npos) {i -= 2; continue;}
+    istringstream sstream(line);
+    if (!(sstream >> start_y))
       error_handle("Could not input starting y for npc");
     if (start_y < 0 || start_y >= dimension.height)
       error_handle("Invalid start y for npc");
-    if (!(file >> start_x))
+    if (!(sstream >> start_x))
       error_handle("Could not input starting x for npc");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for npc");
-    Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
-    team = (i < 2 ? RED : BLUE);
-    npc_type = (team == RED ? "Blonde_Kid" : "Girl");
-    npcs.push_back(create_npc(npc_type, pos, team));
+    team = (i < 2 ? BLUE : RED);
+    npc_type = (team == BLUE ? "Blonde_Kid" : "Girl");
+    npcs.push_back(create_npc(npc_type, Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), team));
+    
+    // logging
+    cout << npc_type << " Location (y,x): (" << start_y << ',' << start_x << ')' << endl;
+  }
+  
+  // Get locations of crystals
+  crystals_in_play = 0;
+  int number_of_crystal_locations;
+  {
+    getline(file,line);
+    istringstream sstream(line);
+    if (line.find('#') != std::string::npos) {
+      getline(file,line);
+      istringstream temp(line);
+      sstream.swap(temp);
+    }
+    if (!(sstream >> total_num_crystals)) error_handle("Could not input number of crystals in play");
+    
+    // logging
+    cout << "Number of Crystals: " << total_num_crystals << endl;
+    
+    getline(file,line);
+    istringstream temp(line);
+    sstream.swap(temp);
+    if (!(sstream >> number_of_crystal_locations)) error_handle("Could not input number of crystal locs");
+    
+    // logging
+    cout << "Number of Crystal Locations: " << number_of_crystal_locations << endl;
+  }
+  for (int i = 0; i < number_of_crystal_locations && getline(file,line); ++i) {
+    if (line.find('#') != std::string::npos) {--i; continue;}
+    istringstream sstream(line);
+    if (!(sstream >> start_y))
+      error_handle("Could not input y for crystal location");
+    if (start_y < 0 || start_y >= dimension.height)
+      error_handle("Invalid y for crystal location");
+    if (!(sstream >> start_x))
+      error_handle("Could not input x for crystal location");
+    if (start_x < 0 || start_x >= dimension.width)
+      error_handle("Invalid x for crystal location");
+    crystal_locations.push_back(Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH));
+    
+    // logging
+    cout << "Crystal " << i << " Location (y,x): (" << start_y << ',' << start_x << ')' << endl;
   }
 
   // Get map information
-  getline(file,line); // waste a newline
   for (int height = 0; getline(file,line) && height < dimension.height;) {
     if (line.find('#') != std::string::npos) continue;
     for (int width = 0; width < line.length() && width < dimension.width; ++width) {
@@ -600,7 +652,7 @@ void Game_State::load_map(const std::string &file_) {
 
       // every space will always have a grass tile
       grasss.push_back(create_terrain("Grass", position));
-
+      
       if (line[width] == '.');
       else if (line[width] == 't') {
         create_tree(position);
@@ -608,13 +660,13 @@ void Game_State::load_map(const std::string &file_) {
         create_house(position);
       } else if (Map_Manager::get_Instance().find_terrain(line[width])) {
         terrains.push_back(create_terrain(
-            Map_Manager::get_Instance().get_terrain(line[width]),position));                  
+            Map_Manager::get_Instance().get_terrain(line[width]),position));
       } else if (Map_Manager::get_Instance().find_atmosphere(line[width])) {
         atmospheres.push_back(
           create_atmosphere(Map_Manager::get_Instance().get_atmosphere(line[width]),position));
       } else {
         string s = "Invalid character found in map: ";
-        error_handle(s + line[width]);
+        error_handle(s);
       }
     }
     ++height;
@@ -629,18 +681,12 @@ void Game_State::load_map(const std::string &file_) {
      vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
   for (auto environment : collidable_environments)
     vbo_ptr_middle->give_Quadrilateral(create_quad_ptr(environment));
-//  for (auto atmosphere : atmospheres)
-//     vbo_ptr_upper->give_Quadrilateral(create_quad_ptr(atmosphere));
   
-  // TEMP: spawn a couple crystals for now
-  random_device rd;
-  gen = mt19937(rd());
-  dis = uniform_int_distribution<>(0, 2);
-  crystal_locations.push_back(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8));
-  crystal_locations.push_back(Point2f(UNIT_LENGTH*11, UNIT_LENGTH*9));
-  crystal_locations.push_back(Point2f(UNIT_LENGTH*13, UNIT_LENGTH*8));
-  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*6, UNIT_LENGTH*8)));
-  crystals.push_back(new Crystal(Point2f(UNIT_LENGTH*11, UNIT_LENGTH*9)));
+  // Spawn crystals
+  respawn_crystal();
+
+  // Logging
+  cout << "Created Map!" << endl;
   
   file.close();
 }

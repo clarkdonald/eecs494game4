@@ -18,7 +18,6 @@
 #include <map>
 #include <list>
 #include <vector>
-#include <random>
 
 class Control;
 class Terrain;
@@ -77,6 +76,8 @@ class Game_State {
     
   private:  
     void clear();
+  
+    void respawn_crystal();
 
 	  void render_all(Player_Wrapper * player_wrapper);
 
@@ -103,8 +104,6 @@ class Game_State {
     std::list<Crystal*> crystals;
     std::vector<Zeni::Point2f> crystal_locations;
     std::map<Team, unsigned int> scores;
-    std::mt19937 gen;
-    std::uniform_int_distribution<> dis;
     int total_num_crystals;
     int crystals_in_play;
     bool gameover;
@@ -113,7 +112,6 @@ class Game_State {
     Zeni::Vertex_Buffer *vbo_ptr_floor;
     Zeni::Vertex_Buffer *vbo_ptr_lower;
     Zeni::Vertex_Buffer *vbo_ptr_middle;
-    Zeni::Vertex_Buffer *vbo_ptr_upper;
 };
 
 #endif /* GAME_STATE_H */

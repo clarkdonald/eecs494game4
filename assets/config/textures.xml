@@ -10,7 +10,7 @@
     <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
   </crystal>
- 
+  
   <!-------------- NPC ------------->
   <blondekiddownidle>
     <filepath>textures/NPC/blondekid/blondekiddownidle.png</filepath>
@@ -22,7 +22,7 @@
   </girldownidle>
   
   <!-------------- Player ------------->
-
+  
   <attackdown>
     <filepath>textures/Character/attackdown.png</filepath>
     <tile>0</tile>
@@ -135,7 +135,7 @@
     <filepath>textures/Character/upidle.png</filepath>
     <tile>0</tile>
   </uprun4>
-
+  
   <!-------------- Mage Sprites ------------->
   <!-- RED -->
   <mage_red_downrun2>
@@ -166,7 +166,7 @@
     <filepath>textures/Character/mage_red_leftrun2.png</filepath>
     <tile>0</tile>
   </mage_red_leftrun3>
-    <mage_red_leftrun4>
+  <mage_red_leftrun4>
     <filepath>textures/Character/mage_red_leftidle.png</filepath>
     <tile>0</tile>
   </mage_red_leftrun4>
@@ -202,72 +202,72 @@
     <filepath>textures/Character/mage_red_upidle.png</filepath>
     <tile>0</tile>
   </mage_red_uprun4>
-
-    <!-- BLUE -->
-    <mage_blue_downrun2>
-      <filepath>textures/Character/mage_blue_downidle.png</filepath>
-      <tile>0</tile>
-    </mage_blue_downrun2>
-    <mage_blue_downrun1>
-      <filepath>textures/Character/mage_blue_downrun1.png</filepath>
-      <tile>0</tile>
-    </mage_blue_downrun1>
-    <mage_blue_downrun3>
-      <filepath>textures/Character/mage_blue_downrun2.png</filepath>
-      <tile>0</tile>
-    </mage_blue_downrun3>
-    <mage_blue_downrun4>
-      <filepath>textures/Character/mage_blue_downidle.png</filepath>
-      <tile>0</tile>
-    </mage_blue_downrun4>
-    <mage_blue_leftrun2>
-      <filepath>textures/Character/mage_blue_leftidle.png</filepath>
-      <tile>0</tile>
-    </mage_blue_leftrun2>
-    <mage_blue_leftrun1>
-      <filepath>textures/Character/mage_blue_leftrun1.png</filepath>
-      <tile>0</tile>
-    </mage_blue_leftrun1>
-    <mage_blue_leftrun3>
-      <filepath>textures/Character/mage_blue_leftrun2.png</filepath>
-      <tile>0</tile>
-    </mage_blue_leftrun3>
-    <mage_blue_leftrun4>
-      <filepath>textures/Character/mage_blue_leftidle.png</filepath>
-      <tile>0</tile>
-    </mage_blue_leftrun4>
-    <mage_blue_rightrun2>
-      <filepath>textures/Character/mage_blue_rightidle.png</filepath>
-      <tile>0</tile>
-    </mage_blue_rightrun2>
-    <mage_blue_rightrun1>
-      <filepath>textures/Character/mage_blue_rightrun1.png</filepath>
-      <tile>0</tile>
-    </mage_blue_rightrun1>
-    <mage_blue_rightrun3>
-      <filepath>textures/Character/mage_blue_rightrun2.png</filepath>
-      <tile>0</tile>
-    </mage_blue_rightrun3>
-    <mage_blue_rightrun4>
-      <filepath>textures/Character/mage_blue_rightidle.png</filepath>
-      <tile>0</tile>
-    </mage_blue_rightrun4>
-    <mage_blue_uprun2>
-      <filepath>textures/Character/mage_blue_upidle.png</filepath>
-      <tile>0</tile>
-    </mage_blue_uprun2>
-    <mage_blue_uprun1>
-      <filepath>textures/Character/mage_blue_uprun1.png</filepath>
-      <tile>0</tile>
-    </mage_blue_uprun1>
-    <mage_blue_uprun3>
-      <filepath>textures/Character/mage_blue_uprun2.png</filepath>
-      <tile>0</tile>
-    </mage_blue_uprun3>
-    <mage_blue_uprun4>
-      <filepath>textures/Character/mage_blue_upidle.png</filepath>
-      <tile>0</tile>
-    </mage_blue_uprun4>
+  
+  <!-- BLUE -->
+  <mage_blue_downrun2>
+    <filepath>textures/Character/mage_blue_downidle.png</filepath>
+    <tile>0</tile>
+  </mage_blue_downrun2>
+  <mage_blue_downrun1>
+    <filepath>textures/Character/mage_blue_downrun1.png</filepath>
+    <tile>0</tile>
+  </mage_blue_downrun1>
+  <mage_blue_downrun3>
+    <filepath>textures/Character/mage_blue_downrun2.png</filepath>
+    <tile>0</tile>
+  </mage_blue_downrun3>
+  <mage_blue_downrun4>
+    <filepath>textures/Character/mage_blue_downidle.png</filepath>
+    <tile>0</tile>
+  </mage_blue_downrun4>
+  <mage_blue_leftrun2>
+    <filepath>textures/Character/mage_blue_leftidle.png</filepath>
+    <tile>0</tile>
+  </mage_blue_leftrun2>
+  <mage_blue_leftrun1>
+    <filepath>textures/Character/mage_blue_leftrun1.png</filepath>
+    <tile>0</tile>
+  </mage_blue_leftrun1>
+  <mage_blue_leftrun3>
+    <filepath>textures/Character/mage_blue_leftrun2.png</filepath>
+    <tile>0</tile>
+  </mage_blue_leftrun3>
+  <mage_blue_leftrun4>
+    <filepath>textures/Character/mage_blue_leftidle.png</filepath>
+    <tile>0</tile>
+  </mage_blue_leftrun4>
+  <mage_blue_rightrun2>
+    <filepath>textures/Character/mage_blue_rightidle.png</filepath>
+    <tile>0</tile>
+  </mage_blue_rightrun2>
+  <mage_blue_rightrun1>
+    <filepath>textures/Character/mage_blue_rightrun1.png</filepath>
+    <tile>0</tile>
+  </mage_blue_rightrun1>
+  <mage_blue_rightrun3>
+    <filepath>textures/Character/mage_blue_rightrun2.png</filepath>
+    <tile>0</tile>
+  </mage_blue_rightrun3>
+  <mage_blue_rightrun4>
+    <filepath>textures/Character/mage_blue_rightidle.png</filepath>
+    <tile>0</tile>
+  </mage_blue_rightrun4>
+  <mage_blue_uprun2>
+    <filepath>textures/Character/mage_blue_upidle.png</filepath>
+    <tile>0</tile>
+  </mage_blue_uprun2>
+  <mage_blue_uprun1>
+    <filepath>textures/Character/mage_blue_uprun1.png</filepath>
+    <tile>0</tile>
+  </mage_blue_uprun1>
+  <mage_blue_uprun3>
+    <filepath>textures/Character/mage_blue_uprun2.png</filepath>
+    <tile>0</tile>
+  </mage_blue_uprun3>
+  <mage_blue_uprun4>
+    <filepath>textures/Character/mage_blue_upidle.png</filepath>
+    <tile>0</tile>
+  </mage_blue_uprun4>
   <!-------------- Archer Sprites ------------->
   <!-- RED -->
   <archer_red_downrun2>
@@ -318,23 +318,23 @@
     <filepath>textures/Character/archer_red_rightidle.png</filepath>
     <tile>0</tile>
   </archer_red_rightrun4>
-    <archer_red_uprun2>
+  <archer_red_uprun2>
     <filepath>textures/Character/archer_red_upidle.png</filepath>
     <tile>0</tile>
   </archer_red_uprun2>
-    <archer_red_uprun1>
+  <archer_red_uprun1>
     <filepath>textures/Character/archer_red_uprun1.png</filepath>
     <tile>0</tile>
   </archer_red_uprun1>
-    <archer_red_uprun3>
+  <archer_red_uprun3>
     <filepath>textures/Character/archer_red_uprun2.png</filepath>
     <tile>0</tile>
   </archer_red_uprun3>
-    <archer_red_uprun4>
+  <archer_red_uprun4>
     <filepath>textures/Character/archer_red_upidle.png</filepath>
     <tile>0</tile>
   </archer_red_uprun4>
-
+  
   <!-- BLUE -->
   <archer_blue_downrun2>
     <filepath>textures/Character/archer_blue_downidle.png</filepath>
@@ -454,20 +454,20 @@
   <warrior_red_uprun2>
     <filepath>textures/Character/warrior_red_upidle.png</filepath>
     <tile>0</tile>
-    </warrior_red_uprun2>
-    <warrior_red_uprun1>
-      <filepath>textures/Character/warrior_red_uprun1.png</filepath>
-      <tile>0</tile>
-    </warrior_red_uprun1>
-    <warrior_red_uprun3>
-      <filepath>textures/Character/warrior_red_uprun2.png</filepath>
-      <tile>0</tile>
-    </warrior_red_uprun3>
-    <warrior_red_uprun4>
-      <filepath>textures/Character/warrior_red_upidle.png</filepath>
-      <tile>0</tile>
-    </warrior_red_uprun4>
-
+  </warrior_red_uprun2>
+  <warrior_red_uprun1>
+    <filepath>textures/Character/warrior_red_uprun1.png</filepath>
+    <tile>0</tile>
+  </warrior_red_uprun1>
+  <warrior_red_uprun3>
+    <filepath>textures/Character/warrior_red_uprun2.png</filepath>
+    <tile>0</tile>
+  </warrior_red_uprun3>
+  <warrior_red_uprun4>
+    <filepath>textures/Character/warrior_red_upidle.png</filepath>
+    <tile>0</tile>
+  </warrior_red_uprun4>
+  
   
   <!-- BLUE -->
   <warrior_blue_downrun2>
@@ -526,7 +526,7 @@
     <filepath>textures/Character/warrior_blue_uprun1.png</filepath>
     <tile>0</tile>
   </warrior_blue_uprun1>
-    <warrior_blue_uprun3>
+  <warrior_blue_uprun3>
     <filepath>textures/Character/warrior_blue_uprun2.png</filepath>
     <tile>0</tile>
   </warrior_blue_uprun3>
@@ -534,239 +534,217 @@
     <filepath>textures/Character/warrior_blue_upidle.png</filepath>
     <tile>0</tile>
   </warrior_blue_uprun4>
-    <!-------------- Player Info ------------->
-    <health_bar>
-      <filepath>textures/GUI/health_bar.png</filepath>
-      <tile>0</tile>
-    </health_bar>
-    <health>
-      <filepath>textures/GUI/health.png</filepath>
-      <tile>0</tile>
-    </health>
+  <!-------------- Player Info ------------->
+  <health_bar>
+    <filepath>textures/GUI/health_bar.png</filepath>
+    <tile>0</tile>
+  </health_bar>
+  <health>
+    <filepath>textures/GUI/health.png</filepath>
+    <tile>0</tile>
+  </health>
   <aiming>
     <filepath>textures/Character/aiming_circle.png</filepath>
-    <tile>0</tile>    
+    <tile>0</tile>
   </aiming>
-    <!-------------- Weapons ------------->
-    <arrow>
-      <filepath>textures/Projectiles/arrow4.png</filepath>
-      <tile>0</tile>
-    </arrow>
-    <magic>
-      <filepath>textures/Projectiles/magic1.png</filepath>
-      <tile>0</tile>
-    </magic>
-    <bow>
-      <filepath>textures/GUI/bowgui.png</filepath>
-      <tile>0</tile>
-    </bow>
-    <wand>
-      <filepath>textures/GUI/wandgui.png</filepath>
-      <tile>0</tile>
-    </wand>
-    <sword>
-      <filepath>textures/GUI/swordgui.png</filepath>
-      <tile>0</tile>
-    </sword>
-    <!-------------- Terrain ------------->
-    <water>
-      <filepath>textures/Terrain/water.png</filepath>
-      <tile>0</tile>
-    </water>
-    <dirt>
-      <filepath>textures/Terrain/dirt.png</filepath>
-      <tile>0</tile>
-    </dirt>
-    <grass>
-      <filepath>textures/Terrain/grass.png</filepath>
-      <tile>0</tile>
-    </grass>
-    <rockpile>
-      <filepath>textures/Terrain/rockpile1.png</filepath>
-      <tile>0</tile>
-    </rockpile>
-    <stonedown>
-      <filepath>textures/Terrain/stonedown.png</filepath>
-      <tile>0</tile>
-    </stonedown>
-    <stonedownend>
-      <filepath>textures/Terrain/stonedownend.png</filepath>
-      <tile>0</tile>
-    </stonedownend>
-    <stonedownleft>
-      <filepath>textures/Terrain/stonedownleft.png</filepath>
-      <tile>0</tile>
-    </stonedownleft>
-    <stonedownright>
-      <filepath>textures/Terrain/stonedownright.png</filepath>
-      <tile>0</tile>
-    </stonedownright>
-    <stonehorizontal>
-      <filepath>textures/Terrain/stonehorizontal.png</filepath>
-      <tile>0</tile>
-    </stonehorizontal>
-    <stoneleft>
-      <filepath>textures/Terrain/stoneleft.png</filepath>
-      <tile>0</tile>
-    </stoneleft>
-    <stoneleftend>
-      <filepath>textures/Terrain/stoneleftend.png</filepath>
-      <tile>0</tile>
-    </stoneleftend>
-    <stonemiddle>
-      <filepath>textures/Terrain/stonemiddle.png</filepath>
-      <tile>0</tile>
-    </stonemiddle>
-    <stoneright>
-      <filepath>textures/Terrain/stoneright.png</filepath>
-      <tile>0</tile>
-    </stoneright>
-    <stonerightend>
-      <filepath>textures/Terrain/stonerightend.png</filepath>
-      <tile>0</tile>
-    </stonerightend>
-    <stoneup>
-      <filepath>textures/Terrain/stoneup.png</filepath>
-      <tile>0</tile>
-    </stoneup>
-    <stoneupend>
-      <filepath>textures/Terrain/stoneupend.png</filepath>
-      <tile>0</tile>
-    </stoneupend>
-    <stoneupleft>
-      <filepath>textures/Terrain/stoneupleft.png</filepath>
-      <tile>0</tile>
-    </stoneupleft>
-    <stoneupright>
-      <filepath>textures/Terrain/stoneupright.png</filepath>
-      <tile>0</tile>
-    </stoneupright>
-    <stonevertical>
-      <filepath>textures/Terrain/stonevertical.png</filepath>
-      <tile>0</tile>
-    </stonevertical>
-    <woodfloor>
-      <filepath>textures/Terrain/woodfloor.png</filepath>
-      <tile>0</tile>
-    </woodfloor>
-    <bush>
-      <filepath>textures/Terrain/bush.png</filepath>
-      <tile>0</tile>
-    </bush>
-    <!-------------- Environment ------------->
-    <treetop>
-      <filepath>textures/Terrain/treetop.png</filepath>
-      <tile>0</tile>
-    </treetop>
-    <treebottom>
-      <filepath>textures/Terrain/treebottom.png</filepath>
-      <tile>0</tile>
-    </treebottom>
-    <blueroofdownleftcorner1>
-      <filepath>textures/Buildings/blueroofdownleftcorner1.png</filepath>
-      <tile>0</tile>
-    </blueroofdownleftcorner1>
-    <blueroofdownleftcorner2>
-      <filepath>textures/Buildings/blueroofdownleftcorner2.png</filepath>
-      <tile>0</tile>
-    </blueroofdownleftcorner2>
-    <blueroofdownrightcorner1>
-      <filepath>textures/Buildings/blueroofdownrightcorner1.png</filepath>
-      <tile>0</tile>
-    </blueroofdownrightcorner1>
-    <blueroofdownrightcorner2>
-      <filepath>textures/Buildings/blueroofdownrightcorner2.png</filepath>
-      <tile>0</tile>
-    </blueroofdownrightcorner2>
-    <blueroofmiddle>
-      <filepath>textures/Buildings/blueroofmiddle.png</filepath>
-      <tile>0</tile>
-    </blueroofmiddle>
-    <blueroofmiddleedge>
-      <filepath>textures/Buildings/blueroofmiddleedge.png</filepath>
-      <tile>0</tile>
-    </blueroofmiddleedge>
-    <blueroofleftside>
-      <filepath>textures/Buildings/blueroofleftside.png</filepath>
-      <tile>0</tile>
-    </blueroofleftside>
-    <blueroofrightside>
-      <filepath>textures/Buildings/blueroofrightside.png</filepath>
-      <tile>0</tile>
-    </blueroofrightside>
-    <blueroofupleftcorner>
-      <filepath>textures/Buildings/blueroofupleftcorner.png</filepath>
-      <tile>0</tile>
-    </blueroofupleftcorner>
-    <blueroofupmiddle>
-      <filepath>textures/Buildings/blueroofupmiddle.png</filepath>
-      <tile>0</tile>
-    </blueroofupmiddle>
-    <blueroofuprightcorner>
-      <filepath>textures/Buildings/blueroofuprightcorner.png</filepath>
-      <tile>0</tile>
-    </blueroofuprightcorner>
-    <door>
-      <filepath>textures/Buildings/doorclose.png</filepath>
-      <tile>0</tile>
-    </door>
-    <windowleft>
-      <filepath>textures/Buildings/windowleft.png</filepath>
-      <tile>0</tile>
-    </windowleft>
-    <windowright>
-      <filepath>textures/Buildings/windowright.png</filepath>
-      <tile>0</tile>
-    </windowright>
-    <fencedownleftcorner>
-      <filepath>textures/Objects/fencedownleftcorner.png</filepath>
-      <tile>0</tile>
-    </fencedownleftcorner>
-    <fencedownrightcorner>
-      <filepath>textures/Objects/fencedownrightcorner.png</filepath>
-      <tile>0</tile>
-    </fencedownrightcorner>
-    <fencehorizontal>
-      <filepath>textures/Objects/fencehorizontal.png</filepath>
-      <tile>0</tile>
-    </fencehorizontal>
-    <fencevertical>
-      <filepath>textures/Objects/fencevertical.png</filepath>
-      <tile>0</tile>
-    </fencevertical>
-    <fenceupleftcorner>
-      <filepath>textures/Objects/fenceupleftcorner.png</filepath>
-      <tile>0</tile>
-    </fenceupleftcorner>
-    <fenceuprightcorner>
-      <filepath>textures/Objects/fenceuprightcorner.png</filepath>
-      <tile>0</tile>
-    </fenceuprightcorner>
-    <!-------------- Atmosphere ------------->
-    <cloud>
-      <filepath>textures/Atmosphere/cloud.png</filepath>
-      <tile>0</tile>
-    </cloud>
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <!-------------- Weapons ------------->
+  <arrow>
+    <filepath>textures/Projectiles/arrow4.png</filepath>
+    <tile>0</tile>
+  </arrow>
+  <magic>
+    <filepath>textures/Projectiles/magic1.png</filepath>
+    <tile>0</tile>
+  </magic>
+  <bow>
+    <filepath>textures/GUI/bowgui.png</filepath>
+    <tile>0</tile>
+  </bow>
+  <wand>
+    <filepath>textures/GUI/wandgui.png</filepath>
+    <tile>0</tile>
+  </wand>
+  <sword>
+    <filepath>textures/GUI/swordgui.png</filepath>
+    <tile>0</tile>
+  </sword>
+  <!-------------- Terrain ------------->
+  <water>
+    <filepath>textures/Terrain/water.png</filepath>
+    <tile>0</tile>
+  </water>
+  <dirt>
+    <filepath>textures/Terrain/dirt.png</filepath>
+    <tile>0</tile>
+  </dirt>
+  <grass>
+    <filepath>textures/Terrain/grass.png</filepath>
+    <tile>0</tile>
+  </grass>
+  <rockpile>
+    <filepath>textures/Terrain/rockpile1.png</filepath>
+    <tile>0</tile>
+  </rockpile>
+  <stonedown>
+    <filepath>textures/Terrain/stonedown.png</filepath>
+    <tile>0</tile>
+  </stonedown>
+  <stonedownend>
+    <filepath>textures/Terrain/stonedownend.png</filepath>
+    <tile>0</tile>
+  </stonedownend>
+  <stonedownleft>
+    <filepath>textures/Terrain/stonedownleft.png</filepath>
+    <tile>0</tile>
+  </stonedownleft>
+  <stonedownright>
+    <filepath>textures/Terrain/stonedownright.png</filepath>
+    <tile>0</tile>
+  </stonedownright>
+  <stonehorizontal>
+    <filepath>textures/Terrain/stonehorizontal.png</filepath>
+    <tile>0</tile>
+  </stonehorizontal>
+  <stoneleft>
+    <filepath>textures/Terrain/stoneleft.png</filepath>
+    <tile>0</tile>
+  </stoneleft>
+  <stoneleftend>
+    <filepath>textures/Terrain/stoneleftend.png</filepath>
+    <tile>0</tile>
+  </stoneleftend>
+  <stonemiddle>
+    <filepath>textures/Terrain/stonemiddle.png</filepath>
+    <tile>0</tile>
+  </stonemiddle>
+  <stoneright>
+    <filepath>textures/Terrain/stoneright.png</filepath>
+    <tile>0</tile>
+  </stoneright>
+  <stonerightend>
+    <filepath>textures/Terrain/stonerightend.png</filepath>
+    <tile>0</tile>
+  </stonerightend>
+  <stoneup>
+    <filepath>textures/Terrain/stoneup.png</filepath>
+    <tile>0</tile>
+  </stoneup>
+  <stoneupend>
+    <filepath>textures/Terrain/stoneupend.png</filepath>
+    <tile>0</tile>
+  </stoneupend>
+  <stoneupleft>
+    <filepath>textures/Terrain/stoneupleft.png</filepath>
+    <tile>0</tile>
+  </stoneupleft>
+  <stoneupright>
+    <filepath>textures/Terrain/stoneupright.png</filepath>
+    <tile>0</tile>
+  </stoneupright>
+  <stonevertical>
+    <filepath>textures/Terrain/stonevertical.png</filepath>
+    <tile>0</tile>
+  </stonevertical>
+  <woodfloor>
+    <filepath>textures/Terrain/woodfloor.png</filepath>
+    <tile>0</tile>
+  </woodfloor>
+  <bush>
+    <filepath>textures/Terrain/bush.png</filepath>
+    <tile>0</tile>
+  </bush>
+  <!-------------- Environment ------------->
+  <treetop>
+    <filepath>textures/Terrain/treetop.png</filepath>
+    <tile>0</tile>
+  </treetop>
+  <treebottom>
+    <filepath>textures/Terrain/treebottom.png</filepath>
+    <tile>0</tile>
+  </treebottom>
+  <blueroofdownleftcorner1>
+    <filepath>textures/Buildings/blueroofdownleftcorner1.png</filepath>
+    <tile>0</tile>
+  </blueroofdownleftcorner1>
+  <blueroofdownleftcorner2>
+    <filepath>textures/Buildings/blueroofdownleftcorner2.png</filepath>
+    <tile>0</tile>
+  </blueroofdownleftcorner2>
+  <blueroofdownrightcorner1>
+    <filepath>textures/Buildings/blueroofdownrightcorner1.png</filepath>
+    <tile>0</tile>
+  </blueroofdownrightcorner1>
+  <blueroofdownrightcorner2>
+    <filepath>textures/Buildings/blueroofdownrightcorner2.png</filepath>
+    <tile>0</tile>
+  </blueroofdownrightcorner2>
+  <blueroofmiddle>
+    <filepath>textures/Buildings/blueroofmiddle.png</filepath>
+    <tile>0</tile>
+  </blueroofmiddle>
+  <blueroofmiddleedge>
+    <filepath>textures/Buildings/blueroofmiddleedge.png</filepath>
+    <tile>0</tile>
+  </blueroofmiddleedge>
+  <blueroofleftside>
+    <filepath>textures/Buildings/blueroofleftside.png</filepath>
+    <tile>0</tile>
+  </blueroofleftside>
+  <blueroofrightside>
+    <filepath>textures/Buildings/blueroofrightside.png</filepath>
+    <tile>0</tile>
+  </blueroofrightside>
+  <blueroofupleftcorner>
+    <filepath>textures/Buildings/blueroofupleftcorner.png</filepath>
+    <tile>0</tile>
+  </blueroofupleftcorner>
+  <blueroofupmiddle>
+    <filepath>textures/Buildings/blueroofupmiddle.png</filepath>
+    <tile>0</tile>
+  </blueroofupmiddle>
+  <blueroofuprightcorner>
+    <filepath>textures/Buildings/blueroofuprightcorner.png</filepath>
+    <tile>0</tile>
+  </blueroofuprightcorner>
+  <door>
+    <filepath>textures/Buildings/doorclose.png</filepath>
+    <tile>0</tile>
+  </door>
+  <windowleft>
+    <filepath>textures/Buildings/windowleft.png</filepath>
+    <tile>0</tile>
+  </windowleft>
+  <windowright>
+    <filepath>textures/Buildings/windowright.png</filepath>
+    <tile>0</tile>
+  </windowright>
+  <fencedownleftcorner>
+    <filepath>textures/Objects/fencedownleftcorner.png</filepath>
+    <tile>0</tile>
+  </fencedownleftcorner>
+  <fencedownrightcorner>
+    <filepath>textures/Objects/fencedownrightcorner.png</filepath>
+    <tile>0</tile>
+  </fencedownrightcorner>
+  <fencehorizontal>
+    <filepath>textures/Objects/fencehorizontal.png</filepath>
+    <tile>0</tile>
+  </fencehorizontal>
+  <fencevertical>
+    <filepath>textures/Objects/fencevertical.png</filepath>
+    <tile>0</tile>
+  </fencevertical>
+  <fenceupleftcorner>
+    <filepath>textures/Objects/fenceupleftcorner.png</filepath>
+    <tile>0</tile>
+  </fenceupleftcorner>
+  <fenceuprightcorner>
+    <filepath>textures/Objects/fenceuprightcorner.png</filepath>
+    <tile>0</tile>
+  </fenceuprightcorner>
+  <!-------------- Atmosphere ------------->
+  <cloud>
+    <filepath>textures/Atmosphere/cloud.png</filepath>
+    <tile>0</tile>
+  </cloud>
 </Textures>
