@@ -722,6 +722,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 106:
+			player_infos[0]->controls.LT = (confidence == 1.0);
       break;
 
     case 107:
@@ -769,6 +770,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 206:
+			player_infos[1]->controls.LT = (confidence == 1.0);
       break;
 
     case 207:
@@ -816,6 +818,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 306:
+			player_infos[2]->controls.LT = (confidence == 1.0);
       break;
 
     case 307:
@@ -863,6 +866,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       break;
 
     case 406:
+			player_infos[3]->controls.LT = (confidence == 1.0);
       break;
 
     case 407:
