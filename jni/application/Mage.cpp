@@ -7,7 +7,7 @@ using namespace std;
 Mage::Mage(const Zeni::Point2f &position_,
            const int &uid_,
            const Team &team_)
-: Player(position_, uid_, 80.0f, 100.0f, team_, "mage_", 1.0f)
+: Player(position_, uid_, 80.0f, 100.0f, team_, "mage_", 0.5f)
 {}
 
 void Mage::render() const {

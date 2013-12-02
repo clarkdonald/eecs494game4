@@ -27,11 +27,11 @@ void Sword::render() const {
   theta = theta + (animation_timer.seconds() - SWING_TIME/2)/(SWING_TIME/2) * Global::pi/3;
   
   render_image("sword", // which texture to use
-              pos, // upper-left corner
-              pos + size, // lower-right corner
+              pos + size.get_j() * 0.5, // upper-left corner
+              pos + size.get_j() * 0.5 + size, // lower-right corner
               theta, // rotation in radians
               1.0f, // scaling factor
-              pos + 0.5f * size.get_i(), // point to rotate & scale about
+              pos + 0.5f * OBJECT_SIZE, // point to rotate & scale about
               false, // whether or not to horizontally flip the texture
               Color()); // what Color to "paint" the texture  
 }

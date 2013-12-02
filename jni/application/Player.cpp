@@ -194,7 +194,7 @@ Point2f Player::calc_sword_pos() {
     pos += Vector2f(size.magnitude() * 0.3f * cos(facing),
                     size.magnitude() * 0.3f * sin(facing));
     // Offset for centering the sword's HANDLE wrt player's center
-    pos -= (OBJECT_SIZE.get_i() / 2);
+    pos -= (OBJECT_SIZE / 2);
     return pos;
 }
 void Player::render() const {
