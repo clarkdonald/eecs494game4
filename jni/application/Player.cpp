@@ -249,6 +249,8 @@ void Player::render() const {
 
 	String str;
 
+	if(dodging) return;
+
 	switch(team)
 	{
 		case RED:
