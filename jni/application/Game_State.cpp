@@ -463,9 +463,9 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   for (auto npc : npcs) npc->render();
   for (auto player_wrapper : player_wrappers) player_wrapper->player->render();
   for (auto projectile : projectiles) projectile->render();
+  for (auto melee : melees) melee->render();
   vbo_ptr_middle->render();
   for (auto atmosphere : atmospheres) atmosphere->render();
-  for (auto melee : melees) melee->render();
 
   // Render Player health
   player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(240.0f, 190.0f));
