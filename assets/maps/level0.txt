@@ -3,9 +3,9 @@
 # player 0
 0 1
 # player 1
-1 0
-# player 2
 24 33
+# player 2
+1 0
 # player 3
 23 34
 # npc team 1
@@ -39,8 +39,8 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 WWWWWWcWWWWWWWWWWcWWWWWWWWWWcWWWWWW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-ttt...c...tttt.c....rtttt.......ttt
-ttt.......tt....t.t..tttt.c.....ttt
+tt....c...tttt.c....rtttt.......ttt
+tt........tt....t.t..tttt.c.....ttt
 ....ttttt..t.....t.........t.t.....
 WWWWWWWWWWWt................t......
 WWWWWW.WWWWt.r......c......r.......

@@ -391,8 +391,7 @@ void Game_State::perform_logic() {
         }
         should_remove = true;
         break;
-      }
-      player_wrapper->player->update_blink_timer(time_step);
+      }      
     }
 
     // do environment collision checks
@@ -417,6 +416,11 @@ void Game_State::perform_logic() {
     } else {
       projectile++;
     }
+  }
+
+  //Blinking players
+  for (auto player_wrapper : player_wrappers) {
+    player_wrapper->player->update_blink_timer(time_step);
   }
   
   // respawn dead players
