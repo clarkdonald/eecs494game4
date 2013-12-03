@@ -7,11 +7,13 @@ using namespace std;
 Mage::Mage(const Zeni::Point2f &position_,
            const int &uid_,
            const Team &team_)
-: Player(position_, uid_, 80.0f, 100.0f, team_, "mage_", 0.5f)
+: Player(position_, uid_, 80.0f, 100.0f, team_, "mage_", 0.5f), heal_circle(nullptr)
 {}
 
 void Mage::render() const {
 	Player::render();
+	if(heal_circle)
+		heal_circle->render();
 }
 
 Weapon* Mage::range() {
@@ -25,10 +27,35 @@ Weapon* Mage::range() {
 
 void Mage::spc_skill(bool pressed)
 {
-	if(pressed) {
-		disable_movement();
-		
+	if(pressed && !heal_circle) {
+		heal_circle = new Heal_Circle(get_position());
+	}
+	else if(!pressed && heal_circle){
+		delete heal_circle;
+		heal_circle = nullptr;
+	}
+}
+
+void Mage::move_x(const float &mag, const float &timestep, bool first_time) 
+{
+	if(heal_circle && first_time)
+	{
+		Point2f circle_pos = heal_circle->get_position();
+    circle_pos.x += HEAL_CIRCLE_SPEED * timestep * mag;
+    heal_circle->set_position(circle_pos);
 	}
 	else
-		enable_movement();
+		Player::move_x(mag, timestep, first_time);
+}
+
+void Mage::move_y(const float &mag, const float &timestep, bool first_time) 
+{
+	if(heal_circle && first_time)
+	{
+		Point2f circle_pos = heal_circle->get_position();
+    circle_pos.y += HEAL_CIRCLE_SPEED * timestep * mag;
+    heal_circle->set_position(circle_pos);
+	}
+	else
+		Player::move_y(mag, timestep, first_time);
 }

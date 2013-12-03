@@ -2,6 +2,9 @@
 #define MAGE_H
 
 #include "Player.h"
+#include "Heal_Circle.h"
+
+#define HEAL_CIRCLE_SPEED 100
 
 class Mage : public Player {
   public:
@@ -11,9 +14,16 @@ class Mage : public Player {
 
     void render() const override;
 
+		void move_y(const float &, const float &, bool) override;
+  
+    void move_x(const float &, const float &, bool) override;
+
     Weapon* range() override;
   
     void spc_skill(bool pressed) override;
+
+private:
+	Heal_Circle* heal_circle;
 };
 
 #endif /* MAGE_H */

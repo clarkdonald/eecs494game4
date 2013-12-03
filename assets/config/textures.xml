@@ -202,7 +202,12 @@
     <filepath>textures/Character/mage_red_upidle.png</filepath>
     <tile>0</tile>
   </mage_red_uprun4>
-  
+  <heal_circle>
+    <filepath>textures/Projectiles/mage_circle.png</filepath>
+    <tile>0</tile>
+  </heal_circle>
+
+
   <!-- BLUE -->
   <mage_blue_downrun2>
     <filepath>textures/Character/mage_blue_downidle.png</filepath>

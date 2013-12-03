@@ -145,12 +145,8 @@ void Game_State::perform_logic() {
     // check collision with terrain on movement for effects
     
 		float move_x, move_y;
-		if(player_wrapper->player->can_move()) {
-			move_x = input.move_x;
-			move_y = input.move_y;  
-		}
-		else
-			move_x = move_y = 0;
+		move_x = input.move_x;
+		move_y = input.move_y;  
 
 		bool is_submerged = false;
     
