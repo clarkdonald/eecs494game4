@@ -13,7 +13,7 @@
 #include "Utility.h"
 #include <zenilib.h>
 
-#define CLOUD_SPD 10.0f
+#define CLOUD_SPD 50.0f
 
 class Cloud : public Atmosphere {
   public:
