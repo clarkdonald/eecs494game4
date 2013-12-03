@@ -470,8 +470,8 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
   for (auto crystal : crystals) crystal->render();
-  for (auto npc : npcs) npc->render();
   for (auto player_wrapper : player_wrappers) player_wrapper->player->render();
+  for (auto npc : npcs) npc->render();
   for (auto projectile : projectiles) projectile->render();
   for (auto melee : melees) melee->render();
   vbo_ptr_middle->render();
