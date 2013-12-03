@@ -29,10 +29,12 @@ void Mage::spc_skill(bool pressed)
 {
 	if(pressed && !heal_circle) {
 		heal_circle = new Heal_Circle(get_position());
+		disable_attack();
 	}
 	else if(!pressed && heal_circle){
 		delete heal_circle;
 		heal_circle = nullptr;
+		enable_attack();
 	}
 }
 

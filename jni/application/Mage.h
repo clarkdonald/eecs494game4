@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "Heal_Circle.h"
 
-#define HEAL_CIRCLE_SPEED 100
+#define HEAL_CIRCLE_SPEED 400
 
 class Mage : public Player {
   public:

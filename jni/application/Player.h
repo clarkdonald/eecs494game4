@@ -84,9 +84,12 @@ class Player : public Game_Object {
 		bool can_move() {return move_enabled;}
 		void disable_movement() {move_enabled = false;}
 		void enable_movement() {move_enabled = true;}
+
+		void disable_attack() {attack_enabled = false;}
+		void enable_attack() {attack_enabled = true;}
   
   protected:
-		virtual bool can_attack() const {return time_since_attack.seconds() > attack_limit;}
+		virtual bool can_attack() const {return attack_enabled && time_since_attack.seconds() > attack_limit;}
     Weapon* weapon;
     Zeni::Point2f calc_weapon_pos();
     Zeni::Point2f calc_sword_pos();
@@ -107,7 +110,8 @@ class Player : public Game_Object {
     float blink_timer;
     bool blink;
     bool hit;
-
+	
+		bool attack_enabled;
 		bool move_enabled;
 
 		enum Player_Direction {LEFT, RIGHT, UP, DOWN};
