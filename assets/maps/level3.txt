@@ -3,9 +3,9 @@
 # player 0
 0 0
 # player 1
-0 1
-# player 2
 24 24
+# player 2
+0 1
 # player 3
 24 23
 # npc team 1
