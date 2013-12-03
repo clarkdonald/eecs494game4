@@ -13,7 +13,7 @@ class Warrior : public Player {
 
     Weapon* melee() override;
   
-    void spc_skill(bool pressed) override;
+    void warrior_spc_skill(bool pressed) override;
 };
 
 #endif /* WARRIOR_H */

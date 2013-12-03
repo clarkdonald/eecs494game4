@@ -8,8 +8,8 @@ Sword::Sword(const Zeni::Point2f &position_,
              const Team& team_,
              Player* player_)
 : Weapon(position_, 50.0f, team_),
-  dir(theta_),
-  owner(player_)
+  owner(player_),
+  dir(theta_)
 {
 }
 

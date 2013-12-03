@@ -152,6 +152,9 @@ void Game_State::perform_logic() {
       continue;
     }
     
+    // if player is stunned, don't move or anything else
+    if (player_wrapper->player->is_stunned()) continue;
+    
     // check collision with terrain on movement for effects
     
 		float move_x, move_y;
@@ -182,8 +185,8 @@ void Game_State::perform_logic() {
         player_wrapper->player->dodge();
     }
     if(player_wrapper->player->is_dodging()) {      
-      move_x *= 8.0f;
-      move_y *= 8.0f;      
+      move_x *= 6.0f;
+      move_y *= 6.0f;
     }
     
     // check collision with environment/npc/player on movement
@@ -297,7 +300,19 @@ void Game_State::perform_logic() {
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
 
-		player_wrapper->player->spc_skill(input.LT);
+		player_wrapper->player->mage_spc_skill(input.LT);
+
+    Weapon* stun_arrow = nullptr;
+
+    if(input.LT)
+    {
+      stun_arrow = player_wrapper->player->archer_spc_skill();
+
+      if(stun_arrow != nullptr)
+      {
+        projectiles.push_back(stun_arrow);
+      }
+    }
 
     // crystal depositing logic
     bool touching = false;
@@ -378,6 +393,12 @@ void Game_State::perform_logic() {
       }
       if ((*projectile)->touching(*(player_wrapper->player))) {
         player_wrapper->player->take_dmg((*projectile)->get_damage());
+        
+        if((*projectile)->is_stun())
+        {
+          player_wrapper->player->start_stun_timer();
+        }
+        
         should_remove = true;
         break;
       }      
@@ -519,7 +540,7 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
 void Game_State::render(){
   // render logic for when a team wins
   if (game_over_timer.is_running()) {
-    if (game_over_timer.seconds() <= 3.0f) {
+    if (game_over_timer.seconds() <= 4.0f) {
       get_Video().set_2d(make_pair(Point2f(0.0f, 0.0f), Point2f(get_Window().get_width(), get_Window().get_height())), false);
       if (scores[BLUE] >= WIN_CRYSTAL_COUNT) {
         get_Fonts()["godofwar_80"].render_text("BLUE TEAM WINS!",
@@ -538,9 +559,6 @@ void Game_State::render(){
       gameover = true;
     }
   } else {
-    // If we're done with the level, don't render anything
-    if (gameover) return;
-    
     for (auto player_wrapper : player_wrappers) {    
       if (player_wrapper->player->is_dead()) 
         render_spawn_menu(player_wrapper);
