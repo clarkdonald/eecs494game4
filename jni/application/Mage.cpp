@@ -39,6 +39,7 @@ void Mage::mage_spc_skill(bool pressed)
 		delete heal_circle;
 		heal_circle = nullptr;
 		enable_attack();
+    start_special_timer();
 	}
 }
 
