@@ -123,22 +123,24 @@ void Game_State::perform_logic() {
 
     if (player_wrapper->player->is_dead()) {
       float move_y = input.move_y;            
-			if(move_y > 0.7f && player_infos[player_wrapper->uid]->down_axis_released) {
+			if (move_y > 0.7f && player_infos[player_wrapper->uid]->down_axis_released) {
 				player_infos[player_wrapper->uid]->down_axis_released = false;
         player_infos[player_wrapper->uid]->spawn_menu->move_down();
 			}
-      if(move_y < -0.7f && player_infos[player_wrapper->uid]->up_axis_released) {
+      if (move_y < -0.7f && player_infos[player_wrapper->uid]->up_axis_released) {
 				player_infos[player_wrapper->uid]->up_axis_released = false;
         player_infos[player_wrapper->uid]->spawn_menu->move_up();
 			}
 
-			if(move_y <= 0.2)
+			if (move_y <= 0.2)
 				player_infos[player_wrapper->uid]->down_axis_released = true;
-			if(move_y >= -0.2)
+			if (move_y >= -0.2)
 				player_infos[player_wrapper->uid]->up_axis_released = true;
 
-			if(input.A)
+			if (input.A)
         player_infos[player_wrapper->uid]->spawn_menu->select_current_option();
+      
+      // if the player is dead, we skip rest of movement logic
       continue;
     }
     
@@ -146,12 +148,12 @@ void Game_State::perform_logic() {
     
 		float move_x, move_y;
 		move_x = input.move_x;
-		move_y = input.move_y;  
+		move_y = input.move_y;
+    
+    // take away dead zones of joy stick
+		if (fabs(move_x) < .1f && fabs(move_y) < .1f) move_y = move_x = 0;
 
 		bool is_submerged = false;
-    
-		if(abs(move_x) < .2) move_x = 0;
-		if(abs(move_y) < .2) move_y = 0;
 		
 		for (auto terrain : terrains) {
       if (terrain->slow_player_down() && player_wrapper->player->touching_feet(*terrain)) {
