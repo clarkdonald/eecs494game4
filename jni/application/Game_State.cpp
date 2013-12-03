@@ -432,7 +432,6 @@ void Game_State::respawn_crystal() {
     int index;
     do {
       index = dis(gen);
-      cout << index << endl;
       for (auto crystal : crystals) {
         if (crystal->get_position().x == crystal_locations[index].x &&
             crystal->get_position().y == crystal_locations[index].y) {
