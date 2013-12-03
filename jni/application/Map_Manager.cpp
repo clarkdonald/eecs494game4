@@ -45,6 +45,9 @@ Map_Manager::Map_Manager()
   terrain_charmap['W'] = "Water";
   terrain_charmap['w'] = "Wood_Floor";
   terrain_charmap['b'] = "Bush";
+
+  // load the character mapping for environments
+  environment_charmap['f'] = "Fence";
   
   // load the character mapping for atmosphere
   atmosphere_charmap['c'] = "Cloud";
@@ -77,6 +80,19 @@ const String & Map_Manager::get_terrain(char c) const {
   map<char, String>::const_iterator it;
   if ((it = terrain_charmap.find(c)) == terrain_charmap.end()) {
     string s = "There is no terrain mapping to ";
+    error_handle(s + c);
+  }
+  return it->second;
+}
+
+bool Map_Manager::find_environment(char c) const {
+  return environment_charmap.find(c) != environment_charmap.end();
+}
+
+const String & Map_Manager::get_environment(char c) const {
+  map<char, String>::const_iterator it;
+  if ((it = environment_charmap.find(c)) == environment_charmap.end()) {
+    string s = "There is no environment mapping to ";
     error_handle(s + c);
   }
   return it->second;
