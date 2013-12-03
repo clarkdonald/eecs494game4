@@ -30,7 +30,7 @@ Weapon* Archer::archer_spc_skill()
   Weapon* stun_arrow = nullptr;
   if (can_use_special()) {
     stun_arrow = new Stun_Arrow(calc_weapon_pos(), get_facing(), get_team());
-    start_stun_timer();
+    start_special_timer();
   }
   return stun_arrow;
 }

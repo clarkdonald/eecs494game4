@@ -12,8 +12,6 @@ Mage::Mage(const Zeni::Point2f &position_,
 
 void Mage::render() const {
 	Player::render();
-	if(heal_circle)
-		heal_circle->render();
 }
 
 Weapon* Mage::range() {
@@ -60,4 +58,9 @@ void Mage::move_y(const float &mag, const float &timestep, bool first_time)
 	}
 	else
 		Player::move_y(mag, timestep, first_time);
+}
+
+void Mage::render_extras() {
+	if(heal_circle)
+		heal_circle->render();
 }

@@ -14,6 +14,8 @@ class Mage : public Player {
 
     void render() const override;
 
+		void render_extras();
+
 		void move_y(const float &, const float &, bool) override;
   
     void move_x(const float &, const float &, bool) override;

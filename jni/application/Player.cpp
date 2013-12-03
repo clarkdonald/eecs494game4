@@ -42,7 +42,8 @@ Player::Player(const Point2f &position_,
   sprite_prefix(sprite_prefix_),
   team(team_),
 	move_enabled(true),
-  sp_attack_limit(sp_attack_limit_)
+  sp_attack_limit(sp_attack_limit_),
+	partner(nullptr)
 {
   time_since_attack.start();
   time_since_special.start();
@@ -170,6 +171,12 @@ void Player::take_dmg(const float &dmg) {
   }
 }
 
+void Player::restore_health(const float&)
+{
+
+}
+
+
 void Player::update_blink_timer(const float &timestep) { 
   if(hit) {
     blink_timer += timestep;
@@ -208,12 +215,18 @@ void Player::start_special_timer()
 
 void Player::start_stun_timer()
 {
-	stun_timer.reset();
+	stun_timer.start();
 }
 
 bool Player::is_stunned()
 {
-  return stun_timer.is_running() && stun_timer.seconds() < STUN_TIME;
+  bool is_stun = false;
+  if(stun_timer.is_running())
+  {
+    is_stun = stun_timer.seconds() < STUN_TIME;
+    if(is_stun) stun_timer.stop();
+  }
+  return is_stun;
 }
 
 void Player::pick_up_crystal() {
