@@ -30,6 +30,12 @@ void Mage::spc_skill(bool pressed)
 		disable_attack();
 	}
 	else if(!pressed && heal_circle){
+
+		if(heal_circle->touching(*this))
+			restore_health(25);
+		if(heal_circle->touching(*get_partner()))
+			get_partner()->restore_health(25);
+
 		delete heal_circle;
 		heal_circle = nullptr;
 		enable_attack();

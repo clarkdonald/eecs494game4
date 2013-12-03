@@ -162,9 +162,11 @@ void Player::take_dmg(const float &dmg) {
   }
 }
 
-void Player::restore_health(const float&)
+void Player::restore_health(const float& value)
 {
-
+	hp += value;
+	if(hp > max_hp)
+		hp = max_hp;
 }
 
 

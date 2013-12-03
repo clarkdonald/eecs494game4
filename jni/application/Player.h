@@ -57,7 +57,7 @@ class Player : public Game_Object {
   
     bool is_dead() const {return hp <= 0.0f;}	  
   
-    bool is_depositting_crystal() const;    
+    bool is_depositting_crystal() const;   
   
     void deposit_crystal();
   
@@ -86,6 +86,8 @@ class Player : public Game_Object {
     const int & get_uid() const {return uid;}
   
     void remove_weapon() {weapon = nullptr;}
+
+		Player* get_partner() {return partner;}
 
 		bool can_move() {return move_enabled;}
 		void disable_movement() {move_enabled = false;}
