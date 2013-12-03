@@ -144,6 +144,14 @@ void Game_State::perform_logic() {
       continue;
     }
     
+    // if player is stunned, don't move or anything else
+    if(player_wrapper->player->is_stunned())
+    {
+          char msg[256];
+          sprintf(msg, "player %d is stunned\n",player_wrapper->uid);
+          OutputDebugString(msg);
+      continue;
+    }
     // check collision with terrain on movement for effects
     
 		float move_x, move_y;
@@ -289,7 +297,19 @@ void Game_State::perform_logic() {
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
 
-		player_wrapper->player->spc_skill(input.LT);
+		player_wrapper->player->mage_spc_skill(input.LT);
+
+    Weapon* stun_arrow = nullptr;
+
+    if(input.LT)
+    {
+      stun_arrow = player_wrapper->player->archer_spc_skill();
+
+      if(stun_arrow != nullptr)
+      {
+        projectiles.push_back(stun_arrow);
+      }
+    }
 
     // crystal depositing logic
     bool touching = false;
@@ -370,6 +390,10 @@ void Game_State::perform_logic() {
       }
       if ((*projectile)->touching(*(player_wrapper->player))) {
         player_wrapper->player->take_dmg((*projectile)->get_damage());
+        if((*projectile)->is_stun())
+        {
+          player_wrapper->player->start_stun_timer();
+        }
         if (player_wrapper->player->is_dead()) {
           scores[(*projectile)->get_team()] += KILL_PLAYER_POINTS;
         }
@@ -673,21 +697,28 @@ void Game_State::load_map(const std::string &file_) {
     if (line.find('#') != std::string::npos) continue;
     for (int width = 0; width < line.length() && width < dimension.width; ++width) {
       Point2f position(UNIT_LENGTH*width, UNIT_LENGTH*height);
-
-      // every space will always have a grass tile
-      grasss.push_back(create_terrain("Grass", position));
       
-      if (line[width] == '.');
+      if (line[width] == '.') {
+        grasss.push_back(create_terrain("Grass", position));
+      }
       else if (line[width] == 't') {
+        grasss.push_back(create_terrain("Grass", position));
         create_tree(position);
       } else if (line[width] == 'h') {
+        grasss.push_back(create_terrain("Grass", position));
         create_house(position);
       } else if (Map_Manager::get_Instance().find_terrain(line[width])) {
+        grasss.push_back(create_terrain("Grass", position));
         terrains.push_back(create_terrain(
             Map_Manager::get_Instance().get_terrain(line[width]),position));
       } else if (Map_Manager::get_Instance().find_atmosphere(line[width])) {
+        grasss.push_back(create_terrain("Grass", position));
         atmospheres.push_back(
           create_atmosphere(Map_Manager::get_Instance().get_atmosphere(line[width]),position));
+      } else if (Map_Manager::get_Instance().find_environment(line[width])) {
+        terrains.push_back(create_terrain("Dirt", position));
+        collidable_environments.push_back(
+          create_environment(Map_Manager::get_Instance().get_environment(line[width]),position));
       } else {
         string s = "Invalid character found in map: ";
         error_handle(s);

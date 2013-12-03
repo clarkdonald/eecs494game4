@@ -9,9 +9,11 @@
 #include "Environment.h"
 
 using Zeni::Point2f;
+using Zeni::String;
 
-Environment::Environment(const Point2f &position_)
-: Game_Object(position_)
+Environment::Environment(const Point2f &position_, const String &texture_)
+: Game_Object(position_),
+  texture(texture_)
 {}
 
 Environment::~Environment() {}

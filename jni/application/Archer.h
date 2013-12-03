@@ -14,7 +14,7 @@ class Archer : public Player {
 
     Weapon* range() override;
   
-    void spc_skill(bool pressed) override;
+    Weapon* archer_spc_skill() override;
 
 		void set_can_attack();
 		void set_cannot_attack();

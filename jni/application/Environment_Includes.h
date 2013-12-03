@@ -13,5 +13,6 @@
 #include "Environment.h"
 #include "Tree.h"
 #include "House.h"
+#include "Simple_Environment.h"
 
 #endif /* ENVIRONMENT_INCLUDES_H */

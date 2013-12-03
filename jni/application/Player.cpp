@@ -18,7 +18,8 @@ Player::Player(const Point2f &position_,
                const float &max_hp_,
                const Team &team_,
 							 const String& sprite_prefix_,
-							 const float& attack_limit_)
+							 const float& attack_limit_,
+               const float& sp_attack_limit_)
 : Game_Object(position_),
   weapon(nullptr),
   speed(speed_),
@@ -41,9 +42,11 @@ Player::Player(const Point2f &position_,
   sprite_prefix(sprite_prefix_),
   team(team_),
 	move_enabled(true),
+  sp_attack_limit(sp_attack_limit_),
 	partner(nullptr)
 {
   time_since_attack.start();
+  time_since_special.start();
 }
 
 Player::~Player() {}
@@ -199,6 +202,35 @@ float Player::get_hp_pctg() const {
 void Player::start_attack_timer()
 {
 	time_since_attack.reset();
+}
+
+void Player::start_special_timer()
+{
+	time_since_special.reset();
+}
+
+void Player::start_stun_timer()
+{
+	stun_timer.start();
+}
+
+bool Player::is_stunned()
+{
+  bool is_stun = false;
+  if(stun_timer.is_running())
+  {
+    
+          char msg[256];
+          sprintf(msg, "inside is_stunned\n");
+          OutputDebugString(msg);
+    is_stun = stun_timer.seconds() < STUN_TIME;
+    if(!is_stun) 
+    {
+      stun_timer.stop();
+      stun_timer.reset();
+    }
+  }
+  return is_stun;
 }
 
 void Player::pick_up_crystal() {

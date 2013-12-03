@@ -15,14 +15,9 @@
 
 class Tree : public Environment {
   public:
-    Tree(const Zeni::Point2f &position_, const Two_Part_Object &part_);
+    Tree(const Zeni::Point2f &position_, const Zeni::String &texture_);
     
-    Zeni::String get_texture() const override;
-
     void render() const override;
-  
-  private:
-    Two_Part_Object part;
 };
 
 #endif /* TREE_H */
