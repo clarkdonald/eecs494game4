@@ -96,7 +96,7 @@ class Game_State {
     std::list<Environment*> collidable_environments;
     std::list<Atmosphere*> atmospheres;
     std::list<Terrain*> grasss;
-    std::list<Player_Wrapper*> player_wrappers;
+    std::vector<Player_Wrapper*> player_wrappers;
     std::vector<Player_Info*> player_infos;
     std::list<Weapon*> projectiles;
     std::list<Weapon*> melees;

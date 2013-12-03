@@ -40,7 +40,8 @@ Player::Player(const Point2f &position_,
   sprite_frame(0),
   sprite_prefix(sprite_prefix_),
   team(team_),
-	move_enabled(true)
+	move_enabled(true),
+	partner(nullptr)
 {
   time_since_attack.start();
 }
@@ -160,6 +161,12 @@ void Player::take_dmg(const float &dmg) {
     blink_timer = 0.0f;
   }
 }
+
+void Player::restore_health(const float&)
+{
+
+}
+
 
 void Player::update_blink_timer(const float &timestep) { 
   if(hit) {

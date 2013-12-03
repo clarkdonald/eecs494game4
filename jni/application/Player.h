@@ -26,6 +26,8 @@ class Player : public Game_Object {
     virtual ~Player() = 0;
 
     virtual void render() const = 0;
+
+		virtual void render_extras() {};
   
     virtual void move_y(const float &, const float &, bool);
   
@@ -48,6 +50,8 @@ class Player : public Game_Object {
 	  virtual void spc_skill(bool pressed) = 0; // special class-specific attack
 
 	  void take_dmg(const float &);
+		
+		void restore_health(const float&);
 
     void update_blink_timer(const float &timestep);
   
@@ -76,6 +80,8 @@ class Player : public Game_Object {
     void pick_up_crystal();
   
 	  void drop_crystal();
+
+		void set_partner(Player* partner_ptr) {partner = partner_ptr;}
   
     const int & get_uid() const {return uid;}
   
@@ -120,6 +126,7 @@ class Player : public Game_Object {
 		int sprite_frame;
 		Zeni::String sprite_prefix;
     Team team;
+		Player* partner;
 		Zeni::Chronometer<Zeni::Time> time_since_attack;
 };
 

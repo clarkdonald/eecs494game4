@@ -419,6 +419,11 @@ void Game_State::perform_logic() {
     }
   }
 
+	player_wrappers[0]->player->set_partner(player_wrappers[2]->player);
+	player_wrappers[1]->player->set_partner(player_wrappers[3]->player);
+	player_wrappers[2]->player->set_partner(player_wrappers[0]->player);
+	player_wrappers[3]->player->set_partner(player_wrappers[1]->player);
+
   // respawn crystals
   if (crystals_in_play < total_num_crystals) respawn_crystal();
 }
@@ -507,8 +512,12 @@ void Game_State::render(){
   if (gameover) return;
   
   for (auto player_wrapper : player_wrappers) {    
-    if (player_wrapper->player->is_dead()) render_spawn_menu(player_wrapper);
-    else render_all(player_wrapper);
+    if (player_wrapper->player->is_dead()) 
+			render_spawn_menu(player_wrapper);
+    else {
+			render_all(player_wrapper);
+			player_wrapper->player->render_extras();
+		}
   }
 }
 
@@ -583,7 +592,7 @@ void Game_State::load_map(const std::string &file_) {
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for player");
     Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
-    team = (i < 2 ? BLUE : RED);
+    team = (i % 2 ? BLUE : RED);
     scores[team] = 0;
     player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i, team), i));
     player_wrappers.back()->player->kill();
@@ -606,7 +615,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x for npc");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for npc");
-    team = (i < 2 ? BLUE : RED);
+    team = (i % 2 ? BLUE : RED);
     npc_type = (team == BLUE ? "Blonde_Kid" : "Girl");
     npcs.push_back(create_npc(npc_type, Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), team));
     
