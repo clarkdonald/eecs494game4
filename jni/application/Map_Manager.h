@@ -30,6 +30,10 @@ class Map_Manager {
     
     const Zeni::String & get_terrain(char c) const;
   
+    bool find_environment(char c) const;
+  
+    const Zeni::String & get_environment(char c) const;
+  
     bool find_atmosphere(char c) const;
   
     const Zeni::String & get_atmosphere(char c) const;

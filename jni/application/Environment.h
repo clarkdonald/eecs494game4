@@ -16,13 +16,16 @@
 
 class Environment : public Game_Object {
   public:
-    Environment(const Zeni::Point2f &position_);
+    Environment(const Zeni::Point2f &position_, const Zeni::String &texture_);
     
     virtual ~Environment() = 0;
 
-    virtual Zeni::String get_texture() const = 0;
+    const Zeni::String get_texture() const {return texture;}
     
     virtual void affect(Player &player_);
+
+  private:
+    Zeni::String texture;
 };
 
 #endif /* ENVIRONMENT_H */
