@@ -1,47 +1,51 @@
 # dimension (y,x)
-25 25
+25 35
 # player 0
-0 0
-# player 1
 0 1
+# player 1
+24 33
 # player 2
-24 24
+1 0
 # player 3
-24 23
+23 34
 # npc team 1
-3 2
+1 1
 # npc team 2
-21 22
+23 33
 # crystal metadata
-2
-3
+4
+7
 # crystal positions
-8 6
-9 11
-8 13
+0 34
+24 0
+12 6
+12 17
+12 28
+19 6
+7 33
 # map
-wwwwwwwwwwwwwwwwwwwwwwwww
-c........................
-.........................
-.................c.......
-.........................
-.........................
-WWWWWWWWWWWWWWWWWWWWWWWWW
-WWWWWWWWWWWWWWWWWWWWWWWWW
-WWWWWWWWWWWWWWWWWWWWWWWWW
-WWWWWWWWWWWWWWWWWWWWWWWWW
-.........................
-...c.....................
-.........................
-..................c......
-.........................
-WWWWWWWWWWWWWWWWWWWWWWWWW
-WWWWWWWWWWWWWWWWWWWWWWWWW
-WWWWWWWWWWWWWWWWWWWWWWWWW
-WWWWWWWWWWWWWWWWWWWWWWWWW
-.........................
-.........................
-..c...............c......
-.......c.................
-.........................
-wwwwwwwwwwwwwwwwwwwwwwwww
+ddd................................
+ddd.............t..................
+ddd.....bbb.c..t................c.t
+ttt.....bbb..........c............t
+........bbb...t.....h..h..h..h..ttt
+..........................c.....WWW
+..............c.................WWW
+..c...t.........................W.W
+ttt..t.t..tttt...c...tttt..c..ttWWW
+ttt..c....tttt.......ttttc....ttWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWcWWWWWWWWWWcWWWWWWWWWWcWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+tt....c...tttt.c....rtttt.......ttt
+tt........tt....t.t..tttt.c.....ttt
+....ttttt..t.....t.........t.t.....
+WWWWWWWWWWWt................t......
+WWWWWW.WWWWt.r......c......r.......
+WWWWWWWWWWWt........r..............
+....t...t............c..........ttt
+r...tc..t.....r..r..............ddd
+..r.t.h.t.......................ddd
+...................r.....r......ddd
