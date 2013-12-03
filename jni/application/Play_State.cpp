@@ -61,23 +61,16 @@ void Play_State::on_key(const SDL_KeyboardEvent &event) {
 }
 
 void Play_State::perform_logic() {
-  bool over = false;
   if (game_state->is_gameover()) {
     delete game_state;
-    if (Map_Manager::get_Instance().empty()) {
-      over = true;
-      get_Game().pop_state();
-    }
-    else {
-      game_state = new Game_State(Map_Manager::get_Instance().get_next());
-    }
+    get_Game().pop_state();
+  } else {
+    game_state->perform_logic();
   }
-
-  if (!over) game_state->perform_logic();
 }
 
 void Play_State::render(){
-  if (game_state != nullptr) game_state->render();
+  if (game_state != nullptr && !game_state->is_gameover()) game_state->render();
 }
 
 // --- Code to detect xbox controller button presses ---

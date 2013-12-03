@@ -74,7 +74,7 @@ class Game_State {
                                  const float &confidence,
                                  const int &action);
     
-  private:  
+  private:
     void clear();
   
     void respawn_crystal();
@@ -112,6 +112,7 @@ class Game_State {
     Zeni::Vertex_Buffer *vbo_ptr_floor;
     Zeni::Vertex_Buffer *vbo_ptr_lower;
     Zeni::Vertex_Buffer *vbo_ptr_middle;
+    Zeni::Chronometer<Zeni::Time> game_over_timer;
 };
 
 #endif /* GAME_STATE_H */

@@ -110,6 +110,14 @@ Game_State::~Game_State() {
 }
 
 void Game_State::perform_logic() {
+  // check if a team won
+  for (auto& score : scores) {
+    if (score.second >= WIN_CRYSTAL_COUNT) {
+      if (!game_over_timer.is_running()) game_over_timer.start();
+      return;
+    }
+  }
+  
   // calculate game time
   const Time_HQ current_time = get_Timer_HQ().get_time();
   float processing_time = float(current_time.get_seconds_since(time_passed));
@@ -306,7 +314,7 @@ void Game_State::perform_logic() {
           else {
             if (player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() > DEPOSIT_TIME) {
               player_wrapper->player->drop_crystal();
-              scores[player_wrapper->player->get_team()] += DEPOSIT_CRYSTAL_POINTS;
+              ++scores[player_wrapper->player->get_team()];
               --crystals_in_play;
               player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
             }
@@ -370,9 +378,6 @@ void Game_State::perform_logic() {
       }
       if ((*projectile)->touching(*(player_wrapper->player))) {
         player_wrapper->player->take_dmg((*projectile)->get_damage());
-        if (player_wrapper->player->is_dead()) {
-          scores[(*projectile)->get_team()] += KILL_PLAYER_POINTS;
-        }
         should_remove = true;
         break;
       }      
@@ -512,16 +517,38 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
 }
 
 void Game_State::render(){
-  // If we're done with the level, don't render anything
-  if (gameover) return;
-  
-  for (auto player_wrapper : player_wrappers) {    
-    if (player_wrapper->player->is_dead()) 
-			render_spawn_menu(player_wrapper);
-    else {
-			render_all(player_wrapper);
-			player_wrapper->player->render_extras();
-		}
+  // render logic for when a team wins
+  if (game_over_timer.is_running()) {
+    if (game_over_timer.seconds() <= 3.0f) {
+      get_Video().set_2d(make_pair(Point2f(0.0f, 0.0f), Point2f(get_Window().get_width(), get_Window().get_height())), false);
+      if (scores[BLUE] >= WIN_CRYSTAL_COUNT) {
+        get_Fonts()["godofwar_80"].render_text("BLUE TEAM WINS!",
+                                               Point2f(get_Window().get_width()/2, get_Window().get_height()/2),
+                                               get_Colors()["blue"],
+                                               ZENI_CENTER);
+      } else {
+        get_Fonts()["godofwar_80"].render_text("RED TEAM WINS!",
+                                               Point2f(get_Window().get_width()/2, get_Window().get_height()/2),
+                                               get_Colors()["red"],
+                                               ZENI_CENTER);
+      }
+    } else {
+      game_over_timer.stop();
+      game_over_timer.reset();
+      gameover = true;
+    }
+  } else {
+    // If we're done with the level, don't render anything
+    if (gameover) return;
+    
+    for (auto player_wrapper : player_wrappers) {    
+      if (player_wrapper->player->is_dead()) 
+        render_spawn_menu(player_wrapper);
+      else {
+        render_all(player_wrapper);
+        player_wrapper->player->render_extras();
+      }
+    }
   }
 }
 

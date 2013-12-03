@@ -30,7 +30,12 @@ Only TrueType fonts are supported.
   <godofwar_20>
     <filepath>fonts/GODOFWAR.TTF</filepath>
     <height>20</height>
-  </godofwar_20>  
+  </godofwar_20>
+  
+  <godofwar_80>
+    <filepath>fonts/GODOFWAR.TTF</filepath>
+    <height>80</height>
+  </godofwar_80>
   
   <system_36_x600>
     <filepath>fonts/FORGOTTE.TTF</filepath>
