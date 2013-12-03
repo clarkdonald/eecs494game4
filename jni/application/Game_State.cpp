@@ -417,6 +417,11 @@ void Game_State::perform_logic() {
     }
   }
 
+	player_wrappers[0]->player->set_partner(player_wrappers[2]->player);
+	player_wrappers[1]->player->set_partner(player_wrappers[3]->player);
+	player_wrappers[2]->player->set_partner(player_wrappers[0]->player);
+	player_wrappers[3]->player->set_partner(player_wrappers[1]->player);
+
   // respawn crystals
   if (crystals_in_play < total_num_crystals) respawn_crystal();
 }
