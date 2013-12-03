@@ -7,7 +7,7 @@ using namespace std;
 Warrior::Warrior(const Zeni::Point2f &position_,
                  const int &uid_,
                  const Team &team_)
-: Player(position_, uid_, 120.0f, 200.0f, team_, "warrior_", 0.4f)
+: Player(position_, uid_, 120.0f, 200.0f, team_, "warrior_", 0.4f, 5.0f)
 {}
 
 void Warrior::render() const {
@@ -24,6 +24,6 @@ Weapon* Warrior::melee() {
   return sword;
 }
 
-void Warrior::spc_skill(bool pressed)
+void Warrior::warrior_spc_skill(bool pressed)
 {
 }

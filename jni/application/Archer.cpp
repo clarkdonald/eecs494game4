@@ -1,5 +1,6 @@
 #include "Archer.h"
 #include "Arrow.h"
+#include "Stun_Arrow.h"
 
 using namespace Zeni;
 using namespace std;
@@ -7,7 +8,7 @@ using namespace std;
 Archer::Archer(const Zeni::Point2f &position_,
                const int &uid_,
                const Team &team_)
-: Player(position_, uid_, 100.0f, 150.0f, team_, "archer_", .5f)
+: Player(position_, uid_, 100.0f, 150.0f, team_, "archer_", .5f, 5.0f)
 {}
 
 void Archer::render() const {
@@ -24,7 +25,12 @@ Weapon* Archer::range()
   return projectile;
 }
 
-void Archer::spc_skill(bool pressed)
+Weapon* Archer::archer_spc_skill()
 {
-
+  Weapon* stun_arrow = nullptr;
+  if (can_use_special()) {
+    stun_arrow = new Stun_Arrow(calc_weapon_pos(), get_facing(), get_team());
+    start_stun_timer();
+  }
+  return stun_arrow;
 }

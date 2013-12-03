@@ -13,7 +13,7 @@ class Arrow : public Weapon {
   
     void update(const float) override;
   
-  private:
+  protected:
     Zeni::Vector2f move_vec;
 };
 

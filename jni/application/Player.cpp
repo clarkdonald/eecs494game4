@@ -18,7 +18,8 @@ Player::Player(const Point2f &position_,
                const float &max_hp_,
                const Team &team_,
 							 const String& sprite_prefix_,
-							 const float& attack_limit_)
+							 const float& attack_limit_,
+               const float& sp_attack_limit_)
 : Game_Object(position_),
   weapon(nullptr),
   speed(speed_),
@@ -40,70 +41,78 @@ Player::Player(const Point2f &position_,
   sprite_frame(0),
   sprite_prefix(sprite_prefix_),
   team(team_),
-	move_enabled(true)
+	move_enabled(true),
+  sp_attack_limit(sp_attack_limit_)
 {
   time_since_attack.start();
+  time_since_special.start();
 }
 
 Player::~Player() {}
 
 void Player::move_x(const float &mag, const float &timestep, bool first_time) {
-	Point2f pos = get_position();
-	pos.x += speed * timestep * mag;
-	set_position(pos);
-
-  if(weapon != nullptr)
+  if(!is_stunned())
   {
-    Point2f wep_pos = weapon->get_position();
-    wep_pos.x += speed * timestep * mag;
-    weapon->set_position(wep_pos);
+	  Point2f pos = get_position();
+	  pos.x += speed * timestep * mag;
+	  set_position(pos);
+
+    if(weapon != nullptr)
+    {
+      Point2f wep_pos = weapon->get_position();
+      wep_pos.x += speed * timestep * mag;
+      weapon->set_position(wep_pos);
+    }
+
+	  // code to anmimate movement
+	  if(first_time){
+		  sprite_distance_traveled += speed * timestep * abs(mag);
+
+		  if(mag >= 0.3f)
+			  player_direction = RIGHT;
+		  else if(mag <= -.3f)
+			  player_direction = LEFT;
+
+		  if(sprite_distance_traveled >= 20.0f) {
+				  sprite_distance_traveled = 0;
+				  sprite_frame++;
+				  if(sprite_frame == 4)
+					  sprite_frame = 0;
+		  }
+	  }
   }
-
-	// code to anmimate movement
-	if(first_time){
-		sprite_distance_traveled += speed * timestep * abs(mag);
-
-		if(mag >= 0.3f)
-			player_direction = RIGHT;
-		else if(mag <= -.3f)
-			player_direction = LEFT;
-
-		if(sprite_distance_traveled >= 20.0f) {
-				sprite_distance_traveled = 0;
-				sprite_frame++;
-				if(sprite_frame == 4)
-					sprite_frame = 0;
-		}
-	}
 }
 
 void Player::move_y(const float &mag, const float &timestep, bool first_time) {
-	Point2f pos = get_position();
-	pos.y += speed * timestep * mag;
-	set_position(pos);
-  
-  if(weapon != nullptr)
+  if(!is_stunned())
   {
-    Point2f wep_pos = weapon->get_position();
-    wep_pos.y += speed * timestep * mag;
-    weapon->set_position(wep_pos);
-  }
-	// code to animate movement
-	if(first_time) {
-		sprite_distance_traveled += speed * timestep * abs(mag);
+	  Point2f pos = get_position();
+	  pos.y += speed * timestep * mag;
+	  set_position(pos);
+  
+    if(weapon != nullptr)
+    {
+      Point2f wep_pos = weapon->get_position();
+      wep_pos.y += speed * timestep * mag;
+      weapon->set_position(wep_pos);
+    }
+	  // code to animate movement
+	  if(first_time) {
+		  sprite_distance_traveled += speed * timestep * abs(mag);
 	
-		if(mag >= 0.3f)
-			player_direction = DOWN;
-		else if(mag <= -.3f)
-			player_direction = UP;
+		  if(mag >= 0.3f)
+			  player_direction = DOWN;
+		  else if(mag <= -.3f)
+			  player_direction = UP;
 
-		if(sprite_distance_traveled >= 20.0f) {
-				sprite_distance_traveled = 0;
-				sprite_frame++;
-				if(sprite_frame == 4)
-					sprite_frame = 0;
-		}
-	}
+		  if(sprite_distance_traveled >= 20.0f) {
+				  sprite_distance_traveled = 0;
+				  sprite_frame++;
+				  if(sprite_frame == 4)
+					  sprite_frame = 0;
+		  }
+	  }
+  }
 }
 
 void Player::dodge() {
@@ -190,6 +199,21 @@ float Player::get_hp_pctg() const {
 void Player::start_attack_timer()
 {
 	time_since_attack.reset();
+}
+
+void Player::start_special_timer()
+{
+	time_since_special.reset();
+}
+
+void Player::start_stun_timer()
+{
+	stun_timer.reset();
+}
+
+bool Player::is_stunned()
+{
+  return stun_timer.is_running() && stun_timer.seconds() < STUN_TIME;
 }
 
 void Player::pick_up_crystal() {

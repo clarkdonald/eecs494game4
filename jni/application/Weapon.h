@@ -25,10 +25,15 @@ class Weapon : public Game_Object {
     
     virtual void remove_from_owner() {}
 
+    bool is_stun() {return stun_attack;}
+
     Zeni::Chronometer<Zeni::Time> animation_timer;
 
-  private:
+  protected:
+    bool stun_attack;
 	  float damage;
+
+  private:
     Team team;
 };
 

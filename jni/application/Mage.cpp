@@ -7,7 +7,7 @@ using namespace std;
 Mage::Mage(const Zeni::Point2f &position_,
            const int &uid_,
            const Team &team_)
-: Player(position_, uid_, 80.0f, 100.0f, team_, "mage_", 0.5f), heal_circle(nullptr)
+: Player(position_, uid_, 80.0f, 100.0f, team_, "mage_", 0.5f, 5.0f), heal_circle(nullptr)
 {}
 
 void Mage::render() const {
@@ -25,7 +25,7 @@ Weapon* Mage::range() {
   return projectile;
 }
 
-void Mage::spc_skill(bool pressed)
+void Mage::mage_spc_skill(bool pressed)
 {
 	if(pressed && !heal_circle) {
 		heal_circle = new Heal_Circle(get_position());

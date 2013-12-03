@@ -13,6 +13,8 @@
 #include "Utility.h"
 #include "Weapon.h"
 
+#define STUN_TIME 1.0f
+
 class Player : public Game_Object {
   public:
 	  Player(const Zeni::Point2f &position_,
@@ -21,7 +23,8 @@ class Player : public Game_Object {
            const float &max_hp_,
            const Team &team_,
 					 const Zeni::String& sprite_prefix_,
-					 const float& attack_limit_);
+					 const float& attack_limit_,
+           const float& sp_attack_limit_);
   
     virtual ~Player() = 0;
 
@@ -45,7 +48,9 @@ class Player : public Game_Object {
   
     virtual Weapon* range() {return nullptr;}  // arrow, fireball
 
-	  virtual void spc_skill(bool pressed) = 0; // special class-specific attack
+    virtual void mage_spc_skill(bool pressed) {}; // special class-specific attack
+    virtual Weapon* archer_spc_skill() {return nullptr;} // special class-specific attack
+    virtual void warrior_spc_skill(bool pressed) {}; // special class-specific attack
 
 	  void take_dmg(const float &);
 
@@ -72,6 +77,10 @@ class Player : public Game_Object {
 		void set_submerged(bool value) {submerged = value;}
 
 		void start_attack_timer();
+		void start_special_timer();
+    void start_stun_timer();
+
+    bool is_stunned();
 
     void pick_up_crystal();
   
@@ -90,6 +99,7 @@ class Player : public Game_Object {
   
   protected:
 		virtual bool can_attack() const {return attack_enabled && time_since_attack.seconds() > attack_limit;}
+    virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
     Weapon* weapon;
     Zeni::Point2f calc_weapon_pos();
     Zeni::Point2f calc_sword_pos();
@@ -100,6 +110,7 @@ class Player : public Game_Object {
     float max_hp;
     float hp;
 		float attack_limit;
+    float sp_attack_limit;
     unsigned int n_crystals;
     int uid;
     bool attackable;
@@ -121,6 +132,8 @@ class Player : public Game_Object {
 		Zeni::String sprite_prefix;
     Team team;
 		Zeni::Chronometer<Zeni::Time> time_since_attack;
+		Zeni::Chronometer<Zeni::Time> time_since_special;
+		Zeni::Chronometer<Zeni::Time> stun_timer;
 };
 
 #endif /* PLAYER_H */

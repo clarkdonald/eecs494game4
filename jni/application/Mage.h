@@ -20,7 +20,7 @@ class Mage : public Player {
 
     Weapon* range() override;
   
-    void spc_skill(bool pressed) override;
+    void mage_spc_skill(bool pressed) override;
 
 private:
 	Heal_Circle* heal_circle;
