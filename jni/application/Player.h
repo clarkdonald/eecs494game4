@@ -45,7 +45,7 @@ class Player : public Game_Object {
   
     virtual Weapon* range() {return nullptr;}  // arrow, fireball
 
-	  virtual void spc_skill() = 0; // special class-specific attack
+	  virtual void spc_skill(bool pressed) = 0; // special class-specific attack
 
 	  void take_dmg(const float &);
 
@@ -80,6 +80,10 @@ class Player : public Game_Object {
     const int & get_uid() const {return uid;}
   
     void remove_weapon() {weapon = nullptr;}
+
+		bool can_move() {return move_enabled;}
+		void disable_movement() {move_enabled = false;}
+		void enable_movement() {move_enabled = true;}
   
   protected:
 		virtual bool can_attack() const {return time_since_attack.seconds() > attack_limit;}
@@ -103,6 +107,8 @@ class Player : public Game_Object {
     float blink_timer;
     bool blink;
     bool hit;
+
+		bool move_enabled;
 
 		enum Player_Direction {LEFT, RIGHT, UP, DOWN};
 		Player_Direction player_direction;

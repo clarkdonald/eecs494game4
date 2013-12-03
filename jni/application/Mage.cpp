@@ -23,6 +23,12 @@ Weapon* Mage::range() {
   return projectile;
 }
 
-void Mage::spc_skill()
+void Mage::spc_skill(bool pressed)
 {
+	if(pressed) {
+		disable_movement();
+		
+	}
+	else
+		enable_movement();
 }

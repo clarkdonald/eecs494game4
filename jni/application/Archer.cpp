@@ -24,7 +24,7 @@ Weapon* Archer::range()
   return projectile;
 }
 
-void Archer::spc_skill()
+void Archer::spc_skill(bool pressed)
 {
 
 }

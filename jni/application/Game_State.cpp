@@ -143,12 +143,19 @@ void Game_State::perform_logic() {
     }
     
     // check collision with terrain on movement for effects
-    float move_x = input.move_x;
-    float move_y = input.move_y;    
+    
+		float move_x, move_y;
+		if(player_wrapper->player->can_move()) {
+			move_x = input.move_x;
+			move_y = input.move_y;  
+		}
+		else
+			move_x = move_y = 0;
+
 		bool is_submerged = false;
     
-		if(abs(move_x) < .3) move_x = 0;
-		if(abs(move_y) < .3) move_y = 0;
+		if(abs(move_x) < .2) move_x = 0;
+		if(abs(move_y) < .2) move_y = 0;
 		
 		for (auto terrain : terrains) {
       if (terrain->slow_player_down() && player_wrapper->player->touching_feet(*terrain)) {
@@ -283,6 +290,8 @@ void Game_State::perform_logic() {
       Weapon* projectile = player_wrapper->player->range();
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
+
+		player_wrapper->player->spc_skill(input.LT);
 
     // crystal depositing logic
     bool touching = false;

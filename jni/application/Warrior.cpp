@@ -24,6 +24,6 @@ Weapon* Warrior::melee() {
   return sword;
 }
 
-void Warrior::spc_skill()
+void Warrior::spc_skill(bool pressed)
 {
 }

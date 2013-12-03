@@ -27,7 +27,8 @@ Controls::Controls()
   look_x(0.0f),
   A(false),
   attack(false),
-  RB(false)
+  RB(false),
+	LT(false)
 {}
 
 Dimension::Dimension()

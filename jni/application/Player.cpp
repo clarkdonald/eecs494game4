@@ -39,7 +39,8 @@ Player::Player(const Point2f &position_,
 	sprite_distance_traveled(0.0f),
   sprite_frame(0),
   sprite_prefix(sprite_prefix_),
-  team(team_)
+  team(team_),
+	move_enabled(true)
 {
   time_since_attack.start();
 }

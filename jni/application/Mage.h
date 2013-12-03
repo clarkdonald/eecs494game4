@@ -13,7 +13,7 @@ class Mage : public Player {
 
     Weapon* range() override;
   
-    void spc_skill() override;
+    void spc_skill(bool pressed) override;
 };
 
 #endif /* MAGE_H */
