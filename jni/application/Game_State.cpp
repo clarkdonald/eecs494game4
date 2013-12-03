@@ -512,8 +512,12 @@ void Game_State::render(){
   if (gameover) return;
   
   for (auto player_wrapper : player_wrappers) {    
-    if (player_wrapper->player->is_dead()) render_spawn_menu(player_wrapper);
-    else render_all(player_wrapper);
+    if (player_wrapper->player->is_dead()) 
+			render_spawn_menu(player_wrapper);
+    else {
+			render_all(player_wrapper);
+			player_wrapper->player->render_extras();
+		}
   }
 }
 

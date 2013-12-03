@@ -26,6 +26,8 @@ class Player : public Game_Object {
     virtual ~Player() = 0;
 
     virtual void render() const = 0;
+
+		virtual void render_extras() {};
   
     virtual void move_y(const float &, const float &, bool);
   
