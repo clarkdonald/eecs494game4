@@ -144,6 +144,14 @@ void Game_State::perform_logic() {
       continue;
     }
     
+    // if player is stunned, don't move or anything else
+    if(player_wrapper->player->is_stunned())
+    {
+          char msg[256];
+          sprintf(msg, "player %d is stunned\n",player_wrapper->uid);
+          OutputDebugString(msg);
+      continue;
+    }
     // check collision with terrain on movement for effects
     
 		float move_x, move_y;

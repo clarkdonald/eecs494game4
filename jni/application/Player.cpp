@@ -52,68 +52,62 @@ Player::Player(const Point2f &position_,
 Player::~Player() {}
 
 void Player::move_x(const float &mag, const float &timestep, bool first_time) {
-  if(!is_stunned())
+	Point2f pos = get_position();
+	pos.x += speed * timestep * mag;
+	set_position(pos);
+
+  if(weapon != nullptr)
   {
-	  Point2f pos = get_position();
-	  pos.x += speed * timestep * mag;
-	  set_position(pos);
-
-    if(weapon != nullptr)
-    {
-      Point2f wep_pos = weapon->get_position();
-      wep_pos.x += speed * timestep * mag;
-      weapon->set_position(wep_pos);
-    }
-
-	  // code to anmimate movement
-	  if(first_time){
-		  sprite_distance_traveled += speed * timestep * abs(mag);
-
-		  if(mag >= 0.3f)
-			  player_direction = RIGHT;
-		  else if(mag <= -.3f)
-			  player_direction = LEFT;
-
-		  if(sprite_distance_traveled >= 20.0f) {
-				  sprite_distance_traveled = 0;
-				  sprite_frame++;
-				  if(sprite_frame == 4)
-					  sprite_frame = 0;
-		  }
-	  }
+    Point2f wep_pos = weapon->get_position();
+    wep_pos.x += speed * timestep * mag;
+    weapon->set_position(wep_pos);
   }
+
+	// code to anmimate movement
+	if(first_time){
+		sprite_distance_traveled += speed * timestep * abs(mag);
+
+		if(mag >= 0.3f)
+			player_direction = RIGHT;
+		else if(mag <= -.3f)
+			player_direction = LEFT;
+
+		if(sprite_distance_traveled >= 20.0f) {
+				sprite_distance_traveled = 0;
+				sprite_frame++;
+				if(sprite_frame == 4)
+					sprite_frame = 0;
+		}
+	}
 }
 
 void Player::move_y(const float &mag, const float &timestep, bool first_time) {
-  if(!is_stunned())
-  {
-	  Point2f pos = get_position();
-	  pos.y += speed * timestep * mag;
-	  set_position(pos);
+	Point2f pos = get_position();
+	pos.y += speed * timestep * mag;
+	set_position(pos);
   
-    if(weapon != nullptr)
-    {
-      Point2f wep_pos = weapon->get_position();
-      wep_pos.y += speed * timestep * mag;
-      weapon->set_position(wep_pos);
-    }
-	  // code to animate movement
-	  if(first_time) {
-		  sprite_distance_traveled += speed * timestep * abs(mag);
-	
-		  if(mag >= 0.3f)
-			  player_direction = DOWN;
-		  else if(mag <= -.3f)
-			  player_direction = UP;
-
-		  if(sprite_distance_traveled >= 20.0f) {
-				  sprite_distance_traveled = 0;
-				  sprite_frame++;
-				  if(sprite_frame == 4)
-					  sprite_frame = 0;
-		  }
-	  }
+  if(weapon != nullptr)
+  {
+    Point2f wep_pos = weapon->get_position();
+    wep_pos.y += speed * timestep * mag;
+    weapon->set_position(wep_pos);
   }
+	// code to animate movement
+	if(first_time) {
+		sprite_distance_traveled += speed * timestep * abs(mag);
+	
+		if(mag >= 0.3f)
+			player_direction = DOWN;
+		else if(mag <= -.3f)
+			player_direction = UP;
+
+		if(sprite_distance_traveled >= 20.0f) {
+				sprite_distance_traveled = 0;
+				sprite_frame++;
+				if(sprite_frame == 4)
+					sprite_frame = 0;
+		}
+	}
 }
 
 void Player::dodge() {
@@ -223,8 +217,16 @@ bool Player::is_stunned()
   bool is_stun = false;
   if(stun_timer.is_running())
   {
+    
+          char msg[256];
+          sprintf(msg, "inside is_stunned\n");
+          OutputDebugString(msg);
     is_stun = stun_timer.seconds() < STUN_TIME;
-    if(is_stun) stun_timer.stop();
+    if(!is_stun) 
+    {
+      stun_timer.stop();
+      stun_timer.reset();
+    }
   }
   return is_stun;
 }
