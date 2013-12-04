@@ -428,7 +428,7 @@ void Game_State::perform_logic() {
     }
   }
 
-  //Blinking players
+  // blinking players
   for (auto player_wrapper : player_wrappers) {
     player_wrapper->player->update_blink_timer(time_step);
   }
@@ -664,7 +664,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x for npc");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for npc");
-    team = (i % 2 ? BLUE : RED);
+    team = (i < 2 ? BLUE : RED);
     npc_type = (team == BLUE ? "Blonde_Kid" : "Girl");
     npcs.push_back(create_npc(npc_type, Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), team));
     
