@@ -15,7 +15,7 @@ class Warrior : public Player {
 
     Weapon* melee(const float &direction) override;
   
-    void warrior_spc_skill(bool pressed) override;
+    Weapon* warrior_spc_skill() override;
 
     Zeni::String get_skill_str() const override {return "warrior_skill"; }
 };

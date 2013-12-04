@@ -22,6 +22,7 @@ Player::Player(const Point2f &position_,
                const float& sp_attack_limit_)
 : Game_Object(position_, OBJECT_SIZE, RECTANGLE),
   weapon(nullptr),
+  shield(nullptr),
   speed(speed_),
   facing(Global::pi_over_two),
   max_hp(max_hp_),
@@ -50,7 +51,14 @@ Player::Player(const Point2f &position_,
   time_since_special.start();
 }
 
-Player::~Player() {}
+Player::~Player() 
+{
+  if(weapon != nullptr)
+    delete weapon;
+
+  if(shield != nullptr)
+    delete shield;
+}
 
 void Player::move_x(const float &mag, const float &timestep, bool first_time) {
 	Point2f pos = get_position();
@@ -62,6 +70,12 @@ void Player::move_x(const float &mag, const float &timestep, bool first_time) {
     Point2f wep_pos = weapon->get_position();
     wep_pos.x += speed * timestep * mag;
     weapon->set_position(wep_pos);
+  }
+  if(shield != nullptr)
+  {
+    Point2f shield_pos = shield->get_position();
+    shield_pos.x += speed * timestep * mag;
+    shield->set_position(shield_pos);
   }
 
 	// code to anmimate movement
@@ -93,6 +107,13 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
     wep_pos.y += speed * timestep * mag;
     weapon->set_position(wep_pos);
   }
+  if(shield != nullptr)
+  {
+    Point2f shield_pos = shield->get_position();
+    shield_pos.y += speed * timestep * mag;
+    shield->set_position(shield_pos);
+  }
+  
 	// code to animate movement
 	if(first_time) {
 		sprite_distance_traveled += speed * timestep * abs(mag);
@@ -142,6 +163,11 @@ bool Player::touching_feet(const Game_Object &rhs) const {
 
 void Player::turn_to_face(const float &theta) {
 	facing = theta;
+
+  if(shield != nullptr)
+  {
+    shield->set_position(calc_shield_pos());
+  }
 
 	float tempo = theta + Global::pi_over_two;
 	if(tempo >= .7854f && tempo <= 2.356f)
@@ -257,6 +283,18 @@ Point2f Player::calc_sword_pos(const float &direction) {
     pos -= (OBJECT_SIZE / 2);
     return pos;
 }
+
+Point2f Player::calc_shield_pos() {
+    Point2f pos = get_center();
+    Vector2f size = get_size();
+    // Offset for how far away from player to shoot
+    pos += Vector2f(size.magnitude() * 0.7f * cos(facing),
+                    size.magnitude() * 0.7f * sin(facing));
+    // Offset for centering the weapon wrt player's center
+    pos -= (OBJECT_SIZE / 2);
+    return pos;
+}
+
 void Player::render() const {
 	if(is_dead()) return;
   

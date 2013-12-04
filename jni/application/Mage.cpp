@@ -29,7 +29,7 @@ Weapon* Mage::range(const float &direction) {
 
 void Mage::mage_spc_skill(bool pressed)
 {
-	if(pressed && !heal_circle) {
+	if(pressed && !heal_circle && can_use_special()) {
 		heal_circle = new Heal_Circle(get_position());
 		disable_attack();
 	}

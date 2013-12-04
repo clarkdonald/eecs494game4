@@ -601,6 +601,10 @@
     <filepath>textures/GUI/swordgui.png</filepath>
     <tile>0</tile>
   </sword>
+  <shield>
+    <filepath>textures/Weapons/shield.png</filepath>
+    <tile>0</tile>
+  </shield>
   <!-------------- Terrain ------------->
   <water>
     <filepath>textures/Terrain/water.png</filepath>

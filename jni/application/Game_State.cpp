@@ -318,17 +318,24 @@ void Game_State::perform_logic() {
 
 		player_wrapper->player->mage_spc_skill(input.LT);
 
-    Weapon* stun_arrow = nullptr;
 
     if(input.LT)
     {
+      Weapon* stun_arrow = nullptr;
       if (delta_facing) stun_arrow = player_wrapper->player->archer_spc_skill(direction_vector.theta());
       else if (move_x == 0.0f && move_y == 0.0f) stun_arrow = player_wrapper->player->archer_spc_skill();
       else stun_arrow = player_wrapper->player->archer_spc_skill(move_direction.theta());
-
+        
       if (stun_arrow != nullptr)
-      {
         projectiles.push_back(stun_arrow);
+
+      Weapon* shield = nullptr;
+      shield = player_wrapper->player->warrior_spc_skill();
+
+      if(shield != nullptr)
+      {
+        shield->animation_timer.start();
+        melees.push_back(shield);
       }
     }
 
@@ -401,6 +408,14 @@ void Game_State::perform_logic() {
     (*projectile)->update(time_step);
 
     bool should_remove = false;
+
+    // do shield collision checks
+    for (auto melee : melees) {
+      if ( melee->is_shield() && (*projectile)->touching(*melee)) {
+        should_remove = true;
+        break;
+      }
+    }
 
     // do player collision checks 
     for (auto player_wrapper : player_wrappers) {
