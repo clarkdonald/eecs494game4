@@ -165,7 +165,7 @@ void Game_State::perform_logic() {
 		move_y = input.move_y;
     
     // take away dead zones of joy stick
-		if (fabs(move_x) < .1f && fabs(move_y) < .1f) move_y = move_x = 0;
+		if (fabs(move_x) < .1f && fabs(move_y) < .1f) move_y = move_x = 0.0f;
 
 		bool is_submerged = false;
 		
@@ -276,14 +276,23 @@ void Game_State::perform_logic() {
     }
 
     // directional logic for player
+    bool delta_facing = false;
 	  Vector2f direction_vector(input.look_x, input.look_y);
-    if (direction_vector.magnitude() > 0.4f) // deadzone for right stick; magnitude : [0,1]
-	    player_wrapper->player->turn_to_face(direction_vector.theta());        
+    if (direction_vector.magnitude() > 0.4f) { // deadzone for right stick; magnitude : [0,1]
+	    player_wrapper->player->turn_to_face(direction_vector.theta());
+      delta_facing = true;
+    }
 
     // attack logic for player
+    Vector2f move_direction(move_x, move_y);
     if (input.attack && !is_submerged) {
+      
       // warrior melee sword attack
-      Weapon* melee = player_wrapper->player->melee();
+      Weapon *melee = nullptr;
+      if (delta_facing) melee = player_wrapper->player->melee(direction_vector.theta());
+      else if (move_x == 0.0f && move_y == 0.0f) melee = player_wrapper->player->melee();
+      else melee = player_wrapper->player->melee(move_direction.theta());
+      
       if (melee != nullptr) {
         for (auto player_check : player_wrappers) {
           if (player_check->player->is_dead() ||
@@ -299,7 +308,11 @@ void Game_State::perform_logic() {
       }
 
       // archer/mage ranged attack
-      Weapon* projectile = player_wrapper->player->range();
+      Weapon* projectile = nullptr;
+      if (delta_facing) projectile = player_wrapper->player->range(direction_vector.theta());
+      else if (move_x == 0.0f && move_y == 0.0f) projectile = player_wrapper->player->range();
+      else projectile = player_wrapper->player->range(move_direction.theta());
+      
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
 
@@ -309,9 +322,11 @@ void Game_State::perform_logic() {
     if(input.LT)
     {
       Weapon* stun_arrow = nullptr;
-      stun_arrow = player_wrapper->player->archer_spc_skill();
-
-      if(stun_arrow != nullptr)
+      if (delta_facing) stun_arrow = player_wrapper->player->archer_spc_skill(direction_vector.theta());
+      else if (move_x == 0.0f && move_y == 0.0f) stun_arrow = player_wrapper->player->archer_spc_skill();
+      else stun_arrow = player_wrapper->player->archer_spc_skill(move_direction.theta());
+        
+      if (stun_arrow != nullptr)
         projectiles.push_back(stun_arrow);
 
       Weapon* shield = nullptr;
@@ -462,8 +477,35 @@ void Game_State::perform_logic() {
                                              get_selected_option()),
                                              player_infos[player_wrapper->uid]->start_position, 
                                              player_wrapper->uid,
-                                             player_wrapper->player->get_team());      
+                                             player_wrapper->player->get_team());   
+      Weapon* sword = dead->get_weapon();
+      Weapon* shield = dead->get_shield();
+
+      if(sword != nullptr)
+      {
+        for(auto melee = melees.begin(); melee != melees.end(); melee++)
+        {
+          if(sword == *melee)
+          {
+            melees.erase(melee);
+            break;
+          }
+        }
+      }
+      if(shield != nullptr)
+      {
+        for(auto melee = melees.begin(); melee != melees.end(); melee++)
+        {
+          if(shield == *melee)
+          {
+            melees.erase(melee);
+            break;
+          }
+        }
+      }
+
       delete dead;
+
     }
   }
 

@@ -47,14 +47,19 @@ class Player : public Game_Object {
     bool touching_feet(const Game_Object &rhs) const;
   
 	  void turn_to_face(const float &);
-
-    virtual Weapon* melee() {return nullptr;}	// sword
   
-    virtual Weapon* range() {return nullptr;}  // arrow, fireball
+    virtual Weapon* melee() {return nullptr;}
+  
+    virtual Weapon* range() {return nullptr;}
+
+    virtual Weapon* melee(const float &direction) {return nullptr;}	// sword
+  
+    virtual Weapon* range(const float &direction) {return nullptr;}  // arrow, fireball
 
     virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
 
     virtual void mage_spc_skill(bool pressed) {}; // special class-specific attack
+    virtual Weapon* archer_spc_skill(const float &direction) {return nullptr;} // special class-specific attack
     virtual Weapon* archer_spc_skill() {return nullptr;} // special class-specific attack
     virtual Weapon* warrior_spc_skill() {return nullptr;} // special class-specific attack
 
@@ -111,14 +116,17 @@ class Player : public Game_Object {
 
 		void disable_attack() {attack_enabled = false;}
 		void enable_attack() {attack_enabled = true;}
+
+    Weapon* get_weapon() {return weapon;}
+    Weapon* get_shield() {return shield;}
   
   protected:
 		virtual bool can_attack() const {return attack_enabled && time_since_attack.seconds() > attack_limit;}
     
     Weapon* weapon;
     Weapon* shield;
-    Zeni::Point2f calc_weapon_pos();
-    Zeni::Point2f calc_sword_pos();
+    Zeni::Point2f calc_weapon_pos(const float &direction);
+    Zeni::Point2f calc_sword_pos(const float &direction);
     Zeni::Point2f calc_shield_pos();
 
   private:

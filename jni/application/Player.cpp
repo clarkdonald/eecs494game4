@@ -262,23 +262,23 @@ void Player::drop_crystal() {
 	if (n_crystals > 0) --n_crystals;
 }
 
-Point2f Player::calc_weapon_pos() {
+Point2f Player::calc_weapon_pos(const float &direction) {
     Point2f pos = get_center();
     Vector2f size = get_size();
     // Offset for how far away from player to shoot
-    pos += Vector2f(size.magnitude() * 0.2f * cos(facing),
-                    size.magnitude() * 0.2f * sin(facing));
+    pos += Vector2f(size.magnitude() * 0.2f * cos(direction),
+                    size.magnitude() * 0.2f * sin(direction));
     // Offset for centering the weapon wrt player's center
     pos -= (SMALL_SIZE / 2);
     return pos;
 }
 
-Point2f Player::calc_sword_pos() {
+Point2f Player::calc_sword_pos(const float &direction) {
     Point2f pos = get_center();
     Vector2f size = get_size();
     // Offset for how far away from player to shoot
-    pos += Vector2f(size.magnitude() * 0.3f * cos(facing),
-                    size.magnitude() * 0.3f * sin(facing));
+    pos += Vector2f(size.magnitude() * 0.3f * cos(direction),
+                    size.magnitude() * 0.3f * sin(direction));
     // Offset for centering the sword's HANDLE wrt player's center
     pos -= (OBJECT_SIZE / 2);
     return pos;

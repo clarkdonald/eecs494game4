@@ -19,8 +19,10 @@ class Mage : public Player {
 		void move_y(const float &, const float &, bool) override;
   
     void move_x(const float &, const float &, bool) override;
-
+  
     Weapon* range() override;
+
+    Weapon* range(const float &direction) override;
   
     void mage_spc_skill(bool pressed) override;   
 
