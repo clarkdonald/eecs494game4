@@ -11,10 +11,14 @@ class Archer : public Player {
            const Team &team_);
 
     void render() const override;
-
+  
     Weapon* range() override;
+
+    Weapon* range(const float &direction) override;
   
     Weapon* archer_spc_skill() override;
+  
+    Weapon* archer_spc_skill(const float &direction) override;
 
 		void set_can_attack();
 		void set_cannot_attack();

@@ -15,9 +15,13 @@ void Mage::render() const {
 }
 
 Weapon* Mage::range() {
+  return range(get_facing());
+}
+
+Weapon* Mage::range(const float &direction) {
   Weapon* projectile = nullptr;
   if (can_attack()) {
-    projectile = new Magic(calc_weapon_pos(), get_facing(), get_team());
+    projectile = new Magic(calc_weapon_pos(direction), direction, get_team());
     start_attack_timer();
   }
   return projectile;

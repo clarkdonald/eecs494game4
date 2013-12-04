@@ -15,21 +15,29 @@ void Archer::render() const {
   Player::render();
 }
 
-Weapon* Archer::range()
+Weapon* Archer::range() {
+  return range(get_facing());
+}
+
+Weapon* Archer::range(const float &direction)
 {
   Weapon* projectile = nullptr;
   if (can_attack()) {
-    projectile = new Arrow(calc_weapon_pos(), get_facing(), get_team());
+    projectile = new Arrow(calc_weapon_pos(direction), direction, get_team());
     start_attack_timer();
   }
   return projectile;
 }
 
-Weapon* Archer::archer_spc_skill()
+Weapon* Archer::archer_spc_skill() {
+  return archer_spc_skill(get_facing());
+}
+
+Weapon* Archer::archer_spc_skill(const float &direction)
 {
   Weapon* stun_arrow = nullptr;
   if (can_use_special()) {
-    stun_arrow = new Stun_Arrow(calc_weapon_pos(), get_facing(), get_team());
+    stun_arrow = new Stun_Arrow(calc_weapon_pos(direction), direction, get_team());
     start_special_timer();
   }
   return stun_arrow;

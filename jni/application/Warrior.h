@@ -10,8 +10,10 @@ class Warrior : public Player {
             const Team &team_);
 
     void render() const override;
-
+  
     Weapon* melee() override;
+
+    Weapon* melee(const float &direction) override;
   
     void warrior_spc_skill(bool pressed) override;
 

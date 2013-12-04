@@ -47,15 +47,20 @@ class Player : public Game_Object {
     bool touching_feet(const Game_Object &rhs) const;
   
 	  void turn_to_face(const float &);
-
-    virtual Weapon* melee() {return nullptr;}	// sword
   
-    virtual Weapon* range() {return nullptr;}  // arrow, fireball
+    virtual Weapon* melee() {return nullptr;}
+  
+    virtual Weapon* range() {return nullptr;}
+
+    virtual Weapon* melee(const float &direction) {return nullptr;}	// sword
+  
+    virtual Weapon* range(const float &direction) {return nullptr;}  // arrow, fireball
 
     virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
 
     virtual void mage_spc_skill(bool pressed) {}; // special class-specific attack
-    virtual Weapon* archer_spc_skill() {return nullptr;} // special class-specific attack
+    virtual Weapon* archer_spc_skill() {return nullptr;}
+    virtual Weapon* archer_spc_skill(const float &direction) {return nullptr;} // special class-specific attack
     virtual void warrior_spc_skill(bool pressed) {}; // special class-specific attack
 
 	  void take_dmg(const float &);
@@ -115,8 +120,8 @@ class Player : public Game_Object {
 		virtual bool can_attack() const {return attack_enabled && time_since_attack.seconds() > attack_limit;}
     
     Weapon* weapon;
-    Zeni::Point2f calc_weapon_pos();
-    Zeni::Point2f calc_sword_pos();
+    Zeni::Point2f calc_weapon_pos(const float &direction);
+    Zeni::Point2f calc_sword_pos(const float &direction);
 
   private:
     float speed;
