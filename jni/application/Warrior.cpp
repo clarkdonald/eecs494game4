@@ -28,7 +28,7 @@ Weapon* Warrior::melee() {
 Weapon* Warrior::warrior_spc_skill() {
   Weapon* shieldobj = nullptr;
   if (can_use_special()) {
-    shieldobj = new Shield(calc_sword_pos(), get_facing(), get_team(), this);
+    shieldobj = new Shield(calc_shield_pos(), get_facing(), get_team(), this);
     start_special_timer();
     shield = shieldobj;
   }
