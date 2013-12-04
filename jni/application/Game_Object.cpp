@@ -99,7 +99,7 @@ bool Game_Object::collide4(const Game_Object &rectangle1,
   float rectangle2WidthFactor = rectangle2.size.x / 4.0f;
   
   // set up dimensions for this
-  switch (collider) {
+  switch (rectangle1.collider) {
     case SQUARE:
       rectangle1X1 = rectangle1.position.x;
       rectangle1X2 = rectangle1.position.x + rectangle1.size.x;
