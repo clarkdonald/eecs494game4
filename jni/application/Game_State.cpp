@@ -462,8 +462,35 @@ void Game_State::perform_logic() {
                                              get_selected_option()),
                                              player_infos[player_wrapper->uid]->start_position, 
                                              player_wrapper->uid,
-                                             player_wrapper->player->get_team());      
+                                             player_wrapper->player->get_team());   
+      Weapon* sword = dead->get_weapon();
+      Weapon* shield = dead->get_shield();
+
+      if(sword != nullptr)
+      {
+        for(auto melee = melees.begin(); melee != melees.end(); melee++)
+        {
+          if(sword == *melee)
+          {
+            melees.erase(melee);
+            break;
+          }
+        }
+      }
+      if(shield != nullptr)
+      {
+        for(auto melee = melees.begin(); melee != melees.end(); melee++)
+        {
+          if(shield == *melee)
+          {
+            melees.erase(melee);
+            break;
+          }
+        }
+      }
+
       delete dead;
+
     }
   }
 
