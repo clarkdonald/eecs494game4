@@ -52,7 +52,7 @@ class Player : public Game_Object {
 
     virtual void mage_spc_skill(bool pressed) {}; // special class-specific attack
     virtual Weapon* archer_spc_skill() {return nullptr;} // special class-specific attack
-    virtual void warrior_spc_skill(bool pressed) {}; // special class-specific attack
+    virtual Weapon* warrior_spc_skill() {return nullptr;} // special class-specific attack
 
 	  void take_dmg(const float &);
 		
@@ -95,6 +95,7 @@ class Player : public Game_Object {
     const int & get_uid() const {return uid;}
   
     void remove_weapon() {weapon = nullptr;}
+    void remove_shield() {shield = nullptr;}
 
 		Player* get_partner() {return partner;}
 
@@ -109,8 +110,10 @@ class Player : public Game_Object {
 		virtual bool can_attack() const {return attack_enabled && time_since_attack.seconds() > attack_limit;}
     virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
     Weapon* weapon;
+    Weapon* shield;
     Zeni::Point2f calc_weapon_pos();
     Zeni::Point2f calc_sword_pos();
+    Zeni::Point2f calc_shield_pos();
 
   private:
     float speed;

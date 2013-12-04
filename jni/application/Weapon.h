@@ -26,12 +26,14 @@ class Weapon : public Game_Object {
     virtual void remove_from_owner() {}
 
     bool is_stun() {return stun_attack;}
+    bool is_shield() {return shield;}
 
     Zeni::Chronometer<Zeni::Time> animation_timer;
 
   protected:
     float damage;
     bool stun_attack;
+    bool shield;
 
   private:
     Team team;

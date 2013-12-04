@@ -10,6 +10,7 @@ Weapon::Weapon(const Point2f &position_,
 : Game_Object(position_, size_),
   damage(damage_),
   stun_attack(false),
+  shield(false),
   team(team_)
 {}
 
