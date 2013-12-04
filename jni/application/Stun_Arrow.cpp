@@ -13,7 +13,7 @@ Stun_Arrow::Stun_Arrow(const Zeni::Point2f &position_,
 }
 
 void Stun_Arrow::render() const {
-  Game_Object::render("arrow",
+  Game_Object::render("stun_arrow",
                       Color(),
                       move_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two);
 }

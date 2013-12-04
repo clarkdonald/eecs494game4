@@ -430,7 +430,7 @@ void Game_State::perform_logic() {
     }
   }
 
-  //Blinking players
+  // blinking players
   for (auto player_wrapper : player_wrappers) {
     player_wrapper->player->update_blink_timer(time_step);
   }
@@ -658,7 +658,7 @@ void Game_State::load_map(const std::string &file_) {
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for player");
     Point2f pos(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH);
-    team = (i % 2 ? BLUE : RED);
+    team = (i % 2 == 0 ? BLUE : RED);
     scores[team] = 0;
     player_wrappers.push_back(new Player_Wrapper(create_player("Mage", pos, i, team), i));
     player_wrappers.back()->player->kill();
@@ -681,7 +681,7 @@ void Game_State::load_map(const std::string &file_) {
       error_handle("Could not input starting x for npc");
     if (start_x < 0 || start_x >= dimension.width)
       error_handle("Invalid start x for npc");
-    team = (i % 2 ? BLUE : RED);
+    team = (i < 2 ? BLUE : RED);
     npc_type = (team == BLUE ? "Blonde_Kid" : "Girl");
     npcs.push_back(create_npc(npc_type, Point2f(start_x*UNIT_LENGTH, start_y*UNIT_LENGTH), team));
     
