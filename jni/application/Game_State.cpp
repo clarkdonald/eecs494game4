@@ -68,7 +68,8 @@ Player_Info::~Player_Info() {
 }
 
 Game_State::Game_State(const std::string &file_)
-: gameover(false),
+: crystals_in_play(0),
+  gameover(false),
   vbo_ptr_floor(new Vertex_Buffer),
   vbo_ptr_lower(new Vertex_Buffer),
   vbo_ptr_middle(new Vertex_Buffer),
@@ -690,7 +691,6 @@ void Game_State::load_map(const std::string &file_) {
   }
   
   // Get locations of crystals
-  crystals_in_play = 0;
   int number_of_crystal_locations;
   {
     getline(file,line);

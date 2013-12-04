@@ -11,7 +11,7 @@
 using namespace Zeni;
 
 Tree::Tree(const Point2f &position_, const String &texture_)
-: Environment(position_, texture_, CIRCLE)
+: Environment(position_, texture_, RECTANGLE)
 {}
 
 void Tree::render() const {
