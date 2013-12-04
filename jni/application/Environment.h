@@ -16,7 +16,9 @@
 
 class Environment : public Game_Object {
   public:
-    Environment(const Zeni::Point2f &position_, const Zeni::String &texture_);
+    Environment(const Zeni::Point2f &position_,
+                const Zeni::String &texture_,
+                const Collider &collider_ = SQUARE);
     
     virtual ~Environment() = 0;
 

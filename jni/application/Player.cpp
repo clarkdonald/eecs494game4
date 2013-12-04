@@ -20,7 +20,7 @@ Player::Player(const Point2f &position_,
 							 const String& sprite_prefix_,
 							 const float& attack_limit_,
                const float& sp_attack_limit_)
-: Game_Object(position_),
+: Game_Object(position_, OBJECT_SIZE, RECTANGLE),
   weapon(nullptr),
   speed(speed_),
   facing(Global::pi_over_two),

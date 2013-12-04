@@ -11,8 +11,10 @@
 using Zeni::Point2f;
 using Zeni::String;
 
-Environment::Environment(const Point2f &position_, const String &texture_)
-: Game_Object(position_),
+Environment::Environment(const Point2f &position_,
+                         const String &texture_,
+                         const Collider &collider_)
+: Game_Object(position_, OBJECT_SIZE, collider_),
   texture(texture_)
 {}
 
