@@ -116,6 +116,9 @@ class Player : public Game_Object {
 
 		void disable_attack() {attack_enabled = false;}
 		void enable_attack() {attack_enabled = true;}
+
+    Weapon* get_weapon() {return weapon;}
+    Weapon* get_shield() {return shield;}
   
   protected:
 		virtual bool can_attack() const {return attack_enabled && time_since_attack.seconds() > attack_limit;}
