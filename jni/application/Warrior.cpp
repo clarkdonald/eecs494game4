@@ -8,7 +8,7 @@ using namespace std;
 Warrior::Warrior(const Zeni::Point2f &position_,
                  const int &uid_,
                  const Team &team_)
-: Player(position_, uid_, 120.0f, 200.0f, team_, "warrior_", 0.4f, 1.0f)
+: Player(position_, uid_, 120.0f, 200.0f, team_, "warrior_", 0.4f, 10.0f)
 {}
 
 void Warrior::render() const {

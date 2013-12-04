@@ -164,6 +164,11 @@ bool Player::touching_feet(const Game_Object &rhs) const {
 void Player::turn_to_face(const float &theta) {
 	facing = theta;
 
+  if(shield != nullptr)
+  {
+    shield->set_position(calc_shield_pos());
+  }
+
 	float tempo = theta + Global::pi_over_two;
 	if(tempo >= .7854f && tempo <= 2.356f)
 		player_direction = RIGHT;
@@ -283,8 +288,8 @@ Point2f Player::calc_shield_pos() {
     Point2f pos = get_center();
     Vector2f size = get_size();
     // Offset for how far away from player to shoot
-    pos += Vector2f(size.magnitude() * cos(facing),
-                    size.magnitude() * sin(facing));
+    pos += Vector2f(size.magnitude() * 0.7f * cos(facing),
+                    size.magnitude() * 0.7f * sin(facing));
     // Offset for centering the weapon wrt player's center
     pos -= (OBJECT_SIZE / 2);
     return pos;

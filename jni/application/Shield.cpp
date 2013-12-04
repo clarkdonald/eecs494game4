@@ -34,7 +34,7 @@ void Shield::render() const {
               pos + size, // lower-right corner
               theta, // rotation in radians
               1.0f, // scaling factor
-              owner->get_center(), // point to rotate & scale about
+              pos + 0.5f * size, // point to rotate & scale about
               false, // whether or not to horizontally flip the texture
               Color()); // what Color to "paint" the texture 
 }
