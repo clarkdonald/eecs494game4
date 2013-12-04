@@ -22,9 +22,10 @@ bool Shield::animation_over()
 
 void Shield::render() const {
   float face = owner->get_facing();
+  Vector2f face_vec = Vector2f(cos(face), sin(face));
+
   Point2f pos = get_position();
   Vector2f size = get_size();
-  Vector2f face_vec = Vector2f(cos(face), sin(face));
 
   float theta = face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two;   // facing angle
   
