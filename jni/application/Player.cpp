@@ -20,7 +20,7 @@ Player::Player(const Point2f &position_,
 							 const String& sprite_prefix_,
 							 const float& attack_limit_,
                const float& sp_attack_limit_)
-: Game_Object(position_),
+: Game_Object(position_, OBJECT_SIZE, RECTANGLE),
   weapon(nullptr),
   shield(nullptr),
   speed(speed_),
@@ -178,9 +178,7 @@ void Player::turn_to_face(const float &theta) {
 void Player::take_dmg(const float &dmg) {  
   if (!hit && (hp -= dmg) < 0.0f) {
     hp = 0.0f;
-    n_crystals = 0;
-  }
-  else {
+  } else {
     hit = true;
     blink = true;
     blink_timer = 0.0f;
@@ -256,7 +254,7 @@ void Player::pick_up_crystal() {
 }
 
 void Player::drop_crystal() {
-	if (n_crystals != 0) --n_crystals;
+	if (n_crystals > 0) --n_crystals;
 }
 
 Point2f Player::calc_weapon_pos() {

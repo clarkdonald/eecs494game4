@@ -59,7 +59,7 @@ Player_Wrapper::~Player_Wrapper() {
 }
 
 Player_Info::Player_Info(const Zeni::Point2f &start_position_, const Team &team_, Spawn_Menu * spawn_menu_)
-: start_position(start_position_), spawn_menu(spawn_menu_), team(team_), up_axis_released(false), down_axis_released(false)
+: start_position(start_position_), spawn_menu(spawn_menu_), team(team_), up_axis_released(false), down_axis_released(false), crystal_info("crystal")
 {}
 
 Player_Info::~Player_Info() {
@@ -68,10 +68,13 @@ Player_Info::~Player_Info() {
 }
 
 Game_State::Game_State(const std::string &file_)
-: gameover(false),
+: crystals_in_play(0),
+  gameover(false),
   vbo_ptr_floor(new Vertex_Buffer),
   vbo_ptr_lower(new Vertex_Buffer),
-  vbo_ptr_middle(new Vertex_Buffer)
+  vbo_ptr_middle(new Vertex_Buffer),
+  box("selection"),
+  dodge("dodge")
 {
   // set up function pointers for split screen methods
   screen_coord_map.push_back(&get_top_left_screen);
@@ -541,6 +544,21 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
                                          p_pos - Vector2f(240.0f,-175.0f),
                                          get_Colors()["red"]);
 
+  //Render Skills info  
+  if(player_wrapper->player->can_use_dodge()) {
+    dodge.set_position(p_pos + Vector2f(0.0f, -190.0f));
+    dodge.render();
+  }
+  box.set_position(p_pos + Vector2f(0.0f, -190.0f));
+  box.render();  
+  if(player_wrapper->player->can_use_special()) {
+    special_skill.set_position(p_pos + Vector2f(34.0f, -190.0f));
+    special_skill.render(player_wrapper->player->get_skill_str());
+  }
+  box.set_position(p_pos + Vector2f(34.0f, -190.0f));
+  box.render();
+  
+
   // Render the number of crystals
   player_infos[player_wrapper->uid]->crystal_info.set_position(p_pos + Vector2f(190.0f,-190.0f));
   player_infos[player_wrapper->uid]->crystal_info.render(player_wrapper->player->get_crystals_held());
@@ -688,7 +706,6 @@ void Game_State::load_map(const std::string &file_) {
   }
   
   // Get locations of crystals
-  crystals_in_play = 0;
   int number_of_crystal_locations;
   {
     getline(file,line);

@@ -40,6 +40,8 @@ class Player : public Game_Object {
 
     void update_dodge_timer(const float &timestep);
 
+    bool can_use_dodge() const { return dodge_time > 3.0f; } 
+
     bool is_dodging() {return dodging;};
 
     bool touching_feet(const Game_Object &rhs) const;
@@ -49,6 +51,8 @@ class Player : public Game_Object {
     virtual Weapon* melee() {return nullptr;}	// sword
   
     virtual Weapon* range() {return nullptr;}  // arrow, fireball
+
+    virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
 
     virtual void mage_spc_skill(bool pressed) {}; // special class-specific attack
     virtual Weapon* archer_spc_skill() {return nullptr;} // special class-specific attack
@@ -99,6 +103,8 @@ class Player : public Game_Object {
 
 		Player* get_partner() {return partner;}
 
+    virtual Zeni::String get_skill_str() const = 0;
+
 		bool can_move() {return move_enabled;}
 		void disable_movement() {move_enabled = false;}
 		void enable_movement() {move_enabled = true;}
@@ -108,7 +114,7 @@ class Player : public Game_Object {
   
   protected:
 		virtual bool can_attack() const {return attack_enabled && time_since_attack.seconds() > attack_limit;}
-    virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
+    
     Weapon* weapon;
     Weapon* shield;
     Zeni::Point2f calc_weapon_pos();

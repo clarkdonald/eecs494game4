@@ -113,6 +113,9 @@ class Game_State {
     Zeni::Vertex_Buffer *vbo_ptr_lower;
     Zeni::Vertex_Buffer *vbo_ptr_middle;
     Zeni::Chronometer<Zeni::Time> game_over_timer;
+    Object_Info box;
+    Object_Info dodge;
+    Object_Info special_skill;
 };
 
 #endif /* GAME_STATE_H */

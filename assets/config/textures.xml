@@ -10,6 +10,18 @@
     <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
   </crystal>
+
+  <!-------------- Box ------------->
+  <selection>
+    <filepath>textures/GUI/selection.png</filepath>
+    <tile>0</tile>
+  </selection>
+
+  <!-------------- Dodge Skill ------------->
+  <dodge>
+    <filepath>textures/Character/dodge_skill.png</filepath>
+    <tile>0</tile>
+  </dodge>
   
   <!-------------- NPC ------------->
   <blondekiddownidle>
