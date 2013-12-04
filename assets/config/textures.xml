@@ -10,6 +10,18 @@
     <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
   </crystal>
+
+  <!-------------- Box ------------->
+  <selection>
+    <filepath>textures/GUI/selection.png</filepath>
+    <tile>0</tile>
+  </selection>
+
+  <!-------------- Dodge Skill ------------->
+  <dodge>
+    <filepath>textures/Character/dodge_skill.png</filepath>
+    <tile>0</tile>
+  </dodge>
   
   <!-------------- NPC ------------->
   <blondekiddownidle>
@@ -552,11 +564,27 @@
     <filepath>textures/Character/aiming_circle.png</filepath>
     <tile>0</tile>
   </aiming>
+  <archer_skill>
+    <filepath>textures/GUI/archer_skill.png</filepath>
+    <tile>0</tile>
+  </archer_skill>
+  <mage_skill>
+    <filepath>textures/GUI/mage_skill.png</filepath>
+    <tile>0</tile>
+  </mage_skill>
+  <warrior_skill>
+    <filepath>textures/GUI/warrior_skill.png</filepath>
+    <tile>0</tile>
+  </warrior_skill>
   <!-------------- Weapons ------------->
   <arrow>
     <filepath>textures/Projectiles/arrow4.png</filepath>
     <tile>0</tile>
   </arrow>
+  <stun_arrow>
+    <filepath>textures/Projectiles/stun_arrow.png</filepath>
+    <tile>0</tile>
+  </stun_arrow>
   <magic>
     <filepath>textures/Projectiles/magic1.png</filepath>
     <tile>0</tile>

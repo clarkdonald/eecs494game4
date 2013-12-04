@@ -22,7 +22,9 @@ class Mage : public Player {
 
     Weapon* range() override;
   
-    void mage_spc_skill(bool pressed) override;
+    void mage_spc_skill(bool pressed) override;   
+
+    Zeni::String get_skill_str() const override {return "mage_skill"; }
 
 private:
 	Heal_Circle* heal_circle;

@@ -18,6 +18,9 @@ class Archer : public Player {
 
 		void set_can_attack();
 		void set_cannot_attack();
+
+    Zeni::String get_skill_str() const override {return "archer_skill"; }
+
 private:
 	Zeni::Chronometer<Zeni::Time> time_since_attack;
 };
