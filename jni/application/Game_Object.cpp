@@ -124,7 +124,6 @@ bool Game_Object::collide4(const Game_Object &rectangle1,
     case RECTANGLE:
       rectangle2X1 = rectangle2CenterX - rectangle2WidthFactor;
       rectangle2X2 = rectangle2CenterX + rectangle2WidthFactor;
-      rectangle2Y2 -= 4.0f;
       break;
       
     default:
