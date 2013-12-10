@@ -341,6 +341,29 @@ void Player::render() const {
 				break;
 		}
 	}
+  else if(sprite_prefix == "warrior_" &&
+          weapon != nullptr)
+  {
+    switch(player_direction)
+		{
+			case UP:
+				str += "attackup";
+				Game_Object::render(str);
+				break;
+			case DOWN:
+				str += "attackdown";
+				Game_Object::render(str);
+				break;
+			case LEFT:
+				str += "attackleft";
+				Game_Object::render(str);
+				break;
+			case RIGHT:
+				str += "attackright";
+				Game_Object::render(str);
+				break;
+		}
+  }
 	else
 	{
 		str = sprite_prefix + str;
