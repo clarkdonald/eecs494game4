@@ -1,29 +1,29 @@
 <?xml version="1.0" ?>
 <Textures>
-  <!-------------- Logo ------------->
+  <!--   Logo   -->
   <logo>
     <filepath>textures/Logo/logo.png</filepath>
     <tile>0</tile>
   </logo>
-  <!-------------- Crystal ------------->
+  <!-- Crystal -->
   <crystal>
     <filepath>textures/GUI/gemgui.png</filepath>
     <tile>0</tile>
   </crystal>
 
-  <!-------------- Box ------------->
+  <!-- Box -->
   <selection>
     <filepath>textures/GUI/selection.png</filepath>
     <tile>0</tile>
   </selection>
 
-  <!-------------- Dodge Skill ------------->
+  <!-- Dodge Skill -->
   <dodge>
     <filepath>textures/Character/dodge_skill.png</filepath>
     <tile>0</tile>
   </dodge>
   
-  <!-------------- NPC ------------->
+  <!-- NPC -->
   <blondekiddownidle>
     <filepath>textures/NPC/blondekid/blondekiddownidle.png</filepath>
     <tile>0</tile>
@@ -33,7 +33,7 @@
     <tile>0</tile>
   </girldownidle>
   
-  <!-------------- Player ------------->
+  <!-- Player -->
   
   <attackdown>
     <filepath>textures/Character/attackdown.png</filepath>
@@ -148,7 +148,7 @@
     <tile>0</tile>
   </uprun4>
   
-  <!-------------- Mage Sprites ------------->
+  <!-- Mage Sprites -->
   <!-- RED -->
   <mage_red_downrun2>
     <filepath>textures/Character/mage_red_downidle.png</filepath>
@@ -285,7 +285,7 @@
     <filepath>textures/Character/mage_blue_upidle.png</filepath>
     <tile>0</tile>
   </mage_blue_uprun4>
-  <!-------------- Archer Sprites ------------->
+  <!-- Archer Sprites -->
   <!-- RED -->
   <archer_red_downrun2>
     <filepath>textures/Character/archer_red_downidle.png</filepath>
@@ -418,7 +418,7 @@
     <tile>0</tile>
   </archer_blue_uprun4>
   
-  <!-------------- Warrior Sprites ------------->
+  <!-- Warrior Sprites -->
   <!-- RED -->
   <warrior_red_downrun2>
     <filepath>textures/Character/warrior_red_downidle.png</filepath>
@@ -551,7 +551,7 @@
     <filepath>textures/Character/warrior_blue_upidle.png</filepath>
     <tile>0</tile>
   </warrior_blue_uprun4>
-  <!-------------- Player Info ------------->
+  <!-- Player Info -->
   <health_bar>
     <filepath>textures/GUI/health_bar.png</filepath>
     <tile>0</tile>
@@ -560,6 +560,12 @@
     <filepath>textures/GUI/health.png</filepath>
     <tile>0</tile>
   </health>
+  
+  <white_bar>
+    <filepath>textures/GUI/white_bar.png</filepath>
+    <tile>0</tile>
+  </white_bar>
+  
   <aiming>
     <filepath>textures/Character/aiming_circle.png</filepath>
     <tile>0</tile>
@@ -576,7 +582,7 @@
     <filepath>textures/GUI/warrior_skill.png</filepath>
     <tile>0</tile>
   </warrior_skill>
-  <!-------------- Weapons ------------->
+  <!-- Weapons -->
   <arrow>
     <filepath>textures/Projectiles/arrow4.png</filepath>
     <tile>0</tile>
@@ -605,7 +611,7 @@
     <filepath>textures/Weapons/shield.png</filepath>
     <tile>0</tile>
   </shield>
-  <!-------------- Terrain ------------->
+  <!-- Terrain -->
   <water>
     <filepath>textures/Terrain/water.png</filepath>
     <tile>0</tile>
@@ -690,7 +696,7 @@
     <filepath>textures/Terrain/bush.png</filepath>
     <tile>0</tile>
   </bush>
-  <!-------------- Environment ------------->
+  <!-- Environment -->
   <treetop>
     <filepath>textures/Terrain/treetop.png</filepath>
     <tile>0</tile>
@@ -779,7 +785,7 @@
     <filepath>textures/Objects/fenceuprightcorner.png</filepath>
     <tile>0</tile>
   </fenceuprightcorner>
-  <!-------------- Atmosphere ------------->
+  <!-- Atmosphere -->
   <cloud>
     <filepath>textures/Atmosphere/cloud.png</filepath>
     <tile>0</tile>

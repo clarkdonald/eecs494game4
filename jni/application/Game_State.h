@@ -116,6 +116,10 @@ class Game_State {
     Object_Info box;
     Object_Info dodge;
     Object_Info special_skill;
+
+    Percent_Bar divider;
+    Percent_Bar skill_indicator;
+    Percent_Bar health_indicator;
 };
 
 #endif /* GAME_STATE_H */

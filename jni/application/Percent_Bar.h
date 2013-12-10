@@ -9,12 +9,18 @@
 class Percent_Bar : public Game_Object {
   public:
     Percent_Bar(const Zeni::Point2f &position_ = Zeni::Point2f(),
-                const Zeni::Vector2f &size_ = Zeni::Vector2f(100.0f, 8.0f));
-      
+                const Zeni::Vector2f &size_ = Zeni::Vector2f(150.0f, 16.0f),
+                const Zeni::String &texture_ = "health");    
+
     void render(const float &percentage) const;
 
-  private:
+    void render(const Zeni::Point2f &position_,
+                const Zeni::Vector2f &size_);        
+
+  private:    
     void render() const override {}
+
+    Zeni::String bar_type;
 };
 
 #endif /* PERCENT_BAR_H */

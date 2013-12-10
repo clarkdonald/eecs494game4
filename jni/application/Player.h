@@ -44,6 +44,8 @@ class Player : public Game_Object {
 
     bool is_dodging() {return dodging;};
 
+    float get_dodge_percentage() const { return dodge_time / 3.0f; }
+
     bool touching_feet(const Game_Object &rhs) const;
   
 	  void turn_to_face(const float &);
@@ -57,6 +59,8 @@ class Player : public Game_Object {
     virtual Weapon* range(const float &direction) {return nullptr;}  // arrow, fireball
 
     virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
+
+    float get_special_attck_percentage() const {return time_since_special.seconds() / sp_attack_limit;}
 
     virtual void mage_spc_skill(bool pressed) {}; // special class-specific attack
     virtual Weapon* archer_spc_skill(const float &direction) {return nullptr;} // special class-specific attack

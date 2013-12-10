@@ -7,7 +7,7 @@ using namespace std;
 Mage::Mage(const Zeni::Point2f &position_,
            const int &uid_,
            const Team &team_)
-: Player(position_, uid_, 80.0f, 100.0f, team_, "mage_", 0.5f, 5.0f), heal_circle(nullptr)
+: Player(position_, uid_, 80.0f, 300.0f, team_, "mage_", 0.5f, 5.0f), heal_circle(nullptr)
 {}
 
 void Mage::render() const {
@@ -36,7 +36,7 @@ void Mage::mage_spc_skill(bool pressed)
 	else if(!pressed && heal_circle){
 
 		if(heal_circle->touching(*this))
-			restore_health(25);
+			restore_health(75);
 		if(heal_circle->touching(*get_partner()))
 			get_partner()->restore_health(25);
 
