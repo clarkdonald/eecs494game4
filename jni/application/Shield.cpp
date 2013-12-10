@@ -8,7 +8,7 @@ Shield::Shield(const Zeni::Point2f &position_,
                const float &theta_,
                const Team& team_,
                Player* player_)
-: Weapon(position_, 50.0f, team_),
+: Weapon(position_, 50.0f, team_, OBJECT_SIZE * 2),
   owner(player_),
   dir(theta_)
 {
