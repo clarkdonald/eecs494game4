@@ -90,7 +90,6 @@ class Game_State {
     void load_map(const std::string &file_);
     
     Zeni::Time_HQ time_passed;
-    //Zeni::Chronometer<Zeni::Time> shooting_timer;
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
     std::list<Environment*> collidable_environments;
