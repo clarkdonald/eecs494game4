@@ -50,20 +50,28 @@ using std::uniform_int_distribution;
 using std::istringstream;
 
 Player_Wrapper::Player_Wrapper(Player *player_, const int &uid_)
-: player(player_), uid(uid_) 
-{
-}
+: player(player_),
+  uid(uid_)
+{}
   
 Player_Wrapper::~Player_Wrapper() {
   if (player != nullptr) delete player;
 }
 
-Player_Info::Player_Info(const Zeni::Point2f &start_position_, const Team &team_, Spawn_Menu * spawn_menu_)
-: start_position(start_position_), spawn_menu(spawn_menu_), team(team_), up_axis_released(false), down_axis_released(false), crystal_bar(Point2f(), Vector2f(32.0f, 2.0f)) , crystal_info("crystal")
+Player_Info::Player_Info(const Zeni::Point2f &start_position_,
+                         const Team &team_,
+                         Spawn_Menu * spawn_menu_)
+: crystal_bar(Point2f(), Vector2f(32.0f, 2.0f)),
+  crystal_info("crystal"),
+  start_position(start_position_),
+  spawn_menu(spawn_menu_),
+  team(team_),
+  up_axis_released(false),
+  down_axis_released(false)
 {}
 
 Player_Info::~Player_Info() {
-  if(spawn_menu != nullptr)
+  if (spawn_menu != nullptr)
     delete spawn_menu;
 }
 
@@ -186,11 +194,11 @@ void Game_State::perform_logic() {
     // dodge logic for player
     //player_wrapper->player->stop_dodge(time_step);
     player_wrapper->player->update_dodge_timer(time_step);
-    if(input.RB) {      
-      if(!player_wrapper->player->is_dodging())
+    if (input.RB) {
+      if (!player_wrapper->player->is_dodging())
         player_wrapper->player->dodge();
     }
-    if(player_wrapper->player->is_dodging()) {      
+    if (player_wrapper->player->is_dodging()) {
       move_x *= 6.0f;
       move_y *= 6.0f;
     }
@@ -322,7 +330,7 @@ void Game_State::perform_logic() {
 		player_wrapper->player->mage_spc_skill(input.LT);
 
 
-    if(input.LT)
+    if (input.LT)
     {
       Weapon* stun_arrow = nullptr;
       if (delta_facing) stun_arrow = player_wrapper->player->archer_spc_skill(direction_vector.theta());
@@ -335,7 +343,7 @@ void Game_State::perform_logic() {
       Weapon* shield = nullptr;
       shield = player_wrapper->player->warrior_spc_skill();
 
-      if(shield != nullptr)
+      if (shield != nullptr)
       {
         shield->animation_timer.start();
         melees.push_back(shield);
@@ -348,8 +356,8 @@ void Game_State::perform_logic() {
       if (same_team(npc->get_team(), player_wrapper->player->get_team())) {
         if (input.A && player_wrapper->player->has_crystal())            
         {
-          if(player_wrapper->player->pseudo_touching(*npc)) {            
-            if(npc->can_deposit(player_wrapper->uid)) {
+          if (player_wrapper->player->pseudo_touching(*npc)) {            
+            if (npc->can_deposit(player_wrapper->uid)) {
               //touching = true;
               if (!player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
                 player_infos[player_wrapper->uid]->deposit_crystal_timer.reset();
@@ -370,13 +378,13 @@ void Game_State::perform_logic() {
               }
             }
           }
-          else if(player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
+          else if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
             // Stopped depositing
             player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();        
             npc->set_depositing(-1);
           }
         }
-        else if(player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
+        else if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
           // Stopped depositing
           player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();        
           npc->set_depositing(-1);
@@ -415,7 +423,7 @@ void Game_State::perform_logic() {
   
   // iterate through each melee weapon, updating it
   for (auto melee = melees.begin(); melee != melees.end();) {
-    if((*melee)->animation_over())
+    if ((*melee)->animation_over())
     {
       (*melee)->remove_from_owner();
       delete *melee;
@@ -449,7 +457,7 @@ void Game_State::perform_logic() {
       if ((*projectile)->touching(*(player_wrapper->player))) {
         player_wrapper->player->take_dmg((*projectile)->get_damage());
         
-        if((*projectile)->is_stun())
+        if ((*projectile)->is_stun())
         {
           player_wrapper->player->start_stun_timer();
         }
@@ -490,9 +498,14 @@ void Game_State::perform_logic() {
   
   // respawn dead players
   for (auto player_wrapper : player_wrappers) {
-    if(!player_wrapper->player->is_dead()) continue;
+    if (!player_wrapper->player->is_dead()) continue;
     if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
       player_infos[player_wrapper->uid]->spawn_menu->clear_menu();
+      // drop one crystal where you die if it has at least one
+      if (player_wrapper->player->get_crystals_held()) {
+        player_wrapper->player->drop_crystal();
+        crystals.push_back(new Crystal(player_wrapper->player->get_position()));
+      }
       crystals_in_play -= player_wrapper->player->get_crystals_held();
       Player *dead = player_wrapper->player;
       player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->
@@ -503,22 +516,22 @@ void Game_State::perform_logic() {
       Weapon* sword = dead->get_weapon();
       Weapon* shield = dead->get_shield();
 
-      if(sword != nullptr)
+      if (sword != nullptr)
       {
         for(auto melee = melees.begin(); melee != melees.end(); melee++)
         {
-          if(sword == *melee)
+          if (sword == *melee)
           {
             melees.erase(melee);
             break;
           }
         }
       }
-      if(shield != nullptr)
+      if (shield != nullptr)
       {
         for(auto melee = melees.begin(); melee != melees.end(); melee++)
         {
-          if(shield == *melee)
+          if (shield == *melee)
           {
             melees.erase(melee);
             break;
@@ -527,7 +540,6 @@ void Game_State::perform_logic() {
       }
 
       delete dead;
-
     }
   }
 
@@ -593,8 +605,8 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   for (auto melee : melees) melee->render();
   vbo_ptr_middle->render();
   for (auto player_wrapper_ptr : player_wrappers) {
-    if(player_wrapper != player_wrapper_ptr) {
-      if(!player_wrapper_ptr->player->is_dead()) {
+    if (player_wrapper != player_wrapper_ptr) {
+      if (!player_wrapper_ptr->player->is_dead()) {
         health_indicator.set_position(player_wrapper_ptr->player->get_position() - Vector2f(0.0f, 8.0f));
         health_indicator.render(player_wrapper_ptr->player->get_hp_pctg());
       }
@@ -617,7 +629,7 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
                                          get_Colors()["red"]);
 
   //Render Skills info  
-  if(player_wrapper->player->can_use_dodge()) {
+  if (player_wrapper->player->can_use_dodge()) {
     dodge.set_position(p_pos + Vector2f(0.0f, -190.0f));
     dodge.render();
   }
@@ -627,13 +639,13 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   }
   box.set_position(p_pos + Vector2f(0.0f, -190.0f));
   box.render();  
-  if(player_wrapper->player->can_use_special()) {
+  if (player_wrapper->player->can_use_special()) {
     special_skill.set_position(p_pos + Vector2f(34.0f, -190.0f));
     special_skill.render(player_wrapper->player->get_skill_str());
   }
   else {
     auto pctg = player_wrapper->player->get_special_attck_percentage();
-    if(pctg <= 1.0f) {
+    if (pctg <= 1.0f) {
       skill_indicator.set_position(p_pos + Vector2f(34.0f, -157.0f));
       skill_indicator.render(pctg);
     }
