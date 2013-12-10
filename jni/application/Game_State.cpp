@@ -499,14 +499,19 @@ void Game_State::perform_logic() {
   // respawn dead players
   for (auto player_wrapper : player_wrappers) {
     if (!player_wrapper->player->is_dead()) continue;
+    
+    // drop one crystal where you die if they have at least one
+    if (player_wrapper->player->get_crystals_held()) {
+      player_wrapper->player->drop_crystal();
+      crystals.push_back(new Crystal(player_wrapper->player->get_position()));
+      while (player_wrapper->player->get_crystals_held()) {
+        player_wrapper->player->drop_crystal();
+        --crystals_in_play;
+      }
+    }
+    
     if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
       player_infos[player_wrapper->uid]->spawn_menu->clear_menu();
-      // drop one crystal where you die if it has at least one
-      if (player_wrapper->player->get_crystals_held()) {
-        player_wrapper->player->drop_crystal();
-        crystals.push_back(new Crystal(player_wrapper->player->get_position()));
-      }
-      crystals_in_play -= player_wrapper->player->get_crystals_held();
       Player *dead = player_wrapper->player;
       player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->
                                              get_selected_option()),
