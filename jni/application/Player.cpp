@@ -71,12 +71,6 @@ void Player::move_x(const float &mag, const float &timestep, bool first_time) {
     wep_pos.x += speed * timestep * mag;
     weapon->set_position(wep_pos);
   }
-  if(shield != nullptr)
-  {
-    Point2f shield_pos = shield->get_position();
-    shield_pos.x += speed * timestep * mag;
-    shield->set_position(shield_pos);
-  }
 
 	// code to anmimate movement
 	if(first_time){
@@ -106,12 +100,6 @@ void Player::move_y(const float &mag, const float &timestep, bool first_time) {
     Point2f wep_pos = weapon->get_position();
     wep_pos.y += speed * timestep * mag;
     weapon->set_position(wep_pos);
-  }
-  if(shield != nullptr)
-  {
-    Point2f shield_pos = shield->get_position();
-    shield_pos.y += speed * timestep * mag;
-    shield->set_position(shield_pos);
   }
   
 	// code to animate movement
@@ -163,12 +151,7 @@ bool Player::touching_feet(const Game_Object &rhs) const {
 
 void Player::turn_to_face(const float &theta) {
 	facing = theta;
-
-  if(shield != nullptr)
-  {
-    shield->set_position(calc_shield_pos());
-  }
-
+  
 	float tempo = theta + Global::pi_over_two;
 	if(tempo >= .7854f && tempo <= 2.356f)
 		player_direction = RIGHT;

@@ -21,7 +21,7 @@ bool Shield::animation_over()
 }
 
 void Shield::render() const {
-  float face = owner->get_facing();
+  float face = dir;
   Vector2f face_vec = Vector2f(cos(face), sin(face));
 
   Point2f pos = get_position();
