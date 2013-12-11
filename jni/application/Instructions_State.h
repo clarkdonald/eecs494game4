@@ -25,12 +25,16 @@ class Instructions_State : public Zeni::Gamestate_Base {
   
     ~Instructions_State();
   
-    bool is_done() const {return show_text_box;}
+    bool is_done() const {return done;}
   
     void render();
   
     void perform_logic();
-    
+  
+    void execute_controller_code(const Zeni::Zeni_Input_ID &id,
+                                 const float &confidence,
+                                 const int &action);
+  
   private:
     void on_key(const SDL_KeyboardEvent &event);
   
@@ -38,13 +42,15 @@ class Instructions_State : public Zeni::Gamestate_Base {
     
     Zeni::Time_HQ time_passed;
     Zeni::Text_Box tb;
-    bool show_text_box;
+    bool done;
     float distance;
     int movement;
+    bool start_movement;
     std::vector< Zeni::Chronometer<Zeni::Time> > text_timers;
     Zeni::Chronometer<Zeni::Time> final_timer;
     std::vector<std::string> texts;
     int timer_index;
+    int num_texts_to_render;
     Dimension dimension;
     Player *player_blue0;
     Player *player_blue1;

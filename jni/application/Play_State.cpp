@@ -169,5 +169,8 @@ void Play_State::initialize_xbox_controller()
 
 void Play_State::on_event(const Zeni_Input_ID &id, const float &confidence, const int &action)
 {
-	game_state->execute_controller_code(id, confidence, action);
+  if (instructions != nullptr && !instructions->is_done())
+    instructions->execute_controller_code(id, confidence, action);
+  if (game_state != nullptr)
+	  game_state->execute_controller_code(id, confidence, action);
 }
