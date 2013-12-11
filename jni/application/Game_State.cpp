@@ -944,30 +944,18 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 
     case 102:
 			player_infos[0]->controls.move_x = confidence;
-			player_infos[1]->controls.move_x = confidence;
-			player_infos[2]->controls.move_x = confidence;
-			player_infos[3]->controls.move_x = confidence;
       break;
 
     case 103:
 			player_infos[0]->controls.move_y = confidence;
-			player_infos[1]->controls.move_y = confidence;
-			player_infos[2]->controls.move_y = confidence;
-			player_infos[3]->controls.move_y = confidence;
       break;
 
     case 104:
 			player_infos[0]->controls.look_x = confidence;
-			player_infos[1]->controls.look_x = confidence;
-			player_infos[2]->controls.look_x = confidence;
-			player_infos[3]->controls.look_x = confidence;
       break;
 
     case 105:
 			player_infos[0]->controls.look_y = confidence;
-			player_infos[1]->controls.look_y = confidence;
-			player_infos[2]->controls.look_y = confidence;
-			player_infos[3]->controls.look_y = confidence;
       break;
 
     case 106:
@@ -980,9 +968,6 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 
 		case 108:
 			player_infos[0]->controls.A = (confidence == 1.0);
-			player_infos[1]->controls.A = (confidence == 1.0);
-			player_infos[2]->controls.A = (confidence == 1.0);
-			//player_infos[3]->controls.A = (confidence == 1.0);
 			break;
 
     case 109:
