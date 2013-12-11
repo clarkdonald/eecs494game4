@@ -836,6 +836,9 @@ void Game_State::create_house(const Point2f &position) {
 }
 
 void Game_State::load_map(const std::string &file_) {
+  // logging
+  cout << "Creating map: " << file_ << endl;
+  
   ifstream file(file_);
   
   // Check if file exists

@@ -719,6 +719,72 @@
     <filepath>textures/Terrain/bush.png</filepath>
     <tile>0</tile>
   </bush>
+  <!-- Objects -->
+  <bed>
+    <filepath>textures/Objects/bed.png</filepath>
+    <tile>0</tile>
+  </bed>
+  <bookshelf>
+    <filepath>textures/Objects/bookshelf.png</filepath>
+    <tile>0</tile>
+  </bookshelf>
+  <chair>
+    <filepath>textures/Objects/chair.png</filepath>
+    <tile>0</tile>
+  </chair>
+  <chest>
+    <filepath>textures/Objects/chestclosed.png</filepath>
+    <tile>0</tile>
+  </chest>
+  <dresser>
+    <filepath>textures/Objects/dresser.png</filepath>
+    <tile>0</tile>
+  </dresser>
+  <table>
+    <filepath>textures/Objects/table.png</filepath>
+    <tile>0</tile>
+  </table>
+  <flowerpot>
+    <filepath>textures/Objects/flowerpot.png</filepath>
+    <tile>0</tile>
+  </flowerpot>
+  <!-- Building -->
+  <housewallup>
+    <filepath>textures/Buildings/housewallup.png</filepath>
+    <tile>0</tile>
+  </housewallup>
+  <housewalldown>
+    <filepath>textures/Buildings/housewalldown.png</filepath>
+    <tile>0</tile>
+  </housewalldown>
+  <housewallright>
+    <filepath>textures/Buildings/housewallright.png</filepath>
+    <tile>0</tile>
+  </housewallright>
+  <housewallleft>
+    <filepath>textures/Buildings/housewallleft.png</filepath>
+    <tile>0</tile>
+  </housewallleft>
+  <housewallcornerupright>
+    <filepath>textures/Buildings/housewallcornerupright.png</filepath>
+    <tile>0</tile>
+  </housewallcornerupright>
+  <housewallcornerupleft>
+    <filepath>textures/Buildings/housewallcornerupleft.png</filepath>
+    <tile>0</tile>
+  </housewallcornerupleft>
+  <housewallcornerdownright>
+    <filepath>textures/Buildings/housewallcornerdownright.png</filepath>
+    <tile>0</tile>
+  </housewallcornerdownright>
+  <housewallcornerdownleft>
+    <filepath>textures/Buildings/housewallcornerdownleft.png</filepath>
+    <tile>0</tile>
+  </housewallcornerdownleft>
+  <tanwalldoor>
+    <filepath>textures/Buildings/tanwalldoor.png</filepath>
+    <tile>0</tile>
+  </tanwalldoor>
   <!-- Environment -->
   <treetop>
     <filepath>textures/Terrain/treetop.png</filepath>
