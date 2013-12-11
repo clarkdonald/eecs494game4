@@ -22,7 +22,14 @@
     <filepath>textures/Character/dodge_skill.png</filepath>
     <tile>0</tile>
   </dodge>
-  
+  <LB>
+    <filepath>textures/GUI/LB.png</filepath>
+    <tile>0</tile>    
+  </LB>
+  <LT>
+    <filepath>textures/GUI/LT.png</filepath>
+    <tile>0</tile>
+  </LT>
   <!-- NPC -->
   <blondekiddownidle>
     <filepath>textures/NPC/blondekid/blondekiddownidle.png</filepath>
@@ -237,6 +244,11 @@
     <filepath>textures/Projectiles/mage_circle.png</filepath>
     <tile>0</tile>
   </heal_circle>
+
+  <green_circle>
+    <filepath>textures/Projectiles/green_circle.png</filepath>
+    <tile>0</tile>
+  </green_circle>
 
 
   <!-- BLUE -->
@@ -606,18 +618,26 @@
     <tile>0</tile>
   </warrior_skill>
   <!-- Weapons -->
-  <arrow>
-    <filepath>textures/Projectiles/arrow4.png</filepath>
+  <red_arrow>
+    <filepath>textures/Projectiles/red_arrow4.png</filepath>
     <tile>0</tile>
-  </arrow>
+  </red_arrow>
+  <blue_arrow>
+    <filepath>textures/Projectiles/blue_arrow4.png</filepath>
+    <tile>0</tile>
+  </blue_arrow>
   <stun_arrow>
     <filepath>textures/Projectiles/stun_arrow.png</filepath>
     <tile>0</tile>
   </stun_arrow>
-  <magic>
-    <filepath>textures/Projectiles/magic1.png</filepath>
+  <red_magic>
+    <filepath>textures/Projectiles/red_magic1.png</filepath>
     <tile>0</tile>
-  </magic>
+  </red_magic>
+  <blue_magic>
+    <filepath>textures/Projectiles/blue_magic1.png</filepath>
+    <tile>0</tile>
+  </blue_magic>
   <bow>
     <filepath>textures/GUI/bowgui.png</filepath>
     <tile>0</tile>

@@ -50,6 +50,8 @@ class Player : public Game_Object {
 
     void reset_respawn_time() { respawn_time = 6.0f; }
 
+    float get_spawn_time() const { return respawn_time; }
+
     void update_respawn_timer(const float &timestep);
 
     bool touching_feet(const Game_Object &rhs) const;
@@ -64,11 +66,12 @@ class Player : public Game_Object {
   
     virtual Weapon* range(const float &direction) {return nullptr;}  // arrow, fireball
 
-    virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
+    virtual bool can_use_special();
+    void stop_special_timer();
     
     float get_special_attck_percentage() const {return time_since_special.seconds() / sp_attack_limit;}
 
-    virtual void mage_spc_skill(bool pressed) {} // special class-specific attack
+    virtual void mage_spc_skill(bool pressed, const float& time_step) {} // special class-specific attack
     virtual Weapon* archer_spc_skill(const float &direction) {return nullptr;} // special class-specific attack
     virtual Weapon* archer_spc_skill() {return nullptr;} // special class-specific attack
     virtual Weapon* warrior_spc_skill() {return nullptr;} // special class-specific attack

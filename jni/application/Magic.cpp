@@ -12,7 +12,9 @@ Magic::Magic(const Zeni::Point2f &position_,
 }
 
 void Magic::render() const {
-  Game_Object::render("magic",
+  String str = get_color_str();
+
+  Game_Object::render(str + "magic",
                       Color(),
                       move_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two);
 }

@@ -30,7 +30,7 @@ Play_State::Play_State()
   
   // Load BGM
   Sound &sr = get_Sound();
-  sr.set_BGM("music/battle_song");
+  sr.set_BGM("music/Two_Steps_from_Hell_-_Heart_of_Courage_8_Bit_Remix");
   sr.set_BGM_looping(true);
   sr.play_BGM();
 }

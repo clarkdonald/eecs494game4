@@ -51,7 +51,9 @@ using std::istringstream;
 
 Player_Wrapper::Player_Wrapper(Player *player_, const int &uid_)
 : player(player_),
-  uid(uid_)
+  uid(uid_),
+  select_pressed(false),
+  spawn_time_left("")
 {}
   
 Player_Wrapper::~Player_Wrapper() {
@@ -83,6 +85,8 @@ Game_State::Game_State(const std::string &file_)
   vbo_ptr_middle(new Vertex_Buffer),
   box("selection"),
   dodge("dodge"),
+  dodge_button("LB"),
+  special_button("LT"),
   divider(Point2f(), Vector2f(2.0f, 2.0f), "white_bar"),
   skill_indicator(Point2f(), Vector2f(32.0f, 2.0f), "white_bar"),
   health_indicator(Point2f(), Vector2f(32.0f, 2.0f))
@@ -142,6 +146,7 @@ void Game_State::perform_logic() {
   for (auto player_wrapper : player_wrappers) {
     // get controls for each player
     Controls input = player_infos[player_wrapper->uid]->controls;
+    player_infos[player_wrapper->uid]->controls.start = false;
     
     // pausing logic
     if (input.start) {
@@ -160,6 +165,8 @@ void Game_State::perform_logic() {
     }
 
     if (!player_wrapper->player->can_respawn()) {
+      int count_down = ceil(5.0f - player_wrapper->player->get_spawn_time());
+      player_wrapper->spawn_time_left = String("Respawn in " + itoa(count_down));
       player_wrapper->player->update_respawn_timer(time_step);
       continue;
     }
@@ -185,6 +192,14 @@ void Game_State::perform_logic() {
       
       // if the player is dead, we skip rest of movement logic
       continue;
+    }
+
+    if (input.back) {
+      player_wrapper->select_pressed = true;
+      continue;
+    }
+    else {
+      player_wrapper->select_pressed = false;
     }
     
     // if player is stunned, don't move or anything else
@@ -215,7 +230,7 @@ void Game_State::perform_logic() {
     // dodge logic for player
     //player_wrapper->player->stop_dodge(time_step);
     player_wrapper->player->update_dodge_timer(time_step);
-    if (input.RB) {
+    if (input.LB) {
       if (!player_wrapper->player->is_dodging())
         player_wrapper->player->dodge();
     }
@@ -348,7 +363,7 @@ void Game_State::perform_logic() {
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
 
-		player_wrapper->player->mage_spc_skill(input.LT);
+		player_wrapper->player->mage_spc_skill(input.LT, time_step);
 
 
     if (input.LT)
@@ -613,7 +628,8 @@ void Game_State::respawn_crystal() {
 
 void Game_State::render_map(int screen_num) {
   auto screen_coord = screen_coord_map[screen_num]();
-  get_Video().set_2d_view(std::make_pair(Point2f(0.0f, 0.0f) , Point2f(32.0f * dimension.width, 32.0f * dimension.height)),                                         
+  auto bottom_corner = Point2f(32.0f * dimension.width, 32.0f * dimension.height);
+  get_Video().set_2d_view(std::make_pair(Point2f(0.0f, 0.0f) , bottom_corner),                                         
                                   screen_coord, 
                                   false);
   // Render Map and Movable objects
@@ -631,17 +647,17 @@ void Game_State::render_map(int screen_num) {
       health_indicator.render(player_wrapper_ptr->player->get_hp_pctg());
     }    
   }
-  for (auto atmosphere : atmospheres) atmosphere->render();
+  for (auto atmosphere : atmospheres) atmosphere->render();  
 
   // Render Player Score
-  /*get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+  get_Fonts()["godofwar_50"].render_text(String("Crystals: " + to_string(
                                         scores[BLUE])),
-                                        p_pos - Vector2f(240.0f,-150.0f),
+                                        Point2f(5.0f, bottom_corner.y) - Vector2f(0.0f, 105.0f),
                                         get_Colors()["blue"]);
-  get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+  get_Fonts()["godofwar_50"].render_text(String("Crystals: " + to_string(
                                          scores[RED])),
-                                         p_pos - Vector2f(240.0f,-175.0f),
-                                         get_Colors()["red"]);*/
+                                         Point2f(5.0f, bottom_corner.y) - Vector2f(0.0f, 55.0f),
+                                         get_Colors()["red"]);
 
 }
 
@@ -740,6 +756,9 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   }
   box.set_position(p_pos + Vector2f(0.0f, -190.0f));
   box.render();  
+  dodge_button.set_position(p_pos + Vector2f(0.0f, -168.0f));
+  dodge_button.render();
+
   if (player_wrapper->player->can_use_special()) {
     special_skill.set_position(p_pos + Vector2f(34.0f, -190.0f));
     special_skill.render(player_wrapper->player->get_skill_str());
@@ -753,6 +772,8 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   }
   box.set_position(p_pos + Vector2f(34.0f, -190.0f));
   box.render();
+  special_button.set_position(p_pos + Vector2f(34.0f, -165.0f));
+  special_button.render();
   
 
   // Render the number of crystals
@@ -789,11 +810,21 @@ void Game_State::render(){
         }
         else {
           render_map(player_wrapper->uid);
+          auto bottom_corner = Point2f(32.0f * dimension.width, 32.0f * dimension.height);
+          get_Fonts()["godofwar_60"].render_text(player_wrapper->spawn_time_left,
+                                        Point2f(bottom_corner.x/2, bottom_corner.y/2),
+                                        get_Colors()["black"],
+                                        ZENI_CENTER);
         }
       }
       else {
-        render_all(player_wrapper);
-        player_wrapper->player->render_extras();
+        if(player_wrapper->select_pressed) {
+          render_map(player_wrapper->uid);
+        }
+        else {
+          render_all(player_wrapper);
+          player_wrapper->player->render_extras();
+        }
       }
     }
     // Add splitting lines for each screen.
@@ -1049,10 +1080,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 112:
+			player_infos[0]->controls.LB = (confidence == 1.0);
 			break;
 
 		case 113:
-			player_infos[0]->controls.RB = (confidence == 1.0);
 			break;
       
     case 114:
@@ -1105,10 +1136,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 212:
+			player_infos[1]->controls.LB = (confidence == 1.0);
 			break;
 
 		case 213:
-			player_infos[1]->controls.RB = (confidence == 1.0);
 			break;
       
     case 214:
@@ -1161,10 +1192,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 312:
+			player_infos[2]->controls.LB = (confidence == 1.0);
 			break;
 
 		case 313:
-			player_infos[2]->controls.RB = (confidence == 1.0);
 			break;
       
     case 314:
@@ -1217,10 +1248,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 412:
+			player_infos[3]->controls.LB = (confidence == 1.0);
 			break;
 
 		case 413:
-			player_infos[3]->controls.RB = (confidence == 1.0);
 			break;
       
     case 414:

@@ -33,6 +33,8 @@ struct Player_Wrapper {
   ~Player_Wrapper();
   Player* player;
   int uid;  
+  bool select_pressed;
+  Zeni::String spawn_time_left;
 };
 
 struct Player_Info {
@@ -44,7 +46,7 @@ struct Player_Info {
   Object_Info crystal_info;
   Zeni::Point2f start_position;
   Spawn_Menu * spawn_menu;
-  Team team;
+  Team team;  
 
 	// code for main menu selection
 	bool up_axis_released;
@@ -116,7 +118,9 @@ class Game_State {
     Zeni::Chronometer<Zeni::Time> game_over_timer;
     Object_Info box;
     Object_Info dodge;
+    Object_Info dodge_button;
     Object_Info special_skill;
+    Object_Info special_button;
 
     Percent_Bar divider;
     Percent_Bar skill_indicator;

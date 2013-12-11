@@ -22,6 +22,7 @@ Weapon* Warrior::melee() {
 Weapon* Warrior::melee(const float &direction) {
   Weapon* sword = nullptr;
   if (can_attack()) {
+		play_sound("sword_swing", 1.0f, .1f);
     sword = new Sword(calc_sword_pos(direction), direction, get_team(), this);
     start_attack_timer();
     weapon = sword;

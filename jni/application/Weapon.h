@@ -18,7 +18,7 @@ class Weapon : public Game_Object {
 	  virtual void render() const = 0;
   
     const Team & get_team() const {return team;}
-
+      
     const float & get_damage() const {return damage;}
 
     virtual bool animation_over() {return false;}
@@ -27,6 +27,8 @@ class Weapon : public Game_Object {
 
     bool is_stun() {return stun_attack;}
     bool is_shield() {return shield;}
+
+    Zeni::String get_color_str() const;
 
     Zeni::Chronometer<Zeni::Time> animation_timer;
 

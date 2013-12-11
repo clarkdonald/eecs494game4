@@ -11,7 +11,9 @@ Arrow::Arrow(const Zeni::Point2f &position_,
 {}
 
 void Arrow::render() const {
-  Game_Object::render("arrow",
+  String str = get_color_str();
+
+  Game_Object::render(str + "arrow",
                       Color(),
                       move_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two);
 }
