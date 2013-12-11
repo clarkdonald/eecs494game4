@@ -44,7 +44,8 @@ Instructions_State::Instructions_State()
      "A Button: Hold down to deposit crystal to master\n"
      "Start Button: Pause entire game",
      Color()),
-  timer_index(0)
+  timer_index(0),
+  text_y_scroll(0.0f)
 {
   tb.give_BG_Renderer(new Widget_Renderer_Color(get_Colors()["black"]));
   
@@ -109,10 +110,17 @@ void Instructions_State::render() {
     npc_blue->render();
     npc_red->render();
     
-    if (text_timers[timer_index].seconds() > 2.0f) {
-      // RENDER texts[timer_index]
-      text_timers[++timer_index].start();
+    auto text_y_scroll = 0.0f;            
+    for(int i = 0; i < timer_index - 1; ++i) {
+      get_Fonts()["godofwar_20"].render_text(String(texts[i]),
+                                        Point2f(485.0f, text_y_scroll),
+                                        get_Colors()["white"]);
+      text_y_scroll += 25.0f;
     }
+
+    if (text_timers[timer_index].seconds() > 2.0f) {      
+      text_timers[++timer_index].start();
+    }    
   }
 }
 
