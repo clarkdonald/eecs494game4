@@ -21,6 +21,7 @@ Weapon* Mage::range() {
 Weapon* Mage::range(const float &direction) {
   Weapon* projectile = nullptr;
   if (can_attack()) {
+		play_sound("magic");
     projectile = new Magic(calc_weapon_pos(direction), direction, get_team());
     start_attack_timer();
   }
@@ -30,7 +31,7 @@ Weapon* Mage::range(const float &direction) {
 void Mage::mage_spc_skill(bool pressed, const float& time_step)
 {
 	if(pressed && !heal_circle && can_use_special()) {
-		heal_circle = new Heal_Circle(Point2f(get_position().x - 76, get_position().y - 76));
+		heal_circle = new Heal_Circle(Point2f(get_position().x - 80, get_position().y - 72));
 		heal_duration_timer.reset();
 		disable_attack();
 		disable_movement();

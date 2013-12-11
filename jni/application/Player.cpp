@@ -250,6 +250,7 @@ bool Player::is_stunned()
 }
 
 void Player::pick_up_crystal() {
+	play_sound("gempickup");
 	++n_crystals;
 }
 
