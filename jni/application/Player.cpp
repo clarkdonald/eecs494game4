@@ -320,7 +320,7 @@ void Player::render() const {
 
 	String str;
 
-  Point2f crystal_pos = Point2f(get_position().x, get_position().y - 12.0f);
+  Point2f crystal_pos = Point2f(get_position().x, get_position().y - 16.0f);
 	Crystal* crystal = new Crystal(crystal_pos, Vector2f(8.0f, 8.0f));
 	for(int k = 0; k < n_crystals; k++)
 	{
