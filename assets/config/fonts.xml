@@ -26,6 +26,15 @@ Only TrueType fonts are supported.
       <height>300</height>
     </virtual_screen>
   </spawn_menu>
+
+  <godofwar_12>
+    <filepath>fonts/GODOFWAR.TTF</filepath>
+    <height>12</height>
+    <virtual_screen>
+      <width>800</width>
+      <height>600</height>
+    </virtual_screen>
+  </godofwar_12>
   
   <godofwar_20>
     <filepath>fonts/GODOFWAR.TTF</filepath>
