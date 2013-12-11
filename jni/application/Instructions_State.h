@@ -25,12 +25,14 @@ class Instructions_State : public Zeni::Gamestate_Base {
   
     ~Instructions_State();
   
-  private:
-    void on_key(const SDL_KeyboardEvent &event);
+    bool is_done() const {return show_text_box;}
   
     void render();
   
     void perform_logic();
+  
+  private:
+    void on_key(const SDL_KeyboardEvent &event);
   
     void load_map(const std::string &file_);
   

@@ -12,6 +12,7 @@
 #include <zenilib.h>
 
 class Game_State;
+class Instructions_State;
 
 class Play_State : public Zeni::Gamestate_II {
   public:
@@ -36,6 +37,7 @@ class Play_State : public Zeni::Gamestate_II {
     
   private:
     Game_State *game_state;
+    Instructions_State *instructions;
 };
 
 #endif /* PLAY_STATE_H */

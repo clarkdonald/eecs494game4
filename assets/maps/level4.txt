@@ -9,9 +9,9 @@
 # player 3
 23 34
 # npc team 1
-12 16
+1 1
 # npc team 2
-12 18
+23 33
 # crystal metadata
 4
 7
@@ -35,9 +35,9 @@ fff.....bbb..........c............t
 ttt..t.t..tttt...c...tttt.....ttWWW
 ttt..c....tttt.......ttttc....ttWWW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-WWWWWWWWWWWWWWWt...tWWWWWWWWWWWWWWW
-WWWWWW.WWWWWWWWt...tWWWWWWWWcWWWWWW
-WWWWWWWWWWWWWWWt...tWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWW.WWWWWWWWWWcWWWWWWWWWWcWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 tt....c...tttt......rtttt.......ttt
 tt........tt....t.t..tttt.c.....ttt
