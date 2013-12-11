@@ -49,7 +49,7 @@ Player::Player(const Point2f &position_,
   move_enabled(true)
 {
   time_since_attack.start();
-  time_since_special.start();
+  //time_since_special.start();
 }
 
 Player::~Player() 
@@ -226,7 +226,13 @@ void Player::start_attack_timer()
 
 void Player::start_special_timer()
 {
-	time_since_special.reset();
+	time_since_special.start();
+}
+
+void Player::stop_special_timer()
+{
+    time_since_special.stop();
+    time_since_special.reset();
 }
 
 void Player::start_stun_timer()
@@ -247,6 +253,20 @@ bool Player::is_stunned()
     }
   }
   return is_stun;
+}
+
+bool Player::can_use_special()
+{
+  bool can_use = true;
+  if (time_since_special.is_running())
+  {
+    can_use = time_since_special.seconds() > sp_attack_limit;
+    if(can_use)
+    {
+      stop_special_timer();
+    }
+  }
+  return can_use && attack_enabled;
 }
 
 void Player::pick_up_crystal() {

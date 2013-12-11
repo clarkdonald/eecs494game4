@@ -64,7 +64,8 @@ class Player : public Game_Object {
   
     virtual Weapon* range(const float &direction) {return nullptr;}  // arrow, fireball
 
-    virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
+    virtual bool can_use_special();
+    void stop_special_timer();
     
     float get_special_attck_percentage() const {return time_since_special.seconds() / sp_attack_limit;}
 
