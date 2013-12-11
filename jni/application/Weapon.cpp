@@ -14,4 +14,21 @@ Weapon::Weapon(const Point2f &position_,
   team(team_)
 {}
 
+String Weapon::get_color_str() const
+{  
+  Team team = get_team();
+  String str = "";
+	switch(team)
+	{
+		case RED:
+			str = "red_";
+			break;
+		case BLUE:
+			str = "blue_";
+			break;
+	}
+  return str;
+}
+
+
 Weapon::~Weapon() {}

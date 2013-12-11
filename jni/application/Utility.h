@@ -47,6 +47,8 @@ struct Controls {
   bool attack;
   bool RB;
 	bool LT;
+  bool start;
+  bool back;
 };
 
 /** Team identifier **/

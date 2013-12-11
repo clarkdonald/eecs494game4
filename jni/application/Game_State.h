@@ -51,7 +51,7 @@ struct Player_Info {
 	bool down_axis_released;
 
   Zeni::Chronometer<Zeni::Time> deposit_crystal_timer;
-
+  Zeni::Chronometer<Zeni::Time> pause_timer;
 };
 
 class Game_State {
@@ -63,7 +63,7 @@ class Game_State {
     void on_push();
     
     void on_pop();
-        
+          
     void perform_logic();
     
     void render();
@@ -78,6 +78,8 @@ class Game_State {
     void clear();
   
     void respawn_crystal();
+
+    void render_map(int screen_num);
 
 	  void render_all(Player_Wrapper * player_wrapper);
 
