@@ -45,7 +45,7 @@ struct Controls {
   float look_x;
   bool A;
   bool attack;
-  bool RB;
+  bool LB;
 	bool LT;
   bool start;
   bool back;

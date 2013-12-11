@@ -22,7 +22,14 @@
     <filepath>textures/Character/dodge_skill.png</filepath>
     <tile>0</tile>
   </dodge>
-  
+  <LB>
+    <filepath>textures/GUI/LB.png</filepath>
+    <tile>0</tile>    
+  </LB>
+  <LT>
+    <filepath>textures/GUI/LT.png</filepath>
+    <tile>0</tile>
+  </LT>
   <!-- NPC -->
   <blondekiddownidle>
     <filepath>textures/NPC/blondekid/blondekiddownidle.png</filepath>

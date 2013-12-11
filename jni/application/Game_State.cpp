@@ -83,6 +83,8 @@ Game_State::Game_State(const std::string &file_)
   vbo_ptr_middle(new Vertex_Buffer),
   box("selection"),
   dodge("dodge"),
+  dodge_button("LB"),
+  special_button("LT"),
   divider(Point2f(), Vector2f(2.0f, 2.0f), "white_bar"),
   skill_indicator(Point2f(), Vector2f(32.0f, 2.0f), "white_bar"),
   health_indicator(Point2f(), Vector2f(32.0f, 2.0f))
@@ -215,7 +217,7 @@ void Game_State::perform_logic() {
     // dodge logic for player
     //player_wrapper->player->stop_dodge(time_step);
     player_wrapper->player->update_dodge_timer(time_step);
-    if (input.RB) {
+    if (input.LB) {
       if (!player_wrapper->player->is_dodging())
         player_wrapper->player->dodge();
     }
@@ -740,6 +742,9 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   }
   box.set_position(p_pos + Vector2f(0.0f, -190.0f));
   box.render();  
+  dodge_button.set_position(p_pos + Vector2f(0.0f, -168.0f));
+  dodge_button.render();
+
   if (player_wrapper->player->can_use_special()) {
     special_skill.set_position(p_pos + Vector2f(34.0f, -190.0f));
     special_skill.render(player_wrapper->player->get_skill_str());
@@ -753,6 +758,8 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   }
   box.set_position(p_pos + Vector2f(34.0f, -190.0f));
   box.render();
+  special_button.set_position(p_pos + Vector2f(34.0f, -165.0f));
+  special_button.render();
   
 
   // Render the number of crystals
@@ -1046,10 +1053,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 112:
+			player_infos[0]->controls.LB = (confidence == 1.0);
 			break;
 
 		case 113:
-			player_infos[0]->controls.RB = (confidence == 1.0);
 			break;
       
     case 114:
@@ -1102,10 +1109,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 212:
+			player_infos[1]->controls.LB = (confidence == 1.0);
 			break;
 
 		case 213:
-			player_infos[1]->controls.RB = (confidence == 1.0);
 			break;
       
     case 214:
@@ -1158,10 +1165,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 312:
+			player_infos[2]->controls.LB = (confidence == 1.0);
 			break;
 
 		case 313:
-			player_infos[2]->controls.RB = (confidence == 1.0);
 			break;
       
     case 314:
@@ -1214,10 +1221,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 412:
+			player_infos[3]->controls.LB = (confidence == 1.0);
 			break;
 
 		case 413:
-			player_infos[3]->controls.RB = (confidence == 1.0);
 			break;
       
     case 414:

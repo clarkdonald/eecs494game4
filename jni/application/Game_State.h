@@ -116,7 +116,9 @@ class Game_State {
     Zeni::Chronometer<Zeni::Time> game_over_timer;
     Object_Info box;
     Object_Info dodge;
+    Object_Info dodge_button;
     Object_Info special_skill;
+    Object_Info special_button;
 
     Percent_Bar divider;
     Percent_Bar skill_indicator;

@@ -27,7 +27,7 @@ Controls::Controls()
   look_x(0.0f),
   A(false),
   attack(false),
-  RB(false),
+  LB(false),
 	LT(false),
   start(false),
   back(false)
