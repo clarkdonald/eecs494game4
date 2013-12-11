@@ -35,13 +35,15 @@ Instructions_State::Instructions_State()
      "system_36_800x600",
      "P U R P O S E\n"
      "Your goal is to find and capture crystals scattered randomly around "
-     "the map and bring them back to your master.\n\n"
+     "the map and bring them back to your leader.\n\n"
      "C O N T R O L S\n"
      "Left Stick: Move the explorer\n"
      "Right Stick: Look around, aim\n"
      "Right Trigger: Attack\n"
+     "Left Trigger: Special Attack\n"
+     "Left Bumper: Dash\n"
      "Start Button: Pause\n"
-     "A Button: Hold down to deposit crystal to master\n"
+     "A Button: Hold down to deposit crystal to leader\n"
      "Start Button: Pause entire game",
      Color()),
   done(false),
