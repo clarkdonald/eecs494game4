@@ -28,6 +28,7 @@ Controls::Controls()
   A(false),
   attack(false),
   LB(false),
+  RB(false),
 	LT(false),
   start(false),
   back(false)

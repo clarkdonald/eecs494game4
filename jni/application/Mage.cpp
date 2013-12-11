@@ -11,6 +11,11 @@ Mage::Mage(const Zeni::Point2f &position_,
 : Player(position_, uid_, 80.0f, 300.0f, team_, "mage_", 0.5f, 5.0f, size_), heal_circle(nullptr)
 {heal_duration_timer.start();}
 
+Mage::~Mage()
+{
+  if(heal_circle != nullptr) delete heal_circle;
+}
+
 void Mage::render() const {
 	Player::render();
 }
@@ -40,7 +45,10 @@ Heal_Circle* Mage::mage_spc_skill(bool pressed, const float& time_step)
 	else if(pressed && heal_circle) {
 		restore_health(time_step * 50);
 		if(heal_circle -> touching(*get_partner()))
-			get_partner() -> restore_health(time_step * 50);
+    {
+      if(!get_partner()->is_dead())
+			  get_partner() -> restore_health(time_step * 50);
+    }
 	}
 	if((heal_duration_timer.seconds() > 3 || !pressed) && heal_circle){
 

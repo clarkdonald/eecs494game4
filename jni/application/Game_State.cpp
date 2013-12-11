@@ -261,7 +261,7 @@ void Game_State::perform_logic() {
     // dodge logic for player
     //player_wrapper->player->stop_dodge(time_step);
     player_wrapper->player->update_dodge_timer(time_step);
-    if (input.LB) {
+    if (input.LB || input.RB) {
       if (!player_wrapper->player->is_dodging())
         player_wrapper->player->dodge();
     }
@@ -569,20 +569,49 @@ void Game_State::perform_logic() {
   for (auto player_wrapper : player_wrappers) {
     if (!player_wrapper->player->is_dead()) continue;
     
+    Player *dead = player_wrapper->player;
+
     // drop one crystal where you die if they have at least one
-    if (player_wrapper->player->get_crystals_held()) {
-      player_wrapper->player->drop_crystal();
-      crystals.push_back(new Crystal(player_wrapper->player->get_position()));
-      while (player_wrapper->player->get_crystals_held()) {
-        player_wrapper->player->drop_crystal();
+    if (dead->get_crystals_held()) {
+      dead->drop_crystal();
+      crystals.push_back(new Crystal(dead->get_position()));
+      while (dead->get_crystals_held()) {
+        dead->drop_crystal();
         --crystals_in_play;
       }
     }
+
+    Weapon* sword = dead->get_weapon();
+    Weapon* shield = dead->get_shield();
+
+    if (sword != nullptr)
+    {
+      for(auto melee = melees.begin(); melee != melees.end(); melee++)
+      {
+        if (sword == *melee)
+        {
+          melees.erase(melee);
+          break;
+        }
+      }
+    }
+    if (shield != nullptr)
+    {
+      for(auto melee = melees.begin(); melee != melees.end(); melee++)
+      {
+        if (shield == *melee)
+        {
+          melees.erase(melee);
+          break;
+        }
+      }
+    }
+
+    heal_circles[player_wrapper->uid] = nullptr;
     
     if(player_wrapper->player->can_respawn()) {
       if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
         player_infos[player_wrapper->uid]->spawn_menu->clear_menu();
-        Player *dead = player_wrapper->player;
         player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->
                                                get_selected_option()),
                                                player_infos[player_wrapper->uid]->start_position, 
@@ -591,32 +620,6 @@ void Game_State::perform_logic() {
 
         // Once the player is alive it shouldn't make him wait.
         player_wrapper->player->reset_respawn_time();
-
-        Weapon* sword = dead->get_weapon();
-        Weapon* shield = dead->get_shield();
-
-        if (sword != nullptr)
-        {
-          for(auto melee = melees.begin(); melee != melees.end(); melee++)
-          {
-            if (sword == *melee)
-            {
-              melees.erase(melee);
-              break;
-            }
-          }
-        }
-        if (shield != nullptr)
-        {
-          for(auto melee = melees.begin(); melee != melees.end(); melee++)
-          {
-            if (shield == *melee)
-            {
-              melees.erase(melee);
-              break;
-            }
-          }
-        }
 
         delete dead;
       }
@@ -713,6 +716,10 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   // Render Map and Movable objects
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
+  for (auto heal_circle : heal_circles)
+  {
+    if(heal_circle != nullptr) heal_circle->render();
+  }
   for (auto crystal : crystals) crystal->render();
 
   // Render aiming reticle
@@ -856,7 +863,7 @@ void Game_State::render(){
         }
         else {
           render_all(player_wrapper);
-          player_wrapper->player->render_extras();
+          //player_wrapper->player->render_extras();
         }
       }
     }
@@ -1117,6 +1124,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 113:
+			player_infos[0]->controls.RB = (confidence == 1.0);
 			break;
       
     case 114:
@@ -1173,6 +1181,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 213:
+			player_infos[1]->controls.RB = (confidence == 1.0);
 			break;
       
     case 214:
@@ -1229,6 +1238,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 313:
+			player_infos[2]->controls.RB = (confidence == 1.0);
 			break;
       
     case 314:
@@ -1285,6 +1295,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 413:
+			player_infos[3]->controls.RB = (confidence == 1.0);
 			break;
       
     case 414:

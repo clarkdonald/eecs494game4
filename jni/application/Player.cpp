@@ -7,6 +7,7 @@
 //
 
 #include "Player.h"
+#include "Crystal.h"
 #include <string>
 
 using namespace Zeni;
@@ -273,6 +274,7 @@ bool Player::can_use_special()
 void Player::pick_up_crystal() {
 	play_sound("gempickup");
 	++n_crystals;
+  restore_health(50);
 }
 
 void Player::drop_crystal() {
@@ -317,6 +319,14 @@ void Player::render() const {
   // render player
 
 	String str;
+
+  Point2f crystal_pos = Point2f(get_position().x, get_position().y - 8.0f);
+	Crystal* crystal = new Crystal(crystal_pos, Vector2f(8.0f, 8.0f));
+	for(int k = 0; k < n_crystals; k++)
+	{
+		crystal -> render();
+		crystal -> set_position(Point2f(crystal->get_position().x + 6.0f, crystal->get_position().y));
+	}
 
 	if(dodging) return;
 

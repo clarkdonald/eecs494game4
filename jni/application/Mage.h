@@ -13,6 +13,8 @@ class Mage : public Player {
          const Team &team_,
          const Zeni::Vector2f &size_ = OBJECT_SIZE);
 
+    ~Mage();
+
     void render() const override;
 
 		void render_extras();
