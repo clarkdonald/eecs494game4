@@ -20,7 +20,7 @@ using std::endl;
 
 Play_State::Play_State()
 : game_state(nullptr),
-  instructions(new Instructions_State)
+  instructions(new Instructions_State())
 {
   set_pausable(true);
   initialize_xbox_controller();
@@ -34,8 +34,8 @@ Play_State::Play_State()
 
 Play_State::~Play_State() {
   get_Sound().stop_BGM();
-  delete game_state;
-  delete instructions;
+  if (game_state != nullptr) delete game_state;
+  if (instructions != nullptr) delete instructions;
 }
 
 void Play_State::on_push() {

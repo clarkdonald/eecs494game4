@@ -30,7 +30,7 @@ class Instructions_State : public Zeni::Gamestate_Base {
     void render();
   
     void perform_logic();
-  
+    
   private:
     void on_key(const SDL_KeyboardEvent &event);
   
