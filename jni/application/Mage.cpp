@@ -21,7 +21,7 @@ Weapon* Mage::range() {
 Weapon* Mage::range(const float &direction) {
   Weapon* projectile = nullptr;
   if (can_attack()) {
-		play_sound("magic");
+		play_sound("magic", 1.0f, .1f);
     projectile = new Magic(calc_weapon_pos(direction), direction, get_team());
     start_attack_timer();
   }

@@ -40,4 +40,7 @@ HOWTO:  To convert between types, or to downmix to mono,
   <bow>
     <filepath>sfx/bow</filepath>
   </bow>
+  <bgm>
+    <filepath>music/Two_Steps_from_Hell_-_Heart_of_Courage_8_Bit_Remix</filepath>
+  </bgm>
 </Sounds>
