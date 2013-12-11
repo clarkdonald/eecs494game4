@@ -28,6 +28,8 @@ class Weapon : public Game_Object {
     bool is_stun() {return stun_attack;}
     bool is_shield() {return shield;}
 
+    Zeni::String get_color_str() const;
+
     Zeni::Chronometer<Zeni::Time> animation_timer;
 
   protected:
