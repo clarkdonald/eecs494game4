@@ -62,7 +62,7 @@ class Player : public Game_Object {
     
     float get_special_attck_percentage() const {return time_since_special.seconds() / sp_attack_limit;}
 
-    virtual void mage_spc_skill(bool pressed) {} // special class-specific attack
+    virtual void mage_spc_skill(bool pressed, const float& time_step) {} // special class-specific attack
     virtual Weapon* archer_spc_skill(const float &direction) {return nullptr;} // special class-specific attack
     virtual Weapon* archer_spc_skill() {return nullptr;} // special class-specific attack
     virtual Weapon* warrior_spc_skill() {return nullptr;} // special class-specific attack

@@ -238,6 +238,11 @@
     <tile>0</tile>
   </heal_circle>
 
+  <green_circle>
+    <filepath>textures/Projectiles/green_circle.png</filepath>
+    <tile>0</tile>
+  </green_circle>
+
 
   <!-- BLUE -->
   <mage_blue_downrun2>

@@ -327,7 +327,7 @@ void Game_State::perform_logic() {
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
 
-		player_wrapper->player->mage_spc_skill(input.LT);
+		player_wrapper->player->mage_spc_skill(input.LT, time_step);
 
 
     if (input.LT)
@@ -726,7 +726,7 @@ void Game_State::render(){
         render_spawn_menu(player_wrapper);
       else {
         render_all(player_wrapper);
-        player_wrapper->player->render_extras();
+				player_wrapper->player->render_extras();
       }
     }
   }
