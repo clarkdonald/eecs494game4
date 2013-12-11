@@ -142,6 +142,23 @@ void Game_State::perform_logic() {
   for (auto player_wrapper : player_wrappers) {
     // get controls for each player
     Controls input = player_infos[player_wrapper->uid]->controls;
+    player_infos[player_wrapper->uid]->controls.start = false;
+    
+    // pausing logic
+    if (input.start) {
+      if (!player_infos[player_wrapper->uid]->pause_timer.is_running()) {
+        get_Game().push_Popup_Menu_State();
+        player_infos[player_wrapper->uid]->pause_timer.start();
+      }
+    }
+    
+    // fix the timer for pausing
+    if (player_infos[player_wrapper->uid]->pause_timer.is_running()) {
+      if (player_infos[player_wrapper->uid]->pause_timer.seconds() > 0.25f) {
+        player_infos[player_wrapper->uid]->pause_timer.stop();
+        player_infos[player_wrapper->uid]->pause_timer.reset();
+      }
+    }
 
     if (player_wrapper->player->is_dead()) {
       float move_y = input.move_y;            
@@ -950,6 +967,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 		case 113:
 			player_infos[0]->controls.RB = (confidence == 1.0);
 			break;
+      
+    case 114:
+			player_infos[0]->controls.start = (confidence == 1.0);
+			break;
 
 		/* player 2 */
 		case 201:
@@ -997,6 +1018,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 
 		case 213:
 			player_infos[1]->controls.RB = (confidence == 1.0);
+			break;
+      
+    case 214:
+			player_infos[1]->controls.start = (confidence == 1.0);
 			break;
 
 		/* player 3 */
@@ -1046,6 +1071,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 		case 313:
 			player_infos[2]->controls.RB = (confidence == 1.0);
 			break;
+      
+    case 314:
+			player_infos[2]->controls.start = (confidence == 1.0);
+			break;
 
 		/* player 4 */
 		case 401:
@@ -1093,6 +1122,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 
 		case 413:
 			player_infos[3]->controls.RB = (confidence == 1.0);
+			break;
+      
+    case 414:
+			player_infos[4]->controls.start = (confidence == 1.0);
 			break;
 
     default:
