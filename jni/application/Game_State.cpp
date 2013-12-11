@@ -86,7 +86,7 @@ Game_State::Game_State(const std::string &file_)
   box("selection"),
   dodge("dodge"),
   dodge_button("LB"),
-  special_button("LT"),
+  special_button("LT"),  
   divider(Point2f(), Vector2f(2.0f, 2.0f), "white_bar"),
   skill_indicator(Point2f(), Vector2f(32.0f, 2.0f), "white_bar"),
   health_indicator(Point2f(), Vector2f(32.0f, 2.0f))
@@ -384,15 +384,21 @@ void Game_State::perform_logic() {
         shield->animation_timer.start();
         melees.push_back(shield);
       }
-    }
+    }    
 
-    // crystal depositing logic
-    //bool touching = false;    
+    // crystal depositing logic    
     for (auto npc : npcs) {
+      // Show information
+      if (!input.A && same_team(npc->get_team(), player_wrapper->player->get_team()) && player_wrapper->player->has_crystal() && player_wrapper->player->pseudo_touching(*npc))
+        npc->set_hold_a(true);
+      else
+        npc->set_hold_a(false);
+
+      // Crystal logic
       if (same_team(npc->get_team(), player_wrapper->player->get_team())) {
         if (input.A && player_wrapper->player->has_crystal())            
         {
-          if (player_wrapper->player->pseudo_touching(*npc)) {            
+          if (player_wrapper->player->pseudo_touching(*npc)) {             
             if (npc->can_deposit(player_wrapper->uid)) {
               //touching = true;
               if (!player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
@@ -407,7 +413,7 @@ void Game_State::perform_logic() {
                   --crystals_in_play;
                   player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();
                   // Done depositing
-                  npc->set_depositing(-1);
+                  npc->set_depositing(-1);                  
                 }
                 npc->set_deposit_pctg(player_infos[player_wrapper->uid]->deposit_crystal_timer.seconds() / DEPOSIT_TIME);
                 //npc->set_depositing(player_wrapper->uid);
@@ -417,7 +423,7 @@ void Game_State::perform_logic() {
           else if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
             // Stopped depositing
             player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();        
-            npc->set_depositing(-1);
+            npc->set_depositing(-1);            
           }
         }
         else if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
@@ -426,14 +432,7 @@ void Game_State::perform_logic() {
           npc->set_depositing(-1);
         }
       }
-    }
-    //  /*if (!touching && player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running()) {
-    //    player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();        
-    //  }*/
-    //} else {
-    //  if (player_infos[player_wrapper->uid]->deposit_crystal_timer.is_running())
-    //    player_infos[player_wrapper->uid]->deposit_crystal_timer.stop();        
-    //}
+    }    
     
     // crystal pick up logic
     for (auto crystal = crystals.begin(); crystal != crystals.end();) {
@@ -637,7 +636,7 @@ void Game_State::render_map(int screen_num) {
   vbo_ptr_lower->render();
   for (auto crystal : crystals) crystal->render();
   for (auto player_wrapper_ptr : player_wrappers) player_wrapper_ptr->player->render();      
-  for (auto npc : npcs) npc->render();
+  for (auto npc : npcs) npc->render();  
   for (auto projectile : projectiles) projectile->render();
   for (auto melee : melees) melee->render();
   vbo_ptr_middle->render();
