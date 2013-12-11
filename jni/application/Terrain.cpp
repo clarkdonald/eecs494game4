@@ -10,9 +10,10 @@
 
 using Zeni::Point2f;
 using Zeni::String;
+using Zeni::Vector2f;
 
-Terrain::Terrain(const Point2f &position_, const String &texture_)
-: Game_Object(position_),
+Terrain::Terrain(const Point2f &position_, const String &texture_, const Vector2f &size_)
+: Game_Object(position_, size_),
   texture(texture_)
 {}
 

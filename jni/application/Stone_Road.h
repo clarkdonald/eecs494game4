@@ -15,7 +15,7 @@
 
 class Stone_Road : public Terrain {
   public:
-    Stone_Road(const Zeni::Point2f &position_);
+    Stone_Road(const Zeni::Point2f &position_, const Zeni::Vector2f &size_ = OBJECT_SIZE);
     
     void render() const override;
 };

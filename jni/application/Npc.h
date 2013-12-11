@@ -19,7 +19,8 @@ class Npc : public Game_Object {
   public:
     Npc(const Zeni::Point2f &position_,
         const Zeni::String &texture_,
-        const Team &team_);
+        const Team &team_,
+        const Zeni::Vector2f &size_ = OBJECT_SIZE);
     
     void render() const override;
   

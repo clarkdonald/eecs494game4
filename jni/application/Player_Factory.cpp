@@ -16,11 +16,12 @@ using namespace Zeni;
 Player * create_player(const String &type_,
                        const Point2f &position_,
                        const int &uid_,
-                       const Team &team_)
+                       const Team &team_,
+                       const Vector2f &size_)
 {
-  if (type_ == "Warrior") return new Warrior(position_, uid_, team_);
-  else if (type_ == "Mage") return new Mage(position_, uid_, team_);
-  else if (type_ == "Archer") return new Archer(position_, uid_, team_);
+  if (type_ == "Warrior") return new Warrior(position_, uid_, team_, size_);
+  else if (type_ == "Mage") return new Mage(position_, uid_, team_, size_);
+  else if (type_ == "Archer") return new Archer(position_, uid_, team_, size_);
   error_handle("Unknown player type");
   return nullptr;
 }

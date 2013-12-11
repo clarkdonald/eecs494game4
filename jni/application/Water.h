@@ -16,7 +16,7 @@
 
 class Water : public Terrain {
   public:
-    Water(const Zeni::Point2f &position_);
+    Water(const Zeni::Point2f &position_, const Zeni::Vector2f &size_ = OBJECT_SIZE);
     
     void render() const;
   

@@ -6,8 +6,9 @@ using namespace std;
 
 Mage::Mage(const Zeni::Point2f &position_,
            const int &uid_,
-           const Team &team_)
-: Player(position_, uid_, 80.0f, 300.0f, team_, "mage_", 0.5f, 5.0f), heal_circle(nullptr)
+           const Team &team_,
+           const Zeni::Vector2f &size_)
+: Player(position_, uid_, 80.0f, 300.0f, team_, "mage_", 0.5f, 5.0f, size_), heal_circle(nullptr)
 {heal_duration_timer.start();}
 
 void Mage::render() const {

@@ -16,7 +16,9 @@
 
 class Terrain : public Game_Object {
   public:
-    Terrain(const Zeni::Point2f &position_, const Zeni::String &texture_);
+    Terrain(const Zeni::Point2f &position_,
+            const Zeni::String &texture_,
+            const Zeni::Vector2f &size_ = OBJECT_SIZE);
     
     virtual ~Terrain() = 0;
     

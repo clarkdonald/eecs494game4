@@ -28,7 +28,8 @@ const float DEPOSIT_TIME = 5.0f;
 
 /** Size of units in the game **/
 const float UNIT_LENGTH = 32.0f;
-const float TUTORIAL_LENGHT = 21.0f;
+const float TUTORIAL_LENGTH = 21.0f;
+const Zeni::Vector2f TUTORIAL_SIZE = Zeni::Vector2f(TUTORIAL_LENGTH, TUTORIAL_LENGTH);
 const Zeni::Vector2f OBJECT_SIZE = Zeni::Vector2f(UNIT_LENGTH, UNIT_LENGTH);
 const Zeni::Vector2f SMALL_SIZE = Zeni::Vector2f(0.25f*UNIT_LENGTH, 0.25f*UNIT_LENGTH);
 const Zeni::Vector2f LARGE_SIZE = Zeni::Vector2f(3*UNIT_LENGTH, 3*UNIT_LENGTH);

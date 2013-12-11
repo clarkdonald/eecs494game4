@@ -26,7 +26,8 @@ class Player : public Game_Object {
            const Team &team_,
 					 const Zeni::String& sprite_prefix_,
 					 const float& attack_limit_,
-           const float& sp_attack_limit_);
+           const float& sp_attack_limit_,
+           const Zeni::Vector2f &size_ = OBJECT_SIZE);
   
     virtual ~Player() = 0;
 

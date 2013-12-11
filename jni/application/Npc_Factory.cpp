@@ -15,10 +15,11 @@ using namespace Zeni;
 
 Npc * create_npc(const String &type_,
                  const Point2f &position_,
-                 const Team &team_)
+                 const Team &team_,
+                 const Vector2f &size_)
 {
-  if (type_ == "Blonde_Kid") return new Npc(position_, "blondekiddownidle", team_);
-  else if (type_ == "Girl") return new Npc(position_, "girldownidle", team_);
+  if (type_ == "Blonde_Kid") return new Npc(position_, "blondekiddownidle", team_, size_);
+  else if (type_ == "Girl") return new Npc(position_, "girldownidle", team_, size_);
   error_handle("Unknown npc type");
   return nullptr;
 }

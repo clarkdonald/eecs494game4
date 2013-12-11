@@ -16,6 +16,7 @@
 class Terrain;
 
 Terrain * create_terrain(const Zeni::String &type_,
-                         const Zeni::Point2f &position_);
+                         const Zeni::Point2f &position_,
+                         const Zeni::Vector2f &size_ = OBJECT_SIZE);
 
 #endif /* TERRAIN_FACTORY_H */
