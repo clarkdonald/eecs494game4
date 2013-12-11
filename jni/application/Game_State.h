@@ -27,6 +27,7 @@ class Player;
 class Spawn_Menu;
 class Npc;
 class Crystal;
+class Heal_Circle;
 
 struct Player_Wrapper {
   Player_Wrapper(Player *player_, const int &uid_);
@@ -105,6 +106,7 @@ class Game_State {
     std::list<Weapon*> melees;
     std::list<Npc*> npcs;
     std::list<Crystal*> crystals;
+    std::vector<Heal_Circle*> heal_circles;
     std::vector<Zeni::Point2f> crystal_locations;
     std::map<Team, unsigned int> scores;
     int total_num_crystals;

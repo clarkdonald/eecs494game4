@@ -22,6 +22,7 @@
 #include "Map_Manager.h"
 #include "Crystal.h"
 #include "Spawn_Menu.h"
+#include "Heal_Circle.h"
 #include <utility>
 #include <fstream>
 #include <map>
@@ -89,7 +90,8 @@ Game_State::Game_State(const std::string &file_)
   special_button("LT"),
   divider(Point2f(), Vector2f(2.0f, 2.0f), "white_bar"),
   skill_indicator(Point2f(), Vector2f(32.0f, 2.0f), "white_bar"),
-  health_indicator(Point2f(), Vector2f(32.0f, 2.0f))
+  health_indicator(Point2f(), Vector2f(32.0f, 2.0f)),
+  heal_circles(4, nullptr)
 {
   // set up function pointers for split screen methods
   screen_coord_map.push_back(&get_top_left_screen);
@@ -208,8 +210,34 @@ void Game_State::perform_logic() {
     // check collision with terrain on movement for effects
     
 		float move_x, move_y;
-		move_x = input.move_x;
-		move_y = input.move_y;
+
+    bool is_in_circle = false;
+
+    for(auto heal_circle : heal_circles)
+    {
+      if(heal_circle == nullptr) continue;
+
+      if(!same_team(player_wrapper->player->get_team(), heal_circle->get_team()))
+      {
+        if(heal_circle->touching(*(player_wrapper->player)))
+        {
+          is_in_circle = true;
+          Point2f center = heal_circle->get_center();
+          Vector2f vec = player_wrapper->player->get_center() - center;
+          vec.normalize();
+          vec *= 3.0f;
+          move_x = vec.i;
+          move_y = vec.j;
+          break;
+        }
+      }
+    }
+
+    if(!is_in_circle)
+    {
+		  move_x = input.move_x;
+		  move_y = input.move_y;
+    }
     
     // take away dead zones of joy stick
 		if (fabs(move_x) < .1f && fabs(move_y) < .1f) move_y = move_x = 0.0f;
@@ -363,9 +391,10 @@ void Game_State::perform_logic() {
       if (projectile != nullptr) projectiles.push_back(projectile);
     }
 
-		player_wrapper->player->mage_spc_skill(input.LT, time_step);
-
-
+		Heal_Circle* heal_circle = nullptr;
+    heal_circle = player_wrapper->player->mage_spc_skill(input.LT, time_step);
+    heal_circles[player_wrapper->uid] = heal_circle;
+    
     if (input.LT)
     {
       Weapon* stun_arrow = nullptr;

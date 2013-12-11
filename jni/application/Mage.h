@@ -24,7 +24,7 @@ class Mage : public Player {
 
     Weapon* range(const float &direction) override;
   
-    void mage_spc_skill(bool pressed, const float& time_step) override;   
+    Heal_Circle* mage_spc_skill(bool pressed, const float& time_step) override;   
 
     Zeni::String get_skill_str() const override {return "mage_skill"; }
 
