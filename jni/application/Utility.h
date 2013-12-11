@@ -46,6 +46,7 @@ struct Controls {
   bool A;
   bool attack;
   bool LB;
+  bool RB;
 	bool LT;
   bool start;
   bool back;

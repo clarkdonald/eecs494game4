@@ -39,7 +39,10 @@ Heal_Circle* Mage::mage_spc_skill(bool pressed, const float& time_step)
 	else if(pressed && heal_circle) {
 		restore_health(time_step * 50);
 		if(heal_circle -> touching(*get_partner()))
-			get_partner() -> restore_health(time_step * 50);
+    {
+      if(!get_partner()->is_dead())
+			  get_partner() -> restore_health(time_step * 50);
+    }
 	}
 	if((heal_duration_timer.seconds() > 3 || !pressed) && heal_circle){
 

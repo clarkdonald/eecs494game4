@@ -258,7 +258,7 @@ void Game_State::perform_logic() {
     // dodge logic for player
     //player_wrapper->player->stop_dodge(time_step);
     player_wrapper->player->update_dodge_timer(time_step);
-    if (input.LB) {
+    if (input.LB || input.RB) {
       if (!player_wrapper->player->is_dodging())
         player_wrapper->player->dodge();
     }
@@ -708,6 +708,10 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   // Render Map and Movable objects
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
+  for (auto heal_circle : heal_circles)
+  {
+    if(heal_circle != nullptr) heal_circle->render();
+  }
   for (auto crystal : crystals) crystal->render();
 
   // Render aiming reticle
@@ -851,7 +855,7 @@ void Game_State::render(){
         }
         else {
           render_all(player_wrapper);
-          player_wrapper->player->render_extras();
+          //player_wrapper->player->render_extras();
         }
       }
     }
@@ -1112,6 +1116,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 113:
+			player_infos[0]->controls.RB = (confidence == 1.0);
 			break;
       
     case 114:
@@ -1168,6 +1173,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 213:
+			player_infos[1]->controls.RB = (confidence == 1.0);
 			break;
       
     case 214:
@@ -1224,6 +1230,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 313:
+			player_infos[2]->controls.RB = (confidence == 1.0);
 			break;
       
     case 314:
@@ -1280,6 +1287,7 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
 
 		case 413:
+			player_infos[3]->controls.RB = (confidence == 1.0);
 			break;
       
     case 414:

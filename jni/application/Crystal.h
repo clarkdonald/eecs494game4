@@ -14,6 +14,7 @@
 class Crystal : public Game_Object {
   public:
     Crystal(const Zeni::Point2f &position_);
+    Crystal(const Zeni::Point2f &position_, const Zeni::Vector2f& size_);
   
     void render() const override;
 };
