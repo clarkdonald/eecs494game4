@@ -28,10 +28,10 @@ Weapon* Mage::range(const float &direction) {
   return projectile;
 }
 
-void Mage::mage_spc_skill(bool pressed, const float& time_step)
+Heal_Circle* Mage::mage_spc_skill(bool pressed, const float& time_step)
 {
 	if(pressed && !heal_circle && can_use_special()) {
-		heal_circle = new Heal_Circle(Point2f(get_position().x - 80, get_position().y - 72));
+		heal_circle = new Heal_Circle(Point2f(get_position().x - 80, get_position().y - 72), get_team());
 		heal_duration_timer.reset();
 		disable_attack();
 		disable_movement();
@@ -49,6 +49,7 @@ void Mage::mage_spc_skill(bool pressed, const float& time_step)
 		enable_movement();
     start_special_timer();
 	}
+  return heal_circle;
 }
 
 void Mage::move_x(const float &mag, const float &timestep, bool first_time) 
