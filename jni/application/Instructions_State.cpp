@@ -100,7 +100,7 @@ void Instructions_State::perform_logic() {
       case 0:
         player_red0->move_y(0.9f, time_step, true);
         player_red1->move_y(0.9f, time_step, true);
-        if (distance > UNIT_LENGTH*3) {
+        if (distance > TUTORIAL_LENGHT*3) {
           distance = 0.0f;
           movement++;
         }
@@ -109,7 +109,7 @@ void Instructions_State::perform_logic() {
       case 1:
         player_red0->move_x(0.9f, time_step, true);
         player_red1->move_x(-0.9f, time_step, true);
-        if (distance > UNIT_LENGTH*2) {
+        if (distance > TUTORIAL_LENGHT*2) {
           distance = 0.0f;
           movement++;
         }
@@ -118,7 +118,7 @@ void Instructions_State::perform_logic() {
       case 2:
         player_red0->move_y(0.3f, time_step, true);
         player_red1->move_y(0.3f, time_step, true);
-        if (distance > UNIT_LENGTH*1) {
+        if (distance > TUTORIAL_LENGHT*1) {
           distance = 0.0f;
           movement++;
         }
@@ -148,23 +148,30 @@ void Instructions_State::render() {
     player_red0->render();
     player_red1->render();
     npc_blue->render();
-    npc_red->render();        
+    npc_red->render(); 
 
-    if (text_timers[timer_index].seconds() > 2.0f) {
-      /*auto text_y_scroll = 0.0f;            
-      for(int i = 0; i < timer_index; ++i) {
-        get_Fonts()["godofwar_20"].render_text(String(texts[i]),
-                                          Point2f(485.0f, text_y_scroll),
-                                          get_Colors()["white"]);
-        text_y_scroll += 25.0f;
-      }*/
-      if (++timer_index < text_timers.size()) {
-        text_timers[timer_index].start();
+    timer_index;
+
+    auto temp = timer_index;
+
+    auto text_y_scroll = 0.0f;            
+    for(int i = 0; i < timer_index; ++i) {
+      get_Fonts()["godofwar_12"].render_text(String(texts[i]),
+                                        Point2f(327.0f, text_y_scroll),
+                                        get_Colors()["white"]);
+      text_y_scroll += 25.0f;
+    }
+
+    if(timer_index < text_timers.size()) {
+      if (text_timers[timer_index].seconds() > 2.0f) {        
+        if (++timer_index < text_timers.size()) {
+          text_timers[timer_index].start();
+        }
       }
     }
-    if (text_timers[timer_index].seconds() > 2.0f) {      
-      text_timers[++timer_index].start();
-    }    
+    else {
+      timer_index = texts.size();
+    }
   }
 }
 
@@ -198,7 +205,7 @@ void Instructions_State::load_map(const string &file_) {
   for (int height = 0; getline(file,line) && height < dimension.height;) {
     if (line.find('#') != std::string::npos) continue;
     for (int width = 0; width < line.length() && width < dimension.width; ++width) {
-      Point2f position(UNIT_LENGTH*width, UNIT_LENGTH*height);
+      Point2f position(TUTORIAL_LENGHT*width, TUTORIAL_LENGHT*height);
       
       terrains.push_back(create_terrain("Wood_Floor", position));
       
@@ -245,7 +252,7 @@ void Instructions_State::load_map(const string &file_) {
       } else if (line[width] == 'b') { // bed
         terrains.push_back(create_terrain("Bed", position));
       } else if (line[width] == 'z') { // dresser
-        position.y -= (UNIT_LENGTH/2.0f);
+        position.y -= (TUTORIAL_LENGHT/2.0f);
         terrains.push_back(create_terrain("Dresser", position));
       } else if (line[width] == 'i') { // chest
         terrains.push_back(create_terrain("Chest", position));
