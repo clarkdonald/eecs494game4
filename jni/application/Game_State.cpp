@@ -143,6 +143,11 @@ void Game_State::perform_logic() {
     // get controls for each player
     Controls input = player_infos[player_wrapper->uid]->controls;
 
+    if (!player_wrapper->player->can_respawn()) {
+      player_wrapper->player->update_respawn_timer(time_step);
+      continue;
+    }
+
     if (player_wrapper->player->is_dead()) {
       float move_y = input.move_y;            
 			if (move_y > 0.7f && player_infos[player_wrapper->uid]->down_axis_released) {
@@ -510,41 +515,47 @@ void Game_State::perform_logic() {
       }
     }
     
-    if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
-      player_infos[player_wrapper->uid]->spawn_menu->clear_menu();
-      Player *dead = player_wrapper->player;
-      player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->
-                                             get_selected_option()),
-                                             player_infos[player_wrapper->uid]->start_position, 
-                                             player_wrapper->uid,
-                                             player_wrapper->player->get_team());   
-      Weapon* sword = dead->get_weapon();
-      Weapon* shield = dead->get_shield();
+    if(player_wrapper->player->can_respawn()) {
+      if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
+        player_infos[player_wrapper->uid]->spawn_menu->clear_menu();
+        Player *dead = player_wrapper->player;
+        player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->
+                                               get_selected_option()),
+                                               player_infos[player_wrapper->uid]->start_position, 
+                                               player_wrapper->uid,
+                                               player_wrapper->player->get_team());   
 
-      if (sword != nullptr)
-      {
-        for(auto melee = melees.begin(); melee != melees.end(); melee++)
+        // Once the player is alive it shouldn't make him wait.
+        player_wrapper->player->reset_respawn_time();
+
+        Weapon* sword = dead->get_weapon();
+        Weapon* shield = dead->get_shield();
+
+        if (sword != nullptr)
         {
-          if (sword == *melee)
+          for(auto melee = melees.begin(); melee != melees.end(); melee++)
           {
-            melees.erase(melee);
-            break;
+            if (sword == *melee)
+            {
+              melees.erase(melee);
+              break;
+            }
           }
         }
-      }
-      if (shield != nullptr)
-      {
-        for(auto melee = melees.begin(); melee != melees.end(); melee++)
+        if (shield != nullptr)
         {
-          if (shield == *melee)
+          for(auto melee = melees.begin(); melee != melees.end(); melee++)
           {
-            melees.erase(melee);
-            break;
+            if (shield == *melee)
+            {
+              melees.erase(melee);
+              break;
+            }
           }
         }
-      }
 
-      delete dead;
+        delete dead;
+      }
     }
   }
 
@@ -582,6 +593,40 @@ void Game_State::respawn_crystal() {
     crystals.push_back(new Crystal(crystal_locations[index]));
     ++crystals_in_play;
   }
+}
+
+void Game_State::render_map(int screen_num) {
+  auto screen_coord = screen_coord_map[screen_num]();
+  get_Video().set_2d_view(std::make_pair(Point2f(0.0f, 0.0f) , Point2f(32.0f * dimension.width, 32.0f * dimension.height)),                                         
+                                  screen_coord, 
+                                  false);
+  // Render Map and Movable objects
+  vbo_ptr_floor->render();
+  vbo_ptr_lower->render();
+  for (auto crystal : crystals) crystal->render();
+  for (auto player_wrapper_ptr : player_wrappers) player_wrapper_ptr->player->render();      
+  for (auto npc : npcs) npc->render();
+  for (auto projectile : projectiles) projectile->render();
+  for (auto melee : melees) melee->render();
+  vbo_ptr_middle->render();
+  for (auto player_wrapper_ptr : player_wrappers) {    
+    if (!player_wrapper_ptr->player->is_dead()) {
+      health_indicator.set_position(player_wrapper_ptr->player->get_position() - Vector2f(0.0f, 8.0f));
+      health_indicator.render(player_wrapper_ptr->player->get_hp_pctg());
+    }    
+  }
+  for (auto atmosphere : atmospheres) atmosphere->render();
+
+  // Render Player Score
+  /*get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+                                        scores[BLUE])),
+                                        p_pos - Vector2f(240.0f,-150.0f),
+                                        get_Colors()["blue"]);
+  get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+                                         scores[RED])),
+                                         p_pos - Vector2f(240.0f,-175.0f),
+                                         get_Colors()["red"]);*/
+
 }
 
 void Game_State::render_spawn_menu(Player_Wrapper * player_wrapper) {  
@@ -687,19 +732,24 @@ void Game_State::render(){
     }
   } else {
     for (auto player_wrapper : player_wrappers) {    
-      if (player_wrapper->player->is_dead()) 
-        render_spawn_menu(player_wrapper);
+      if (player_wrapper->player->is_dead()) {
+        if(player_wrapper->player->can_respawn()) {
+          render_spawn_menu(player_wrapper);
+        }
+        else {
+          render_map(player_wrapper->uid);
+        }
+      }
       else {
         render_all(player_wrapper);
         player_wrapper->player->render_extras();
       }
     }
-  }
-
-  // Add splitting lines for each screen.
-  get_Video().set_2d(make_pair(Point2f(0.0f, 0.0f), Point2f(get_Window().get_width(), get_Window().get_height())), false);
-  divider.render(Point2f(0.0f, (get_Window().get_height() / 2) - 1), Vector2f(get_Window().get_width(), 2.0f)); 
-  divider.render(Point2f((get_Window().get_width() / 2) - 1, 0.0f), Vector2f(2.0f, get_Window().get_height()));
+    // Add splitting lines for each screen.
+    get_Video().set_2d(make_pair(Point2f(0.0f, 0.0f), Point2f(get_Window().get_width(), get_Window().get_height())), false);
+    divider.render(Point2f(0.0f, (get_Window().get_height() / 2) - 1), Vector2f(get_Window().get_width(), 2.0f)); 
+    divider.render(Point2f((get_Window().get_width() / 2) - 1, 0.0f), Vector2f(2.0f, get_Window().get_height()));
+  }  
 }
 
 void Game_State::create_tree(const Point2f &position) {

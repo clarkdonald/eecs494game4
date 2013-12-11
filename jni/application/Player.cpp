@@ -34,6 +34,7 @@ Player::Player(const Point2f &position_,
   submerged(false),
   dodge_time(0.0f),
   dodging(false),
+  respawn_time(0.0f),
   blink_timer(0.0f),
   blink(false),
   hit(false),
@@ -134,6 +135,14 @@ void Player::update_dodge_timer(const float &timestep) {
   }
 }
 
+void Player::update_respawn_timer(const float &timestep) {
+  respawn_time += timestep;
+}
+
+bool Player::can_respawn() const { 
+  return respawn_time > 5.0f; 
+}
+
 bool Player::touching_feet(const Game_Object &rhs) const {
   float distance = UNIT_LENGTH / 2.0f;
   float centerX = get_position().x + (get_size().x / 2.0f);
@@ -164,8 +173,10 @@ void Player::turn_to_face(const float &theta) {
 }
 
 void Player::take_dmg(const float &dmg) {  
-  if (!hit && (hp -= dmg) < 0.0f) {
+  if ((hp -= dmg) <= 0.0f) {
     hp = 0.0f;
+    // Just died so we need to restart the spawn timer
+    respawn_time = 0.0f;
   } else {
     hit = true;
     blink = true;
@@ -200,6 +211,7 @@ void Player::update_blink_timer(const float &timestep) {
 
 void Player::kill() {
   hp = 0.0f;
+  //respawn_time = 0.0f;
   n_crystals = 0;
 }
 
