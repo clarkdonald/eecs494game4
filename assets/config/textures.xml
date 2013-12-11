@@ -596,6 +596,11 @@
     <filepath>textures/GUI/white_bar.png</filepath>
     <tile>0</tile>
   </white_bar>
+
+  <hold_a>
+    <filepath>textures/GUI/A_prompt.png</filepath>
+    <tile>0</tile>
+  </hold_a>
   
   <red_aiming>
     <filepath>textures/Character/red_aiming_circle.png</filepath>
