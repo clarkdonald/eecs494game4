@@ -29,7 +29,8 @@ Controls::Controls()
   attack(false),
   RB(false),
 	LT(false),
-  start(false)
+  start(false),
+  back(false)
 {}
 
 Dimension::Dimension()

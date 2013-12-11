@@ -142,7 +142,6 @@ void Game_State::perform_logic() {
   for (auto player_wrapper : player_wrappers) {
     // get controls for each player
     Controls input = player_infos[player_wrapper->uid]->controls;
-    player_infos[player_wrapper->uid]->controls.start = false;
     
     // pausing logic
     if (input.start) {
@@ -1006,6 +1005,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
     case 114:
 			player_infos[0]->controls.start = (confidence == 1.0);
 			break;
+      
+    case 115:
+			player_infos[0]->controls.back = (confidence == 1.0);
+			break;
 
 		/* player 2 */
 		case 201:
@@ -1057,6 +1060,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
       
     case 214:
 			player_infos[1]->controls.start = (confidence == 1.0);
+			break;
+      
+    case 215:
+			player_infos[1]->controls.back = (confidence == 1.0);
 			break;
 
 		/* player 3 */
@@ -1110,6 +1117,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
     case 314:
 			player_infos[2]->controls.start = (confidence == 1.0);
 			break;
+      
+    case 315:
+			player_infos[2]->controls.back = (confidence == 1.0);
+			break;
 
 		/* player 4 */
 		case 401:
@@ -1160,7 +1171,11 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 			break;
       
     case 414:
-			player_infos[4]->controls.start = (confidence == 1.0);
+			player_infos[3]->controls.start = (confidence == 1.0);
+			break;
+      
+    case 415:
+			player_infos[3]->controls.back = (confidence == 1.0);
 			break;
 
     default:
