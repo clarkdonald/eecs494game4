@@ -48,6 +48,7 @@ Map_Manager::Map_Manager()
 
   // load the character mapping for environments
   environment_charmap['f'] = "Fence";
+  environment_charmap['F'] = "Fence";
   
   // load the character mapping for atmosphere
   atmosphere_charmap['c'] = "Cloud";

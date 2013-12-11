@@ -1034,6 +1034,14 @@ void Game_State::load_map(const std::string &file_) {
       } else if (line[width] == 'h') {
         grasss.push_back(create_terrain("Grass", position));
         create_house(position);
+      } else if (line[width] == 'F') {
+        grasss.push_back(create_terrain("Grass", position));
+        collidable_environments.push_back(
+          create_environment(Map_Manager::get_Instance().get_environment(line[width]),position));
+      } else if (line[width] == 'f') {
+        terrains.push_back(create_terrain("Dirt", position));
+        collidable_environments.push_back(
+            create_environment(Map_Manager::get_Instance().get_environment(line[width]),position));
       } else if (Map_Manager::get_Instance().find_terrain(line[width])) {
         grasss.push_back(create_terrain("Grass", position));
         terrains.push_back(create_terrain(
