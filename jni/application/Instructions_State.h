@@ -38,6 +38,9 @@ class Instructions_State : public Zeni::Gamestate_Base {
   
     Zeni::Time_HQ time_passed;
     Zeni::Text_Box tb;
+    bool show_text_box;
+    float distance;
+    int movement;
     std::vector< Zeni::Chronometer<Zeni::Time> > text_timers;
     std::vector<std::string> texts;
     int timer_index;

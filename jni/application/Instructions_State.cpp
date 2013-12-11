@@ -44,6 +44,9 @@ Instructions_State::Instructions_State()
      "A Button: Hold down to deposit crystal to master\n"
      "Start Button: Pause entire game",
      Color()),
+  show_text_box(false),
+  distance(0.0f),
+  movement(0),
   timer_index(0)
 {
   tb.give_BG_Renderer(new Widget_Renderer_Color(get_Colors()["black"]));
@@ -57,9 +60,9 @@ Instructions_State::Instructions_State()
   
   // set up texts
   texts.push_back("Six companions fought many battles together.");
-  texts.push_back("After years of victory, they finally wanted to split the wealth.");
+  texts.push_back("After a decade, they finally wanted to split the wealth.");
   texts.push_back("However, there was dispute over how the wealth was to be split.");
-  texts.push_back("The companions split into two sides.");
+  texts.push_back("Tension arose, and the companions turned on each other.");
   texts.push_back("And forever, their relationship will never be the same..");
   
   // fire off first timer
@@ -90,13 +93,51 @@ void Instructions_State::perform_logic() {
   time_passed = current_time;
   float time_step = processing_time;
   
-  
+  if (timer_index >= text_timers.size()) {
+    distance += (80.0f * 0.9f * time_step);
+    cout << movement << endl;
+    switch (movement) {
+      case 0:
+        player_red0->move_y(0.9f, time_step, true);
+        player_red1->move_y(0.9f, time_step, true);
+        if (distance > UNIT_LENGTH*3) {
+          distance = 0.0f;
+          movement++;
+        }
+        break;
+        
+      case 1:
+        player_red0->move_x(0.9f, time_step, true);
+        player_red1->move_x(-0.9f, time_step, true);
+        if (distance > UNIT_LENGTH*2) {
+          distance = 0.0f;
+          movement++;
+        }
+        break;
+        
+      case 2:
+        player_red0->move_y(0.3f, time_step, true);
+        player_red1->move_y(0.3f, time_step, true);
+        if (distance > UNIT_LENGTH*1) {
+          distance = 0.0f;
+          movement++;
+        }
+        break;
+        
+      case 3:
+        show_text_box = true;
+        break;
+        
+      default:
+        break;
+    }
+  }
 }
 
 void Instructions_State::render() {
   get_Video().set_2d(make_pair(Point2f(), Point2f(800.0f, 600.0f)), false);
   
-  if (timer_index > text_timers.size()) {
+  if (show_text_box) {
     tb.render();
   }
   else {
@@ -111,7 +152,9 @@ void Instructions_State::render() {
     
     if (text_timers[timer_index].seconds() > 2.0f) {
       // RENDER texts[timer_index]
-      text_timers[++timer_index].start();
+      if (++timer_index < text_timers.size()) {
+        text_timers[timer_index].start();
+      }
     }
   }
 }
@@ -152,13 +195,13 @@ void Instructions_State::load_map(const string &file_) {
       
       if (line[width] == '.');
       else if (line[width] == '0') { // person 0
-        player_blue0 = create_player("Mage", position, 0, BLUE);
+        player_blue0 = create_player("Warrior", position, 0, BLUE);
       } else if (line[width] == '1') { // person 1
         player_blue1 = create_player("Archer", position, 1, BLUE);
       } else if (line[width] == '2') { // person 2
         player_red0 = create_player("Mage", position, 2, RED);
       } else if (line[width] == '3') { // person 3
-        player_red1 = create_player("Warrior", position, 3, RED);
+        player_red1 = create_player("Mage", position, 3, RED);
       } else if (line[width] == '4') { // npc blue
         npc_blue = create_npc("Blonde_Kid", position, BLUE);
       } else if (line[width] == '5') { // npc red
