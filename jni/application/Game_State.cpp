@@ -51,7 +51,9 @@ using std::istringstream;
 
 Player_Wrapper::Player_Wrapper(Player *player_, const int &uid_)
 : player(player_),
-  uid(uid_)
+  uid(uid_),
+  select_pressed(false),
+  spawn_time_left("")
 {}
   
 Player_Wrapper::~Player_Wrapper() {
@@ -144,6 +146,7 @@ void Game_State::perform_logic() {
   for (auto player_wrapper : player_wrappers) {
     // get controls for each player
     Controls input = player_infos[player_wrapper->uid]->controls;
+    player_infos[player_wrapper->uid]->controls.start = false;
     
     // pausing logic
     if (input.start) {
@@ -162,6 +165,8 @@ void Game_State::perform_logic() {
     }
 
     if (!player_wrapper->player->can_respawn()) {
+      int count_down = ceil(5.0f - player_wrapper->player->get_spawn_time());
+      player_wrapper->spawn_time_left = String("Respawn in " + itoa(count_down));
       player_wrapper->player->update_respawn_timer(time_step);
       continue;
     }
@@ -187,6 +192,14 @@ void Game_State::perform_logic() {
       
       // if the player is dead, we skip rest of movement logic
       continue;
+    }
+
+    if (input.back) {
+      player_wrapper->select_pressed = true;
+      continue;
+    }
+    else {
+      player_wrapper->select_pressed = false;
     }
     
     // if player is stunned, don't move or anything else
@@ -615,7 +628,8 @@ void Game_State::respawn_crystal() {
 
 void Game_State::render_map(int screen_num) {
   auto screen_coord = screen_coord_map[screen_num]();
-  get_Video().set_2d_view(std::make_pair(Point2f(0.0f, 0.0f) , Point2f(32.0f * dimension.width, 32.0f * dimension.height)),                                         
+  auto bottom_corner = Point2f(32.0f * dimension.width, 32.0f * dimension.height);
+  get_Video().set_2d_view(std::make_pair(Point2f(0.0f, 0.0f) , bottom_corner),                                         
                                   screen_coord, 
                                   false);
   // Render Map and Movable objects
@@ -633,17 +647,17 @@ void Game_State::render_map(int screen_num) {
       health_indicator.render(player_wrapper_ptr->player->get_hp_pctg());
     }    
   }
-  for (auto atmosphere : atmospheres) atmosphere->render();
+  for (auto atmosphere : atmospheres) atmosphere->render();  
 
   // Render Player Score
-  /*get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+  get_Fonts()["godofwar_50"].render_text(String("Crystals: " + to_string(
                                         scores[BLUE])),
-                                        p_pos - Vector2f(240.0f,-150.0f),
+                                        Point2f(5.0f, bottom_corner.y) - Vector2f(0.0f, 105.0f),
                                         get_Colors()["blue"]);
-  get_Fonts()["godofwar_20"].render_text(String("Crystals: " + to_string(
+  get_Fonts()["godofwar_50"].render_text(String("Crystals: " + to_string(
                                          scores[RED])),
-                                         p_pos - Vector2f(240.0f,-175.0f),
-                                         get_Colors()["red"]);*/
+                                         Point2f(5.0f, bottom_corner.y) - Vector2f(0.0f, 55.0f),
+                                         get_Colors()["red"]);
 
 }
 
@@ -796,11 +810,21 @@ void Game_State::render(){
         }
         else {
           render_map(player_wrapper->uid);
+          auto bottom_corner = Point2f(32.0f * dimension.width, 32.0f * dimension.height);
+          get_Fonts()["godofwar_60"].render_text(player_wrapper->spawn_time_left,
+                                        Point2f(bottom_corner.x/2, bottom_corner.y/2),
+                                        get_Colors()["black"],
+                                        ZENI_CENTER);
         }
       }
       else {
-        render_all(player_wrapper);
-				player_wrapper->player->render_extras();
+        if(player_wrapper->select_pressed) {
+          render_map(player_wrapper->uid);
+        }
+        else {
+          render_all(player_wrapper);
+          player_wrapper->player->render_extras();
+        }
       }
     }
     // Add splitting lines for each screen.

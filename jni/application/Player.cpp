@@ -270,6 +270,7 @@ bool Player::can_use_special()
 }
 
 void Player::pick_up_crystal() {
+	play_sound("gempickup");
 	++n_crystals;
 }
 

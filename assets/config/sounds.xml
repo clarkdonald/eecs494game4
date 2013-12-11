@@ -28,4 +28,19 @@ HOWTO:  To convert between types, or to downmix to mono,
   <hello_world>
     <filepath>sfx/104469__dkmedic__world</filepath>
   </hello_world>
+  <gempickup>
+    <filepath>sfx/gempickup</filepath>
+  </gempickup>
+  <sword_swing>
+    <filepath>sfx/sword</filepath>
+  </sword_swing>
+  <magic>
+    <filepath>sfx/magic</filepath>
+  </magic>
+  <bow>
+    <filepath>sfx/bow</filepath>
+  </bow>
+  <bgm>
+    <filepath>music/Two_Steps_from_Hell_-_Heart_of_Courage_8_Bit_Remix</filepath>
+  </bgm>
 </Sounds>
