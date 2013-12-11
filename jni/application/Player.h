@@ -50,6 +50,8 @@ class Player : public Game_Object {
 
     void reset_respawn_time() { respawn_time = 6.0f; }
 
+    float get_spawn_time() const { return respawn_time; }
+
     void update_respawn_timer(const float &timestep);
 
     bool touching_feet(const Game_Object &rhs) const;

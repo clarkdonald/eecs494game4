@@ -31,6 +31,21 @@ Only TrueType fonts are supported.
     <filepath>fonts/GODOFWAR.TTF</filepath>
     <height>20</height>
   </godofwar_20>
+
+  <godofwar_40>
+    <filepath>fonts/GODOFWAR.TTF</filepath>
+    <height>40</height>
+  </godofwar_40>
+  
+  <godofwar_50>
+    <filepath>fonts/GODOFWAR.TTF</filepath>
+    <height>50</height>
+  </godofwar_50>
+
+  <godofwar_60>
+    <filepath>fonts/GODOFWAR.TTF</filepath>
+    <height>60</height>
+  </godofwar_60>
   
   <godofwar_80>
     <filepath>fonts/GODOFWAR.TTF</filepath>
