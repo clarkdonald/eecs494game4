@@ -40,11 +40,17 @@ class Player : public Game_Object {
 
     void update_dodge_timer(const float &timestep);
 
-    bool can_use_dodge() const { return dodge_time > 3.0f; } 
+    bool can_use_dodge() const { return dodge_time > 3.0f; }     
 
     bool is_dodging() {return dodging;}
 
     float get_dodge_percentage() const { return dodge_time / 3.0f; }
+
+    bool can_respawn() const;
+
+    void reset_respawn_time() { respawn_time = 6.0f; }
+
+    void update_respawn_timer(const float &timestep);
 
     bool touching_feet(const Game_Object &rhs) const;
   
@@ -146,6 +152,8 @@ class Player : public Game_Object {
 		bool submerged;    
     float dodge_time;
     bool dodging;
+
+    float respawn_time;    
 
     float blink_timer;
     bool blink;

@@ -79,6 +79,8 @@ class Game_State {
   
     void respawn_crystal();
 
+    void render_map(int screen_num);
+
 	  void render_all(Player_Wrapper * player_wrapper);
 
     void render_spawn_menu(Player_Wrapper * player_wrapper);
