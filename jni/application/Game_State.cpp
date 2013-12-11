@@ -604,7 +604,41 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
   for (auto crystal : crystals) crystal->render();
-  for (auto player_wrapper_ptr : player_wrappers) player_wrapper_ptr->player->render();      
+
+  // Render aiming reticle
+  if(!player_wrapper->player->is_submerged())  {
+    Player* player = player_wrapper->player;
+    Point2f pos = p_pos;
+    Vector2f size = player->get_size();
+      
+    pos += 0.4f * size.get_j();
+	  // render aiming reticle
+    Vector2f face_vec = Vector2f(cos(player->get_facing()), sin(player->get_facing()));
+
+    Team team = player->get_team();
+    String str = "";
+
+	  switch(team)
+	  {
+		  case RED:
+			  str = "red_";
+			  break;
+		  case BLUE:
+			  str = "blue_";
+			  break;
+	  }
+    // couldn't use Game_Object::render() because need to render the reticle at a different location
+    render_image(str + "aiming", // which texture to use
+                pos, // upper-left corner
+                pos + size, // lower-right corner
+                face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two, // rotation in radians
+                1.0f, // scaling factor
+                pos + 0.5f * size, // point to rotate & scale about
+                false, // whether or not to horizontally flip the texture
+                Color()); // what Color to "paint" the texture  
+  }
+
+  for (auto player_wrapper_ptr : player_wrappers) player_wrapper_ptr->player->render();
   for (auto npc : npcs) npc->render();
   for (auto projectile : projectiles) projectile->render();
   for (auto melee : melees) melee->render();
@@ -618,6 +652,7 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
     }
   }
   for (auto atmosphere : atmospheres) atmosphere->render();
+
 
   // Render Player health
   player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(240.0f, 190.0f));
