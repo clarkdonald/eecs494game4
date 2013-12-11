@@ -7,8 +7,9 @@ using namespace std;
 
 Archer::Archer(const Zeni::Point2f &position_,
                const int &uid_,
-               const Team &team_)
-: Player(position_, uid_, 100.0f, 450.0f, team_, "archer_", .5f, 8.0f)
+               const Team &team_,
+               const Zeni::Vector2f &size_)
+: Player(position_, uid_, 100.0f, 450.0f, team_, "archer_", .5f, 5.0f, size_)
 {}
 
 void Archer::render() const {

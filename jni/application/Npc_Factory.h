@@ -17,6 +17,7 @@ class Npc;
 
 Npc * create_npc(const Zeni::String &type_,
                  const Zeni::Point2f &position_,
-                 const Team &team_);
+                 const Team &team_,
+                 const Zeni::Vector2f &size_ = OBJECT_SIZE);
 
 #endif /* NPC_FACTORY_H */

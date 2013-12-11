@@ -10,8 +10,10 @@
 
 using namespace Zeni;
 
-Simple_Terrain::Simple_Terrain(const Point2f &position_, const String &texture_)
-: Terrain(position_, texture_)
+Simple_Terrain::Simple_Terrain(const Point2f &position_,
+                               const String &texture_,
+                               const Vector2f &size_)
+: Terrain(position_, texture_, size_)
 {}
 
 void Simple_Terrain::render() const {

@@ -12,8 +12,9 @@ using namespace Zeni;
 
 Npc::Npc(const Point2f &position_,
          const String &texture_,
-         const Team &team_)
-: Game_Object(position_),
+         const Team &team_,
+         const Vector2f &size_)
+: Game_Object(position_, size_),
   depositing(-1),
   deposit_indicator(position_ - Vector2f(0.0f, 8.0f), Vector2f(32.0f, 2.0f)),
   texture(texture_),

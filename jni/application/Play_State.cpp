@@ -9,6 +9,7 @@
 #include "Play_State.h"
 #include "Map_Manager.h"
 #include "Game_State.h"
+#include "Instructions_State.h"
 #include <string>
 
 using namespace Zeni;
@@ -18,15 +19,11 @@ using std::cerr;
 using std::endl;
 
 Play_State::Play_State()
+: game_state(nullptr),
+  instructions(new Instructions_State)
 {
   set_pausable(true);
   initialize_xbox_controller();
-  
-  if (Map_Manager::get_Instance().empty()) {
-    cerr << "No maps to play!" << endl;
-    get_Game().pop_state();
-  }
-  game_state = new Game_State(Map_Manager::get_Instance().get_next());
   
   // Load BGM
   Sound &sr = get_Sound();
@@ -37,6 +34,8 @@ Play_State::Play_State()
 
 Play_State::~Play_State() {
   get_Sound().stop_BGM();
+  delete game_state;
+  delete instructions;
 }
 
 void Play_State::on_push() {
@@ -61,16 +60,35 @@ void Play_State::on_key(const SDL_KeyboardEvent &event) {
 }
 
 void Play_State::perform_logic() {
-  if (game_state->is_gameover()) {
+  if (game_state != nullptr && game_state->is_gameover()) {
     delete game_state;
     get_Game().pop_state();
   } else {
-    game_state->perform_logic();
+    if (instructions->is_done()) {
+      if (game_state == nullptr) {
+        if (Map_Manager::get_Instance().empty()) {
+          cerr << "No maps to play!" << endl;
+          get_Game().pop_state();
+        }
+        game_state = new Game_State(Map_Manager::get_Instance().get_next());
+      }
+      else {
+        game_state->perform_logic();
+      }
+    } else {
+      instructions->perform_logic();
+    }
   }
 }
 
 void Play_State::render(){
-  if (game_state != nullptr && !game_state->is_gameover()) game_state->render();
+  if (instructions->is_done()) {
+    if (game_state != nullptr && !game_state->is_gameover()) {
+      game_state->render();
+    }
+  } else {
+    instructions->render();
+  }
 }
 
 // --- Code to detect xbox controller button presses ---

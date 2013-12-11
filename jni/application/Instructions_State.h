@@ -25,23 +25,24 @@ class Instructions_State : public Zeni::Gamestate_Base {
   
     ~Instructions_State();
   
-  private:
-    void on_key(const SDL_KeyboardEvent &event);
+    bool is_done() const {return show_text_box;}
   
     void render();
   
     void perform_logic();
   
+  private:
+    void on_key(const SDL_KeyboardEvent &event);
+  
     void load_map(const std::string &file_);
-  
-    void load_scripted_movement();
-  
+    
     Zeni::Time_HQ time_passed;
     Zeni::Text_Box tb;
     bool show_text_box;
     float distance;
     int movement;
     std::vector< Zeni::Chronometer<Zeni::Time> > text_timers;
+    Zeni::Chronometer<Zeni::Time> final_timer;
     std::vector<std::string> texts;
     int timer_index;
     Dimension dimension;

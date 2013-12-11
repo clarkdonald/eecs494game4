@@ -129,7 +129,7 @@ Game_State::~Game_State() {
   delete vbo_ptr_middle;
 }
 
-void Game_State::perform_logic() {
+void Game_State::perform_logic() { 
   // check if a team won
   for (auto& score : scores) {
     if (score.second >= WIN_CRYSTAL_COUNT) {
@@ -144,6 +144,9 @@ void Game_State::perform_logic() {
   time_passed = current_time;
   float time_step = processing_time;
   
+  for (auto npc : npcs)
+    npc->set_hold_a(false);
+
   // iterate through each player, updating its state
   for (auto player_wrapper : player_wrappers) {
     // get controls for each player
@@ -416,12 +419,14 @@ void Game_State::perform_logic() {
     }    
 
     // crystal depositing logic    
-    for (auto npc : npcs) {
-      // Show information
-      if (!input.A && same_team(npc->get_team(), player_wrapper->player->get_team()) && player_wrapper->player->has_crystal() && player_wrapper->player->pseudo_touching(*npc))
-        npc->set_hold_a(true);
-      else
-        npc->set_hold_a(false);
+    for (auto npc : npcs) {                  
+      if (!input.A && same_team(npc->get_team(), player_wrapper->player->get_team()) && player_wrapper->player->has_crystal() && player_wrapper->player->pseudo_touching(*npc)) {                
+        // Show information                
+        npc->set_hold_a(true);                
+      }
+      else {        
+        npc->set_hold_a(false || npc->get_hold_a());        
+      }
 
       // Crystal logic
       if (same_team(npc->get_team(), player_wrapper->player->get_team())) {
@@ -564,20 +569,49 @@ void Game_State::perform_logic() {
   for (auto player_wrapper : player_wrappers) {
     if (!player_wrapper->player->is_dead()) continue;
     
+    Player *dead = player_wrapper->player;
+
     // drop one crystal where you die if they have at least one
-    if (player_wrapper->player->get_crystals_held()) {
-      player_wrapper->player->drop_crystal();
-      crystals.push_back(new Crystal(player_wrapper->player->get_position()));
-      while (player_wrapper->player->get_crystals_held()) {
-        player_wrapper->player->drop_crystal();
+    if (dead->get_crystals_held()) {
+      dead->drop_crystal();
+      crystals.push_back(new Crystal(dead->get_position()));
+      while (dead->get_crystals_held()) {
+        dead->drop_crystal();
         --crystals_in_play;
       }
     }
+
+    Weapon* sword = dead->get_weapon();
+    Weapon* shield = dead->get_shield();
+
+    if (sword != nullptr)
+    {
+      for(auto melee = melees.begin(); melee != melees.end(); melee++)
+      {
+        if (sword == *melee)
+        {
+          melees.erase(melee);
+          break;
+        }
+      }
+    }
+    if (shield != nullptr)
+    {
+      for(auto melee = melees.begin(); melee != melees.end(); melee++)
+      {
+        if (shield == *melee)
+        {
+          melees.erase(melee);
+          break;
+        }
+      }
+    }
+
+    heal_circles[player_wrapper->uid] = nullptr;
     
     if(player_wrapper->player->can_respawn()) {
       if (player_infos[player_wrapper->uid]->spawn_menu->is_option_selected()) {
         player_infos[player_wrapper->uid]->spawn_menu->clear_menu();
-        Player *dead = player_wrapper->player;
         player_wrapper->player = create_player(String(player_infos[player_wrapper->uid]->spawn_menu->
                                                get_selected_option()),
                                                player_infos[player_wrapper->uid]->start_position, 
@@ -586,32 +620,6 @@ void Game_State::perform_logic() {
 
         // Once the player is alive it shouldn't make him wait.
         player_wrapper->player->reset_respawn_time();
-
-        Weapon* sword = dead->get_weapon();
-        Weapon* shield = dead->get_shield();
-
-        if (sword != nullptr)
-        {
-          for(auto melee = melees.begin(); melee != melees.end(); melee++)
-          {
-            if (sword == *melee)
-            {
-              melees.erase(melee);
-              break;
-            }
-          }
-        }
-        if (shield != nullptr)
-        {
-          for(auto melee = melees.begin(); melee != melees.end(); melee++)
-          {
-            if (shield == *melee)
-            {
-              melees.erase(melee);
-              break;
-            }
-          }
-        }
 
         delete dead;
       }

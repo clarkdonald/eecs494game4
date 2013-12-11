@@ -10,8 +10,8 @@
 
 using namespace Zeni;
 
-Stone_Road::Stone_Road(const Point2f &position_)
-: Terrain(position_, "stonevertical")
+Stone_Road::Stone_Road(const Point2f &position_, const Vector2f &size_)
+: Terrain(position_, "stonevertical", size_)
 {}
 
 void Stone_Road::render() const {

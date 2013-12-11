@@ -10,12 +10,8 @@
 
 using namespace Zeni;
 
-Crystal::Crystal(const Point2f &position_)
-: Game_Object(position_)
-{}
-
-Crystal::Crystal(const Point2f &position_, const Vector2f& size_) :
-  Game_Object(position_, size_) 
+Crystal::Crystal(const Point2f &position_, const Vector2f &size_)
+: Game_Object(position_, size_)
 {}
 
 void Crystal::render() const {

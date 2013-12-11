@@ -20,8 +20,9 @@ Player::Player(const Point2f &position_,
                const Team &team_,
 							 const String& sprite_prefix_,
 							 const float& attack_limit_,
-               const float& sp_attack_limit_)
-: Game_Object(position_, OBJECT_SIZE, RECTANGLE),
+               const float& sp_attack_limit_,
+               const Vector2f &size_)
+: Game_Object(position_, size_, RECTANGLE),
   weapon(nullptr),
   shield(nullptr),
   speed(speed_),

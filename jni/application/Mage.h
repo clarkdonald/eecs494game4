@@ -10,7 +10,10 @@ class Mage : public Player {
   public:
     Mage(const Zeni::Point2f &position_,
          const int &uid_,
-         const Team &team_);
+         const Team &team_,
+         const Zeni::Vector2f &size_ = OBJECT_SIZE);
+
+    ~Mage();
 
     void render() const override;
 
