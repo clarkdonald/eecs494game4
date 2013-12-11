@@ -54,7 +54,7 @@ Instructions_State::Instructions_State()
   // set up map and players
   load_map("../assets/maps/tutorial.txt");
   
-  for (int i = 0; i < 5; ++i) {
+  for (int i = 0; i < 4; ++i) {
     text_timers.push_back(Chronometer<Time>());
   }
   
@@ -155,7 +155,8 @@ void Instructions_State::render() {
     npc_blue->render();
     npc_red->render(); 
 
-    auto text_y_scroll = 0.0f;            
+    auto text_y_scroll = 0.0f;
+    cout << timer_index << endl;
     for(int i = 0; i < timer_index; ++i) {
       get_Fonts()["godofwar_12"].render_text(String(texts[i]),
                                         Point2f(327.0f, text_y_scroll),
