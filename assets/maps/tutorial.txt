@@ -1,0 +1,18 @@
+# dimension (y,x)
+15 15
+# map
+lUUUUUUUUUUUUUu
+L.sssssssssss.R
+L.kkkkiiikkkk.R
+L.kkkk...kkkk.R
+L.kkkk...kkkk.R
+L......4......R
+Lzbz.0.c.1.zbzR
+L.....ctc.....R
+Lzbz..cTc..zbzR
+L.....ctc.....R
+Lzbz.2.c.3.zbzR
+L......5......R
+L.............R
+L.............R
+rDDDDDDxDDDDDDd
