@@ -44,17 +44,19 @@ Instructions_State::Instructions_State()
      "A Button: Hold down to deposit crystal to master\n"
      "Start Button: Pause entire game",
      Color()),
-  timer_index(0),
-  show_text_box(false),
+  done(false),
   distance(0.0f),
-  movement(0)
+  movement(0),
+  start_movement(false),
+  timer_index(0),
+  num_texts_to_render(0)
 {
   tb.give_BG_Renderer(new Widget_Renderer_Color(get_Colors()["black"]));
   
   // set up map and players
   load_map("../assets/maps/tutorial.txt");
   
-  for (int i = 0; i < 4; ++i) {
+  for (int i = 0; i < 5; ++i) {
     text_timers.push_back(Chronometer<Time>());
   }
   
@@ -94,7 +96,7 @@ void Instructions_State::perform_logic() {
   time_passed = current_time;
   float time_step = processing_time;
   
-  if (timer_index >= text_timers.size()) {
+  if (!done && start_movement) {
     distance += (80.0f * 0.9f * time_step);
     cout << movement << endl;
     switch (movement) {
@@ -126,11 +128,7 @@ void Instructions_State::perform_logic() {
         break;
         
       case 3:
-        if (final_timer.is_running()) {
-          if (final_timer.seconds() > 3.0f) {
-            show_text_box = true;
-          }
-        }
+        done = true;
         break;
         
       default:
@@ -142,7 +140,7 @@ void Instructions_State::perform_logic() {
 void Instructions_State::render() {
   get_Video().set_2d(make_pair(Point2f(), Point2f(800.0f, 600.0f)), false);
   
-  if (show_text_box) {
+  if (done) {
     tb.render();
   }
   else {
@@ -156,24 +154,27 @@ void Instructions_State::render() {
     npc_red->render(); 
 
     auto text_y_scroll = 0.0f;
-    cout << timer_index << endl;
-    for(int i = 0; i < timer_index; ++i) {
+    for(int i = 0; i < num_texts_to_render; ++i) {
       get_Fonts()["godofwar_12"].render_text(String(texts[i]),
                                         Point2f(327.0f, text_y_scroll),
                                         get_Colors()["white"]);
       text_y_scroll += 75.0f;
     }
-
-    if (timer_index < text_timers.size()) {
-      if (text_timers[timer_index].seconds() > 2.0f) {        
+    
+    if (!final_timer.is_running()) {
+      if (text_timers[timer_index].seconds() > 2.0f) {
+        num_texts_to_render++;
+        text_timers[timer_index].stop();
         if (++timer_index < text_timers.size()) {
           text_timers[timer_index].start();
+        } else {
+          final_timer.start();
         }
       }
-    }
-    else {
-      timer_index = texts.size();
-      if (!final_timer.is_running()) final_timer.start();
+    } else {
+      if (final_timer.seconds() > 3.0f) {
+        start_movement = true;
+      }
     }
   }
 }
@@ -268,4 +269,14 @@ void Instructions_State::load_map(const string &file_) {
     }
     ++height;
   }
+}
+
+void Instructions_State::execute_controller_code(const Zeni_Input_ID &id,
+                                                 const float &confidence,
+                                                 const int &action)
+{
+  if (action == 108) done = true;
+  if (action == 208) done = true;
+  if (action == 308) done = true;
+  if (action == 408) done = true;
 }
