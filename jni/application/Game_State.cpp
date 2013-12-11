@@ -142,6 +142,23 @@ void Game_State::perform_logic() {
   for (auto player_wrapper : player_wrappers) {
     // get controls for each player
     Controls input = player_infos[player_wrapper->uid]->controls;
+    player_infos[player_wrapper->uid]->controls.start = false;
+    
+    // pausing logic
+    if (input.start) {
+      if (!player_infos[player_wrapper->uid]->pause_timer.is_running()) {
+        get_Game().push_Popup_Menu_State();
+        player_infos[player_wrapper->uid]->pause_timer.start();
+      }
+    }
+    
+    // fix the timer for pausing
+    if (player_infos[player_wrapper->uid]->pause_timer.is_running()) {
+      if (player_infos[player_wrapper->uid]->pause_timer.seconds() > 0.25f) {
+        player_infos[player_wrapper->uid]->pause_timer.stop();
+        player_infos[player_wrapper->uid]->pause_timer.reset();
+      }
+    }
 
     if (!player_wrapper->player->can_respawn()) {
       player_wrapper->player->update_respawn_timer(time_step);
@@ -649,7 +666,41 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
   vbo_ptr_floor->render();
   vbo_ptr_lower->render();
   for (auto crystal : crystals) crystal->render();
-  for (auto player_wrapper_ptr : player_wrappers) player_wrapper_ptr->player->render();      
+
+  // Render aiming reticle
+  if(!player_wrapper->player->is_submerged())  {
+    Player* player = player_wrapper->player;
+    Point2f pos = p_pos;
+    Vector2f size = player->get_size();
+      
+    pos += 0.4f * size.get_j();
+	  // render aiming reticle
+    Vector2f face_vec = Vector2f(cos(player->get_facing()), sin(player->get_facing()));
+
+    Team team = player->get_team();
+    String str = "";
+
+	  switch(team)
+	  {
+		  case RED:
+			  str = "red_";
+			  break;
+		  case BLUE:
+			  str = "blue_";
+			  break;
+	  }
+    // couldn't use Game_Object::render() because need to render the reticle at a different location
+    render_image(str + "aiming", // which texture to use
+                pos, // upper-left corner
+                pos + size, // lower-right corner
+                face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two, // rotation in radians
+                1.0f, // scaling factor
+                pos + 0.5f * size, // point to rotate & scale about
+                false, // whether or not to horizontally flip the texture
+                Color()); // what Color to "paint" the texture  
+  }
+
+  for (auto player_wrapper_ptr : player_wrappers) player_wrapper_ptr->player->render();
   for (auto npc : npcs) npc->render();
   for (auto projectile : projectiles) projectile->render();
   for (auto melee : melees) melee->render();
@@ -663,6 +714,7 @@ void Game_State::render_all(Player_Wrapper * player_wrapper) {
     }
   }
   for (auto atmosphere : atmospheres) atmosphere->render();
+
 
   // Render Player health
   player_infos[player_wrapper->uid]->health_bar.set_position(p_pos - Vector2f(240.0f, 190.0f));
@@ -1000,6 +1052,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 		case 113:
 			player_infos[0]->controls.RB = (confidence == 1.0);
 			break;
+      
+    case 114:
+			player_infos[0]->controls.start = (confidence == 1.0);
+			break;
 
 		/* player 2 */
 		case 201:
@@ -1047,6 +1103,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 
 		case 213:
 			player_infos[1]->controls.RB = (confidence == 1.0);
+			break;
+      
+    case 214:
+			player_infos[1]->controls.start = (confidence == 1.0);
 			break;
 
 		/* player 3 */
@@ -1096,6 +1156,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 		case 313:
 			player_infos[2]->controls.RB = (confidence == 1.0);
 			break;
+      
+    case 314:
+			player_infos[2]->controls.start = (confidence == 1.0);
+			break;
 
 		/* player 4 */
 		case 401:
@@ -1143,6 +1207,10 @@ void Game_State::execute_controller_code(const Zeni_Input_ID &id,
 
 		case 413:
 			player_infos[3]->controls.RB = (confidence == 1.0);
+			break;
+      
+    case 414:
+			player_infos[4]->controls.start = (confidence == 1.0);
 			break;
 
     default:

@@ -19,6 +19,8 @@ class Instructions_State : public Zeni::Gamestate_Base {
     
   private:
     void on_key(const SDL_KeyboardEvent &event);
+  
+    void load_map(const std::string &file_);
     
     void render();
 };

@@ -585,10 +585,14 @@
     <tile>0</tile>
   </white_bar>
   
-  <aiming>
-    <filepath>textures/Character/aiming_circle.png</filepath>
+  <red_aiming>
+    <filepath>textures/Character/red_aiming_circle.png</filepath>
     <tile>0</tile>
-  </aiming>
+  </red_aiming>
+  <blue_aiming>
+    <filepath>textures/Character/blue_aiming_circle.png</filepath>
+    <tile>0</tile>
+  </blue_aiming>
   <archer_skill>
     <filepath>textures/GUI/archer_skill.png</filepath>
     <tile>0</tile>

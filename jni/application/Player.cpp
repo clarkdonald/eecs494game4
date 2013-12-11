@@ -32,7 +32,7 @@ Player::Player(const Point2f &position_,
   uid(uid_),
   attackable(true),
   submerged(false),
-  dodge_time(0.0f),
+  dodge_time(3.0f),
   dodging(false),
   respawn_time(0.0f),
   blink_timer(0.0f),
@@ -150,8 +150,8 @@ bool Player::touching_feet(const Game_Object &rhs) const {
   float rhsCenterX = rhs.get_position().x + (rhs.get_size().x / 2.0f);
   float rhsCenterY = rhs.get_position().y + (rhs.get_size().y / 2.0f);
   
-  if ((abs(centerX - rhsCenterX) < distance) &&
-      (abs(bottomY - rhsCenterY) < distance))
+  if ((fabs(centerX - rhsCenterX) < distance) &&
+      (fabs(bottomY - rhsCenterY) < distance))
   {
     return true;
   }
@@ -193,13 +193,13 @@ void Player::restore_health(const float& value)
 
 
 void Player::update_blink_timer(const float &timestep) { 
-  if(hit) {
+  if (hit) {
     blink_timer += timestep;
-    if(blink_timer < 0.05f) 
+    if (blink_timer < 0.05f)
       blink = true;    
-    else if(blink_timer <  0.1f) 
+    else if (blink_timer <  0.1f)
       blink = false;
-    else if(blink_timer < 0.15f)
+    else if (blink_timer < 0.15f)
       blink = true;
     else {
       hit = false;
@@ -237,10 +237,10 @@ void Player::start_stun_timer()
 bool Player::is_stunned()
 {
   bool is_stun = false;
-  if(stun_timer.is_running())
+  if (stun_timer.is_running())
   {
     is_stun = stun_timer.seconds() < STUN_TIME;
-    if(!is_stun) 
+    if (!is_stun)
     {
       stun_timer.stop();
       stun_timer.reset();
@@ -291,30 +291,7 @@ Point2f Player::calc_shield_pos() {
 }
 
 void Player::render() const {
-	if(is_dead()) return;
-  
-  if(blink) return;
-
-	// render aiming reticle
-  Vector2f face_vec = Vector2f(cos(facing), sin(facing));
-
-  Point2f pos = get_position();
-  Point2f size = get_size();
-
-  pos += 0.4f * get_size().get_j();
-
-  if(!submerged)  {
-    // couldn't use Game_Object::render() because need to render the reticle at a different location
-    render_image("aiming", // which texture to use
-                pos, // upper-left corner
-                pos + size, // lower-right corner
-                face_vec.multiply_by(Vector2f(1.0f,-1.0f)).theta() + Global::pi_over_two, // rotation in radians
-                1.0f, // scaling factor
-                pos + 0.5f * size, // point to rotate & scale about
-                false, // whether or not to horizontally flip the texture
-                Color()); // what Color to "paint" the texture  
-  }
-
+	if(is_dead() || blink) return;
   // render player
 
 	String str;
