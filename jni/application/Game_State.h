@@ -33,7 +33,7 @@ struct Player_Wrapper {
   ~Player_Wrapper();
   Player* player;
   int uid;  
-  bool select_pressed;
+  bool select_pressed;  
   Zeni::String spawn_time_left;
 };
 
@@ -120,7 +120,7 @@ class Game_State {
     Object_Info dodge;
     Object_Info dodge_button;
     Object_Info special_skill;
-    Object_Info special_button;
+    Object_Info special_button;    
 
     Percent_Bar divider;
     Percent_Bar skill_indicator;
