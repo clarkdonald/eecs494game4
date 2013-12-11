@@ -24,11 +24,12 @@ class Mage : public Player {
 
     Weapon* range(const float &direction) override;
   
-    void mage_spc_skill(bool pressed) override;   
+    void mage_spc_skill(bool pressed, const float& time_step) override;   
 
     Zeni::String get_skill_str() const override {return "mage_skill"; }
 
 private:
+	Zeni::Chronometer<Zeni::Time> heal_duration_timer;
 	Heal_Circle* heal_circle;
 };
 

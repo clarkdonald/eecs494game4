@@ -23,6 +23,7 @@ Weapon* Archer::range(const float &direction)
 {
   Weapon* projectile = nullptr;
   if (can_attack()) {
+		play_sound("bow");
     projectile = new Arrow(calc_weapon_pos(direction), direction, get_team());
     start_attack_timer();
   }

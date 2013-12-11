@@ -18,7 +18,7 @@ class Weapon : public Game_Object {
 	  virtual void render() const = 0;
   
     const Team & get_team() const {return team;}
-
+      
     const float & get_damage() const {return damage;}
 
     virtual bool animation_over() {return false;}
