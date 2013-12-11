@@ -9,9 +9,9 @@
 # player 3
 23 34
 # npc team 1
-12 6
+12 29
 # npc team 2
-12 28
+12 5
 # crystal metadata
 4
 7
