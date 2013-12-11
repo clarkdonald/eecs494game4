@@ -34,7 +34,7 @@ class Npc : public Game_Object {
 
     void set_hold_a(bool hold_a_) { hold_a =  hold_a_;}
 
-    bool show_info() const { return hold_a; }
+    bool get_hold_a() const { return hold_a; }
   
   private:
     int depositing;

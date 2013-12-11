@@ -129,7 +129,7 @@ Game_State::~Game_State() {
   delete vbo_ptr_middle;
 }
 
-void Game_State::perform_logic() {
+void Game_State::perform_logic() { 
   // check if a team won
   for (auto& score : scores) {
     if (score.second >= WIN_CRYSTAL_COUNT) {
@@ -144,6 +144,9 @@ void Game_State::perform_logic() {
   time_passed = current_time;
   float time_step = processing_time;
   
+  for (auto npc : npcs)
+    npc->set_hold_a(false);
+
   // iterate through each player, updating its state
   for (auto player_wrapper : player_wrappers) {
     // get controls for each player
@@ -416,12 +419,14 @@ void Game_State::perform_logic() {
     }    
 
     // crystal depositing logic    
-    for (auto npc : npcs) {
-      // Show information
-      if (!input.A && same_team(npc->get_team(), player_wrapper->player->get_team()) && player_wrapper->player->has_crystal() && player_wrapper->player->pseudo_touching(*npc))
-        npc->set_hold_a(true);
-      else
-        npc->set_hold_a(false);
+    for (auto npc : npcs) {                  
+      if (!input.A && same_team(npc->get_team(), player_wrapper->player->get_team()) && player_wrapper->player->has_crystal() && player_wrapper->player->pseudo_touching(*npc)) {                
+        // Show information                
+        npc->set_hold_a(true);                
+      }
+      else {        
+        npc->set_hold_a(false || npc->get_hold_a());        
+      }
 
       // Crystal logic
       if (same_team(npc->get_team(), player_wrapper->player->get_team())) {
