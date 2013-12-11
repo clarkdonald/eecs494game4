@@ -30,7 +30,7 @@ class Player : public Game_Object {
 
     virtual void render() const = 0;
 
-		virtual void render_extras() {};
+		virtual void render_extras() {}
   
     virtual void move_y(const float &, const float &, bool);
   
@@ -42,7 +42,9 @@ class Player : public Game_Object {
 
     bool can_use_dodge() const { return dodge_time > 3.0f; } 
 
-    bool is_dodging() {return dodging;};
+    bool is_dodging() {return dodging;}
+
+    float get_dodge_percentage() const { return dodge_time / 3.0f; }
 
     bool touching_feet(const Game_Object &rhs) const;
   
@@ -57,8 +59,10 @@ class Player : public Game_Object {
     virtual Weapon* range(const float &direction) {return nullptr;}  // arrow, fireball
 
     virtual bool can_use_special() const {return attack_enabled && time_since_special.seconds() > sp_attack_limit;}
+    
+    float get_special_attck_percentage() const {return time_since_special.seconds() / sp_attack_limit;}
 
-    virtual void mage_spc_skill(bool pressed) {}; // special class-specific attack
+    virtual void mage_spc_skill(bool pressed) {} // special class-specific attack
     virtual Weapon* archer_spc_skill(const float &direction) {return nullptr;} // special class-specific attack
     virtual Weapon* archer_spc_skill() {return nullptr;} // special class-specific attack
     virtual Weapon* warrior_spc_skill() {return nullptr;} // special class-specific attack
@@ -88,6 +92,7 @@ class Player : public Game_Object {
     const float & get_facing() const {return facing;}
 
 		void set_submerged(bool value) {submerged = value;}
+    bool is_submerged() {return submerged;}
 
 		void start_attack_timer();
 		void start_special_timer();

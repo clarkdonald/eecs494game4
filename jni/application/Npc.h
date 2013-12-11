@@ -11,6 +11,7 @@
 
 #include "Terrain.h"
 #include "Utility.h"
+#include "Percent_Bar.h"
 #include <zenilib.h>
 
 class Npc : public Game_Object {
@@ -22,8 +23,17 @@ class Npc : public Game_Object {
     void render() const override;
   
     const Team & get_team() const {return team;}
+
+    void set_deposit_pctg(const float &pctg_);
+
+    void set_depositing(int depositing_) { depositing = depositing_; }
+
+    bool can_deposit(int player_id) const { return (player_id == depositing) || (depositing == -1); }
   
   private:
+    int depositing;
+    float deposit_pctg;
+    Percent_Bar deposit_indicator;
     Zeni::String texture;
     Team team;
 };

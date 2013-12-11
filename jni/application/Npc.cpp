@@ -14,10 +14,18 @@ Npc::Npc(const Point2f &position_,
          const String &texture_,
          const Team &team_)
 : Game_Object(position_),
+  depositing(-1),
+  deposit_indicator(position_ - Vector2f(0.0f, 8.0f), Vector2f(32.0f, 2.0f)),
   texture(texture_),
   team(team_)
 {}
 
+void Npc::set_deposit_pctg(const float &pctg_) {
+  deposit_pctg = pctg_;
+}
+
 void Npc::render() const {
+  if(depositing != -1)
+    deposit_indicator.render(deposit_pctg);
   Game_Object::render(texture);
 }

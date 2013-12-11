@@ -90,7 +90,6 @@ class Game_State {
     void load_map(const std::string &file_);
     
     Zeni::Time_HQ time_passed;
-    //Zeni::Chronometer<Zeni::Time> shooting_timer;
     std::list<Terrain*> terrains;
     std::list<Environment*> environments;
     std::list<Environment*> collidable_environments;
@@ -116,6 +115,10 @@ class Game_State {
     Object_Info box;
     Object_Info dodge;
     Object_Info special_skill;
+
+    Percent_Bar divider;
+    Percent_Bar skill_indicator;
+    Percent_Bar health_indicator;
 };
 
 #endif /* GAME_STATE_H */
